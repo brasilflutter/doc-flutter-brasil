@@ -98,7 +98,7 @@ jobs:
       - name: Check for broken internal links
         run: dart run flutter_site check-links
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: _site
