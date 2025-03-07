@@ -81,7 +81,7 @@ jobs:
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
       - name: Setup pnpm
         run: corepack install
       - name: Install node dependencies
@@ -98,11 +98,11 @@ jobs:
       - name: Check for broken internal links
         run: dart run flutter_site check-links
       - name: Upload build artifacts
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: _site
-     
 
   firebase-validate:
     name: Validate Firebase configuration
@@ -134,12 +134,12 @@ jobs:
         with:
           name: build-artifacts
           path: _site
-      
+
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           channelId: live
           projectId: transliteradu
           target: docs-flutterbrasil
