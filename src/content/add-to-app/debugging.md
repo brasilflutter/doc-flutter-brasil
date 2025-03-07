@@ -17,7 +17,7 @@ O Flutter agora alimenta a UI onde quer que seu código inclua
 
 Você pode estar acostumado a ter seu conjunto de ferramentas de depuração Flutter favoritas
 disponíveis ao executar `flutter run` ou um comando equivalente de uma IDE (ambiente de desenvolvimento integrado).
-Mas você também pode usar todas as suas [funcionalidades de depuração][] do Flutter, como
+Mas você também pode usar todas as suas [funcionalidades de depuração][debugging functionalities] do Flutter, como
 hot reload, *performance overlays* (sobreposições de desempenho), DevTools e definição de *breakpoints* (pontos de interrupção) em
 cenários *add-to-app*.
 
@@ -74,7 +74,7 @@ use `flutter attach`.
 Para um alvo iOS, complete os seguintes passos:
 
 1. Verifique se seu dispositivo se conecta ao Xcode via Wi-Fi
-   como descrito no [guia de configuração do iOS][].
+   como descrito no [guia de configuração do iOS][iOS setup guide].
 
 1. Na sua máquina de desenvolvimento macOS,
    abra o **Xcode** <span aria-label="e então">></span>
@@ -115,7 +115,7 @@ Para um alvo iOS, complete os seguintes passos:
 ### Debug over Wi-Fi on Android devices (Depurar via Wi-Fi em dispositivos Android)
 
 Verifique se seu dispositivo se conecta ao Android Studio via Wi-Fi
-como descrito no [guia de configuração do Android][].
+como descrito no [guia de configuração do Android][Android setup guide].
 
 [iOS setup guide]: /get-started/install/macos/mobile-ios
 [Android setup guide]: /get-started/install/macos/mobile-android?tab=physical#configure-your-target-android-device
