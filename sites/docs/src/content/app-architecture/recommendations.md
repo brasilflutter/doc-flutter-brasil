@@ -1,83 +1,84 @@
 ---
-title: Architecture recommendations and resources
-shortTitle: Architecture recommendations
+title: Recomendações e recursos de arquitetura
+shortTitle: Recomendações de arquitetura
 description: >
-  Recommendations for building scalable Flutter applications.
+  Recomendações para construir aplicações Flutter escaláveis.
 prev:
-  title: Architecture case study
+  title: Estudo de caso de arquitetura
   path: /app-architecture/case-study
 next:
-  title: Design patterns
+  title: Padrões de projeto
   path: /app-architecture/design-patterns
+ia-translate: true
 ---
 
-This page presents architecture best practices, why they matter, and
-whether we recommend them for your Flutter application.
-You should treat these recommendations as recommendations,
-and not steadfast rules, and you should
-adapt them to your app's unique requirements.
+Esta página apresenta as melhores práticas de arquitetura, por que elas são importantes e
+se nós as recomendamos para a sua aplicação Flutter.
+Você deve tratar estas recomendações como recomendações,
+e não como regras inflexíveis, e você deve
+adaptá-las aos requisitos únicos do seu app.
 
-The best practices on this page have a priority,
-which reflects how strongly the Flutter team recommends it.
+As melhores práticas nesta página têm uma prioridade,
+que reflete o quão fortemente o time Flutter a recomenda.
 
-* **Strongly recommend:** You should always implement this recommendation if
-  you're starting to build a new application. You should strongly consider
-  refactoring an existing app to implement this practice unless doing so would
-  fundamentally clash with your current approach.
-* **Recommend**: This practice will likely improve your app.
-* **Conditional**: This practice can improve your app in certain circumstances.
+* **Fortemente recomendado:** Você deve sempre implementar esta recomendação se
+  você está começando a construir um novo aplicativo. Você deve considerar fortemente
+  refatorar um aplicativo existente para implementar esta prática a menos que isso
+  entre em conflito fundamentalmente com sua abordagem atual.
+* **Recomendado**: Esta prática provavelmente irá melhorar o seu aplicativo.
+* **Condicional**: Esta prática pode melhorar seu aplicativo em certas circunstâncias.
 
-## Separation of concerns
+## Separação de responsabilidades
 
-You should separate your app into a UI layer and a data layer. Within those layers, 
-you should further separate logic into classes by responsibility.
+Você deve separar seu app em uma camada de UI e uma camada de dados. Dentro dessas camadas,
+você deve separar ainda mais a lógica em classes por responsabilidade.
 
 <ArchitectureRecommendations category="separation-of-concerns" />
 
-## Handling data
+## Manipulação de dados
 
-Handling data with care makes your code easier to understand, less error prone, and
-prevents malformed or unexpected data from being created.
+Manipular dados com cuidado torna seu código mais fácil de entender, menos propenso a erros e
+evita que dados malformados ou inesperados sejam criados.
 
 <ArchitectureRecommendations category="handling-data" />
 
-## App structure
+## Estrutura do app
 
-Well organized code benefits both the health of the app itself, and the team working on the code.
+Um código bem organizado beneficia tanto a saúde do próprio app quanto a equipe que trabalha no código.
 
 <ArchitectureRecommendations category="app-structure" />
 
-## Testing
+## Testes
 
-Good testing practices makes your app flexible. 
-It also makes it straightforward and low risk to add new logic and new UI.
+Boas práticas de teste tornam seu app flexível.
+Elas também tornam simples e de baixo risco adicionar nova lógica e nova UI.
 
 <ArchitectureRecommendations category="testing" />
 
 <a id="recommended-resources" aria-hidden="true"></a>
 
-## Recommended resources {:#resources}
+## Recursos recomendados {:#resources}
 
-* Code and templates
-  * [Compass app source code][] -
-    Source code of a full-featured, robust Flutter application that
-    implements many of these recommendations.
+* Código e templates
+  * [Código fonte do aplicativo Compass][Compass app source code] -
+    Código fonte de um aplicativo Flutter robusto e completo que
+    implementa muitas dessas recomendações.
   * [very_good_cli][] -
-    A Flutter application template made by
-    the Flutter experts Very Good Ventures.
-    This template generates a similar app structure.
-* Documentation
-  * [Very Good Engineering architecture documentation][] -
-    Very Good Engineering is a documentation site by VGV that has
-    technical articles, demos, and open-sourced projects.
-    It includes documentation on architecting Flutter applications.
-* Tooling
-  * [Flutter developer tools][] -
-    DevTools is a suite of performance and debugging tools for Dart and Flutter.
+    Um template de aplicativo Flutter feito por
+    especialistas Flutter da Very Good Ventures.
+    Este template gera uma estrutura de aplicativo similar.
+* Documentação
+  * [Documentação de arquitetura da Very Good Engineering][Very Good Engineering architecture documentation] -
+    Very Good Engineering é um site de documentação da VGV que possui
+    artigos técnicos, demos e projetos de código aberto.
+    Inclui documentação sobre arquitetura de aplicativos Flutter.
+* Ferramentas
+  * [Ferramentas de desenvolvedor Flutter][Flutter developer tools] -
+    DevTools é um conjunto de ferramentas de desempenho e depuração para Dart e Flutter.
   * [flutter_lints][] -
-    A package that contains the lints for
-    Flutter apps recommended by the Flutter team.
-    Use this package to encourage good coding practices across a team.
+    Um package que contém os lints para
+    aplicativos Flutter recomendados pelo time Flutter.
+    Use este package para incentivar boas práticas de codificação em uma equipe.
 
 
 [Compass app source code]: https://github.com/flutter/samples/tree/main/compass_app
@@ -88,7 +89,7 @@ It also makes it straightforward and low risk to add new logic and new UI.
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está evoluindo,
+nós [agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="recommendations"

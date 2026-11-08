@@ -1,67 +1,68 @@
 ---
-title: Flutter documentation
+title: Documentação do Flutter
 shortTitle: Docs
 description: >-
-  Get started with Flutter. Widgets, examples, updates, and API docs to
-  help you write your first Flutter app.
+  Comece com Flutter. Widgets, exemplos, atualizações e API docs para
+  ajudar a criar seu primeiro app Flutter.
+ia-translate: true
 ---
 
 <div class="card-grid">
-  <Card title="Install Flutter" link="/install" outlined="true">
-    Set up your environment and start building.
+  <Card title="Instalar o Flutter" link="/install" outlined="true">
+    Configure seu ambiente e comece a construir.
   </Card>
-  <Card title="Widget catalog" link="/ui/widgets" outlined="true">
-    Dip into the rich set of Flutter widgets available in the SDK.
+  <Card title="Catálogo de widgets" link="/ui/widgets" outlined="true">
+    Explore o rico conjunto de widgets do Flutter disponíveis no SDK.
   </Card>
   <Card title="API docs" link="{{site.api}}" outlined="true">
-    Bookmark the API reference docs for the Flutter framework.
+    Salve nos favoritos a documentação de referência da API do framework Flutter.
   </Card>
-  <Card title="Learning resources" link="/learn" outlined="true">
-    Browse tutorials, sample code, workshops, and recipes.
+  <Card title="Recursos de aprendizado" link="/learn" outlined="true">
+    Navegue por tutoriais, código de exemplo, workshops e receitas.
   </Card>
-  <Card title="Videos" link="https://www.youtube.com/@flutterdev" outlined="true">
-    View the many videos on the Flutter YouTube channel.
+  <Card title="Vídeos" link="https://www.youtube.com/@flutterdev" outlined="true">
+    Assista aos muitos vídeos do canal do Flutter no YouTube.
   </Card>
-  <Card title="Develop with AI" link="/ai/get-started" outlined="true">
-    Learn how to build with and integrate powerful AI tools.
+  <Card title="Desenvolva com IA" link="/ai/get-started" outlined="true">
+    Aprenda a construir com ferramentas de IA poderosas e a integrá-las.
   </Card>
 </div>
 
-**To see changes to the site since our last release,
-see [What's new][].**
+**Para ver mudanças no site desde nosso último lançamento,
+veja [O que há de novo][What's new].**
 
 [What's new]: /release/whats-new
 
-## New to Flutter?
+## Novo no Flutter?
 
-Ready to build beautiful, multiplatform apps from a single codebase?
-First, [set up your Flutter environment][],
-then follow the [Flutter learning pathway][].
+Pronto para construir apps bonitos e multiplataforma a partir de uma única base de código?
+Primeiro, [configure seu ambiente Flutter][set up your Flutter environment],
+depois siga a [trilha de aprendizado do Flutter][Flutter learning pathway].
 
 [set up your Flutter environment]: /install/with-vs-code
 [Flutter learning pathway]: /learn/pathway
 
-### Docs
+### Documentação
 
-Coming from another platform? Check out Flutter for:
-[Android][], [SwiftUI][], [UIKit][], [React Native][], and
-[Xamarin.Forms][] developers.
+Vindo de outra plataforma? Veja Flutter para desenvolvedores
+[Android][], [SwiftUI][], [UIKit][], [React Native][] e
+[Xamarin.Forms][].
 
-[Building layouts][]
-: Learn how to create layouts in Flutter,
-  where everything is a [widget](/resources/glossary#widget).
+[Construindo layouts][Building layouts]
+: Aprenda como criar layouts no Flutter,
+  onde tudo é um [widget](/resources/glossary#widget).
 
-[Understanding constraints][]
-: Once you understand that "Constraints
-  flow down. Sizes flow up. Parents set
-  positions", then you are well on your
-  way to understanding Flutter's layout model.
+[Entendendo constraints][Understanding constraints]
+: Assim que você entender que "Constraints
+  descem. Tamanhos sobem. Pais definem posições",
+  estará no caminho para entender o modelo
+  de layout do Flutter.
 
-[Adding interactivity to your Flutter app][interactivity]
-: Learn how to add a stateful widget to your app.
+[Adicionando interatividade ao seu app Flutter][interactivity]
+: Aprenda como adicionar um widget stateful ao seu app.
 
 [FAQ][]
-: Get the answers to frequently asked questions.
+: Obtenha respostas para perguntas frequentes.
 
 [Android]: /flutter-for/android-devs
 [Building layouts]: /ui/layout
@@ -73,17 +74,17 @@ Coming from another platform? Check out Flutter for:
 [Understanding constraints]: /ui/layout/constraints
 [Xamarin.Forms]: /flutter-for/xamarin-forms-devs
 
-### Videos
+### Vídeos
 
 <div class="video-wrapper">
-  <span class="video-intro">Check out the latest in Dart and Flutter</span>
+  <span class="video-intro">Confira as novidades de Dart e Flutter</span>
   <YouTubeEmbed id="I1uIbGh1dGE" title="What's New in Dart and Flutter 3.44" fullWidth></YouTubeEmbed>
 </div>
 <br>
 
-For more of the latest on Dart and Flutter, check out
-the technical sessions from [Google I/O][io-wrap-up],
-like these!
+Para mais novidades de Dart e Flutter, confira
+as sessões técnicas do [Google I/O][io-wrap-up],
+como estas!
 
 <div class="card-grid">
   <div class="card wrapped-card outlined-card">
@@ -98,23 +99,23 @@ like these!
   </div>
 </div>
 
-Also, we launched a new 4-video series at Google I/O called
+Além disso, lançamos no Google I/O uma nova série de 4 vídeos chamada
 the Full-stack developer guide:
 
 <div class="video-wrapper">
   <YouTubeEmbed id="hNbY3Bmgojg" title="The Full-stack developer guide" fullWidth></YouTubeEmbed>
 </div>
 
-You can find the 4 videos in this series, as well as a wrap-up video,
-on the [Google I/O wrap-up][io-wrap-up] blog post.
+Você encontra os 4 vídeos desta série, além de um vídeo de encerramento,
+no post do blog [Google I/O wrap-up][io-wrap-up].
 
 [io-wrap-up]: {{site.flutter-blog}}/thats-a-wrap-everything-flutter-at-google-i-o-2026-f316e57186e3
 
-To learn about all of the Flutter video series,
-visit our [videos][] page.
+Para saber sobre todas as séries de vídeos do Flutter,
+veja nossa página de [vídeos][videos].
 
-We release new videos almost every week!
+Lançamos novos vídeos quase toda semana!
 
-<a class="filled-button" target="_blank" href="https://www.youtube.com/@flutterdev">Check out the Flutter YouTube channel</a>
+<a class="filled-button" target="_blank" href="https://www.youtube.com/@flutterdev">Confira o canal do Flutter no YouTube</a>
 
 [videos]: /resources/videos

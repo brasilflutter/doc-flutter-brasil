@@ -1,86 +1,87 @@
 ---
-title: Architecting Flutter apps
-shortTitle: Architecture
+title: Arquitetando apps Flutter
+shortTitle: Arquitetura
 description: >
-  Learn how to structure Flutter apps.
+  Aprenda como estruturar apps Flutter.
 showToc: false
 next:
-  title: Architecture concepts
+  title: Conceitos de arquitetura
   path: /app-architecture/concepts
+ia-translate: true
 ---
 
 <div class="side-by-side">
 <div>
 
-Architecture is an important part of building a
-maintainable, resilient, and scalable Flutter app.
-In this guide, you'll learn app architecture principles and
-best practices for building Flutter apps.
+Arquitetura é uma parte importante para construir
+um app Flutter que seja sustentável, resiliente
+e escalável. Neste guia, você aprenderá os princípios
+de arquitetura e as melhores práticas para criar apps Flutter.
 
-'Architecture' is a word that's hard to define.
-It's a broad term and can refer to any number
-of topics depending on the context. In this guide,
-'architecture' refers to how to structure, organize, and design
-your Flutter app in order to scale as your project requirements and team grow.
+'Arquitetura' é uma palavra difícil de definir.
+É um termo amplo que pode se referir a diversos
+tópicos dependendo do contexto. Neste guia,
+'arquitetura' se refere a como estruturar, organizar e projetar
+seu app Flutter para escalar conforme os requisitos do projeto e o time crescem.
 
 </div>
 <div class="centered-rows">
-<img src='/assets/images/docs/app-architecture/hero-image.png' style="max-height: 480px;" alt="Hero image">
+<img src='/assets/images/docs/app-architecture/hero-image.png' style="max-height: 480px;" alt="Imagem de destaque">
 </div>
 </div>
 
 
-## What you'll learn
+## O que você vai aprender
 
-* Benefits of intentional architecture
-* Common architectural principles
-* The Flutter team's recommended app architecture
-* MVVM and state management
-* Dependency injection
-* Common design patterns for writing robust Flutter applications
+* Benefícios de uma arquitetura intencional
+* Princípios arquiteturais comuns
+* A arquitetura recomendada pelo time do Flutter
+* MVVM e gerenciamento de estado
+* Injeção de dependência
+* Padrões de design comuns para escrever aplicações Flutter robustas
 
 {% comment %}
 TODO @ewindmill complete this list as pages land, add links.
 {% endcomment %}
 
-## Benefits of intentional architecture
+## Benefícios de uma arquitetura intencional
 
-Good app architecture provides a number of benefits to
-engineering teams and their end users.
+Uma boa arquitetura de app oferece vários benefícios
+para as equipes de engenharia e seus usuários finais.
 
-* Maintainability - App architecture makes it easier to modify, update, and fix
-  issues over time.
-* Scalability - A well thought out application allows more people to contribute
-  to the same codebase concurrently, with minimal code conflicts.
-* Testability - Applications with intentional architecture generally have
-  simpler classes with well-defined inputs and outputs, which makes them easier
-  to mock and test.
-* Lower cognitive load - Developers who are new to the project will be more
-  productive in a shorter amount of time, and code reviews are generally less
-  time-consuming when code is easier to understand.
-* A better user experience - Features can ship faster and with fewer bugs.
+* Manutenibilidade - A arquitetura de um app torna mais fácil modificar, atualizar e corrigir
+  problemas ao longo do tempo.
+* Escalabilidade - Um aplicativo bem planejado permite que mais pessoas contribuam
+  para o mesmo código simultaneamente, com conflitos mínimos de código.
+* Testabilidade - Aplicativos com arquitetura intencional geralmente possuem
+  classes simples com entradas e saídas bem definidas, o que os torna mais fáceis
+  de 'mockar' e testar.
+* Menor carga cognitiva - Desenvolvedores novos no projeto serão mais produtivos
+  em menos tempo, e revisões de código geralmente levam menos tempo quando
+  o código é mais fácil de entender.
+* Melhor experiência do usuário - Recursos podem ser lançados mais rápido e com menos bugs.
 
-## How to use this guide
+## Como usar este guia
 
-This is a guide for building scalable Flutter applications and was written for
-teams that have multiple developers contributing to the same code base,
-who're building a feature-rich application.
-If you're writing a Flutter app that has a *growing team and codebase*,
-this guidance is for you.
+Este é um guia para criar aplicativos Flutter escaláveis e foi escrito
+para equipes com vários desenvolvedores contribuindo para o mesmo código,
+que estão construindo um aplicativo rico em recursos.
+Se você está criando um app Flutter com uma *equipe e base de código em crescimento*,
+estas orientações são para você.
 
-Along with general architectural advice, this guide gives concrete examples of
-best practices and includes specific recommendations.
-Some libraries can be swapped out, and very large teams with unique complexity
-might find that some parts don't apply.
-In either case, the ideas remain sound.
-This is the recommended way to build a Flutter app.
+Além de conselhos arquiteturais gerais, este guia apresenta exemplos concretos de
+melhores práticas e inclui recomendações específicas.
+Algumas bibliotecas podem ser substituídas, e equipes muito grandes com complexidades
+únicas podem descobrir que algumas partes não se aplicam.
+Em qualquer caso, as ideias continuam válidas.
+Este é o jeito recomendado de construir um app Flutter.
 
-In the first part of this guide, you'll learn about common architectural
-principles from a high level. In the second part,
-the guide walks through specific and
-concrete recommendations of architecting Flutter apps.
-Finally, at the end of the guide, you'll find a list of design patterns and
-sample code that shows the recommendations in action.
+Na primeira parte deste guia, você aprenderá sobre princípios arquiteturais
+comuns de forma ampla. Na segunda parte,
+o guia apresenta recomendações específicas e concretas
+sobre como arquitetar apps Flutter.
+Por fim, ao final do guia, você encontrará uma lista de padrões de design
+e códigos de exemplo que mostram as recomendações em ação.
 
 [Common architectural principles]: /app-architecture/concepts
 [recommended app architecture]: /app-architecture/guide
@@ -89,7 +90,7 @@ sample code that shows the recommendations in action.
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está em evolução,
+[agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="index"

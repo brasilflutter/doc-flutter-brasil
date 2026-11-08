@@ -1,106 +1,107 @@
 ---
-title: Upgrade Flutter
-shortTitle: Upgrade
-description: Learn how to upgrade Flutter and switch to another channel.
+title: Atualize o Flutter
+shortTitle: Atualizar
+description: Aprenda a atualizar o Flutter e a trocar de canal.
+ia-translate: true
 ---
 
-No matter which one of the Flutter release channels
-you follow, you can use the `flutter` command to upgrade your
-Flutter SDK or the packages that your app depends on.
+Não importa qual canal de release do Flutter
+você acompanha, é possível usar o comando `flutter` para atualizar seu
+Flutter SDK ou os packages dos quais seu app depende.
 
 <a id="upgrading-the-flutter-sdk" aria-hidden="true"></a>
 
-## Upgrade the Flutter SDK
+## Atualize o Flutter SDK
 
-To update the Flutter SDK use the `flutter upgrade` command:
+Para atualizar o Flutter SDK, use o comando `flutter upgrade`:
 
 ```console
 $ flutter upgrade
 ```
 
-This command gets the most recent version of the Flutter SDK
-that's available on your current Flutter channel.
+Esse comando obtém a versão mais recente do Flutter SDK
+disponível no seu canal atual do Flutter.
 
-If you are using the **stable** channel
-and want an even more recent version of the Flutter SDK,
-switch to the **beta** channel using `flutter channel beta`,
-and then run `flutter upgrade`.
+Se você usa o canal **stable**
+e quer uma versão ainda mais recente do Flutter SDK,
+mude para o canal **beta** com `flutter channel beta`
+e depois execute `flutter upgrade`.
 
 <a id="keep-informed" aria-hidden="true"></a>
 
-### Keep informed
+### Mantenha-se informado
 
-We publish [migration guides][] for known breaking changes.
+A equipe do Flutter publica [guias de migração][migration guides] para breaking changes conhecidas.
 
-We send announcements regarding these changes to the
-[Flutter announcements mailing list][flutter-announce].
+Os anúncios sobre essas mudanças são enviados para a
+[lista de e-mails de anúncios do Flutter][flutter-announce].
 
-To avoid being broken by future versions of Flutter,
-consider submitting your tests to our [test registry][].
+Para evitar que versões futuras do Flutter quebrem seu código,
+considere enviar seus testes para o [registro de testes][test registry].
 
 
-## Switching Flutter channels
+## Trocando de canal do Flutter
 
-Flutter has two release channels:
-**stable** and **beta**.
+O Flutter tem dois canais de release:
+**stable** e **beta**.
 
-### The **stable** channel
+### O canal **stable**
 
-We recommend the **stable** channel for new users
-and for production app releases.
-The team updates this channel about every three months.
-The channel might receive occasional hot fixes
-for high-severity or high-impact issues.
+O canal **stable** é o recomendado para novos usuários
+e para releases de apps em produção.
+A equipe atualiza esse canal aproximadamente a cada três meses.
+O canal pode receber hot fixes ocasionais
+para problemas de alta gravidade ou de alto impacto.
 
-The continuous integration for the Flutter team's plugins and packages
-includes testing against the latest **stable** release.
+A integração contínua dos plugins e packages da equipe do Flutter
+inclui testes com a release **stable** mais recente.
 
-The latest documentation for the **stable** branch
-is at: <https://api.flutter.dev>
+A documentação mais recente da branch **stable**
+fica em: <https://api.flutter.dev>
 
-### The **beta** channel
+### O canal **beta**
 
-The **beta** channel has the latest stable release.
-This is the most recent version of Flutter that we have heavily tested.
-This channel has passed all our public testing,
-has been verified against test suites for Google products that use Flutter,
-and has been vetted against [contributed private test suites][test registry].
-The **beta** channel receives regular hot fixes
-to address newly discovered important issues.
+O canal **beta** tem a release estável mais recente.
+É a versão mais recente do Flutter que passou por testes intensivos.
+Esse canal passou por todos os testes públicos,
+foi verificado com as suítes de teste de produtos do Google que usam Flutter
+e foi avaliado com [suítes de teste privadas enviadas pela comunidade][test registry].
+O canal **beta** recebe hot fixes regulares
+para corrigir problemas importantes recém-descobertos.
 
-The **beta** channel is essentially the same as the **stable** channel
-but updated monthly instead of quarterly.
-Indeed, when the **stable** channel is updated,
-it is updated to the latest **beta** release.
+O canal **beta** é essencialmente igual ao canal **stable**,
+mas é atualizado mensalmente em vez de trimestralmente.
+Na verdade, quando o canal **stable** é atualizado,
+ele passa a apontar para a release **beta** mais recente.
 
-### Other channels
+### Outros canais
 
-We currently have one other channel, **main** (previously known as **master**).
-People who [contribute to Flutter][] use this channel.
+Atualmente existe mais um canal, o **main** (antes chamado de **master**).
+Quem [contribui com o Flutter][contribute to Flutter] usa esse canal.
 
-This channel is not as thoroughly tested as
-the **beta** and **stable** channels.
+Esse canal não é testado tão a fundo quanto
+os canais **beta** e **stable**.
 
-We do not recommend using this channel as
-it is more likely to contain serious regressions.
+Não é recomendado usar esse canal, porque
+ele tem mais chances de conter regressões graves.
 
-The latest documentation for the **main** branch
-is at: <https://main-api.flutter.dev>
+A documentação mais recente da branch **main**
+fica em: <https://main-api.flutter.dev>
 
 <a id="changing-channels" aria-hidden="true"></a>
 
-### Change channels
+### Troque de canal
 
-To view your current channel, use the following command:
+Para ver seu canal atual, use o seguinte comando:
 
 ```console
 $ flutter channel
 ```
 
-To change to another channel, use `flutter channel <channel-name>`.
-Once you've changed your channel, use `flutter upgrade`
-to download the latest Flutter SDK and dependent packages for that channel.
-For example:
+Para mudar para outro canal, use `flutter channel <channel-name>`.
+Depois de trocar de canal, use `flutter upgrade`
+para baixar o Flutter SDK mais recente e os packages dependentes desse canal.
+Por exemplo:
 
 ```console
 $ flutter channel beta
@@ -109,23 +110,23 @@ $ flutter upgrade
 
 <a id="switching-to-a-specific-flutter-version" aria-hidden="true"></a>
 
-## Switch to a specific Flutter version
+## Mude para uma versão específica do Flutter
 
-To switch to a specific Flutter version:
+Para mudar para uma versão específica do Flutter:
 
-1. Find your desired **Flutter version** on the [Flutter SDK archive][].
+1. Encontre a **versão do Flutter** desejada no [arquivo do Flutter SDK][Flutter SDK archive].
 
-1. Navigate to the Flutter SDK:
+1. Navegue até o Flutter SDK:
 
    ```console
    $ cd /path/to/flutter
    ```
 
    :::tip
-   You can find the Flutter SDK's path using `flutter doctor --verbose`.
+   Você pode encontrar o caminho do Flutter SDK usando `flutter doctor --verbose`.
    :::
 
-1. Use `git checkout` to switch to your desired **Flutter version**:
+1. Use `git checkout` para mudar para a **versão do Flutter** desejada:
 
    ```console
    $ git checkout <Flutter version>
@@ -133,77 +134,77 @@ To switch to a specific Flutter version:
 
 <a id="upgrading-packages" aria-hidden="true"></a>
 
-## Upgrade packages
+## Atualize os packages
 
-If you've modified your `pubspec.yaml` file, or you want to update
-only the packages that your app depends upon
-(instead of both the packages and Flutter itself),
-then use one of the `flutter pub` commands.
+Se você modificou seu arquivo `pubspec.yaml` ou quer atualizar
+apenas os packages dos quais seu app depende
+(em vez dos packages e do próprio Flutter),
+use um dos comandos `flutter pub`.
 
-To update to the _latest compatible versions_ of
-all the dependencies listed in the `pubspec.yaml` file,
-use the `upgrade` command:
+Para atualizar para as _versões compatíveis mais recentes_ de
+todas as dependências listadas no arquivo `pubspec.yaml`,
+use o comando `upgrade`:
 
 ```console
 $ flutter pub upgrade
 ```
 
-To update to the _latest possible version_ of
-all the dependencies listed in the `pubspec.yaml` file,
-use the `upgrade --major-versions` command:
+Para atualizar para a _versão mais recente possível_ de
+todas as dependências listadas no arquivo `pubspec.yaml`,
+use o comando `upgrade --major-versions`:
 
 ```console
 $ flutter pub upgrade --major-versions
 ```
 
-This also automatically update the constraints
-in the `pubspec.yaml` file.
+Isso também atualiza automaticamente as restrições de versão
+no arquivo `pubspec.yaml`.
 
-To identify out-of-date package dependencies and get advice
-on how to update them, use the `outdated` command. For details, see
-the Dart [`pub outdated` documentation]({{site.dart-site}}/tools/pub/cmd/pub-outdated).
+Para identificar dependências de packages desatualizadas e receber orientações
+sobre como atualizá-las, use o comando `outdated`. Para mais detalhes, consulte
+a [documentação do `pub outdated`]({{site.dart-site}}/tools/pub/cmd/pub-outdated).
 
 ```console
 $ flutter pub outdated
 ```
 
-## Troubleshooting
+## Solução de problemas
 
-### Windows: "Filename too long" error
+### Windows: erro "Filename too long"
 
-When running `flutter upgrade` on Windows,
-you might encounter an error like the following:
+Ao executar `flutter upgrade` no Windows,
+você pode encontrar um erro como o seguinte:
 
 ```text
 error: unable to create file ...: Filename too long
 ```
 
-This occurs because the path to a file in the Flutter SDK exceeds the default
-maximum path length limit on Windows.
+Isso acontece porque o caminho de um arquivo no Flutter SDK excede o limite
+padrão de comprimento máximo de caminho no Windows.
 
-To resolve this issue, consider installing the Flutter SDK
-at a shorter path. For example, install Flutter at
-`C:\Flutter` instead of something longer like
+Para resolver esse problema, considere instalar o Flutter SDK
+em um caminho mais curto. Por exemplo, instale o Flutter em
+`C:\Flutter` em vez de algo mais longo como
 `C:\Users\<user name>\Documents\flutter`.
 
-Otherwise, do the following:
+Caso contrário, faça o seguinte:
 
-1. Enable long paths support in Git:
+1. Ative o suporte a caminhos longos no Git:
 
    ```console
    $ git config --system core.longpaths true
    ```
    
-   If the command fails with a permission error,
-   try running your terminal as an administrator.
+   Se o comando falhar com um erro de permissão,
+   tente executar o terminal como administrador.
 
-1. Enable long paths in Windows:
+1. Ative caminhos longos no Windows:
    
    ```console
    New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
    ```
    
-   This command requires administrator privileges.
+   Esse comando exige privilégios de administrador.
 
 [Flutter SDK archive]: /install/archive
 [flutter-announce]: {{site.groups.flutter-announce}}
