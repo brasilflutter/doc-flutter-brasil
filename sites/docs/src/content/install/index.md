@@ -1,63 +1,64 @@
 ---
-title: Install and set up Flutter
-shortTitle: Install
+title: Instale e configure o Flutter
+shortTitle: Instalar
 description: >-
-  Download and install the Flutter SDK, configure your IDE and target
-  platforms, or update and troubleshoot an existing Flutter installation.
+  Baixe e instale o Flutter SDK, configure sua IDE e as plataformas de
+  destino, ou atualize e resolva problemas de uma instalação existente do Flutter.
+ia-translate: true
 ---
 
 <a id="get-started" aria-hidden="true"></a>
 
-## Choose an installation method {: #install}
+## Escolha um método de instalação {: #install}
 
-To start building multiplatform apps from a single codebase,
-choose how you'd like to install the Flutter SDK:
+Para começar a criar apps multiplataforma a partir de uma única base de código,
+escolha como você quer instalar o Flutter SDK:
 
 <div class="card-grid wide">
   <div class="card filled-card outlined-card">
     <div class="card-header">
       <span class="card-title">
         <Icon id="rocket_launch" filled="true" size="1.675rem" />
-        <span>Install with VS Code</span>
+        <span>Instalar com o VS Code</span>
       </span>
-      <span class="card-subtitle" style="margin-top: 0.1rem;">Recommended</span>
+      <span class="card-subtitle" style="margin-top: 0.1rem;">Recomendado</span>
     </div>
     <div class="card-content" style="flex-direction: column; align-items: flex-start; justify-content: space-between; flex: 1;">
-      <p>Use the Flutter extension in VS Code or another Code OSS-based editor
-        to download and install the Flutter SDK, add it to your
-        <code>PATH</code>, and validate your setup.</p>
-      <a class="filled-button" style="padding: 0.55rem 1.15rem; margin-top: 0.5rem;" href="/install/with-vs-code">Install with VS Code</a>
+      <p>Use a extensão do Flutter no VS Code ou em outro editor baseado no Code OSS
+        para baixar e instalar o Flutter SDK, adicioná-lo ao seu
+        <code>PATH</code> e validar sua configuração.</p>
+      <a class="filled-button" style="padding: 0.55rem 1.15rem; margin-top: 0.5rem;" href="/install/with-vs-code">Instalar com o VS Code</a>
     </div>
   </div>
   <div class="card outlined-card">
     <div class="card-header">
       <span class="card-title">
         <Icon id="download" filled="true" size="1.675rem" />
-        <span>Download and install manually</span>
+        <span>Baixar e instalar manualmente</span>
       </span>
-      <span class="card-subtitle" style="margin-top: 0.1rem;">Set up without VS Code</span>
+      <span class="card-subtitle" style="margin-top: 0.1rem;">Configurar sem o VS Code</span>
     </div>
     <div class="card-content" style="flex-direction: column; align-items: flex-start; justify-content: space-between; flex: 1;">
-      <p>Download the latest stable Flutter SDK bundle for your operating
-        system, extract the archive, and add Flutter to your
+      <p>Baixe o pacote mais recente do Flutter SDK estável para o seu sistema
+        operacional, extraia o arquivo e adicione o Flutter ao seu
         <code>PATH</code>.</p>
-      <a class="outlined-button" style="padding: 0.55rem 1.15rem; margin-top: 0.5rem;" href="/install/manual">Download SDK and install</a>
+      <a class="outlined-button" style="padding: 0.55rem 1.15rem; margin-top: 0.5rem;" href="/install/manual">Baixar o SDK e instalar</a>
     </div>
   </div>
 </div>
 
 <a id="editor" aria-hidden="true"></a>
 
-## Set up target platforms and editors {: #target-platform}
+## Configure as plataformas de destino e os editores {: #target-platform}
 
-After you install the Flutter SDK,
-set up the tools for your target platforms and configure your preferred editor:
+Depois de instalar o Flutter SDK,
+configure as ferramentas para suas plataformas de destino e o seu editor preferido:
 
-- **Target platforms:** Set up development tools for [Android][], [iOS][],
-  [web][] (requires only a supported browser), [Windows][], [macOS][], or
+- **Plataformas de destino:** configure as ferramentas de desenvolvimento para [Android][], [iOS][],
+  [web][] (requer apenas um navegador compatível), [Windows][], [macOS][] ou
   [Linux][].
-- **IDEs and editors:** Configure Flutter support in [VS Code][] or
-  [Android Studio and IntelliJ][].
+- **IDEs e editores:** configure o suporte ao Flutter no [VS Code][] ou no
+  [Android Studio e IntelliJ][Android Studio and IntelliJ].
 
 [Android]: /platform-integration/android/setup
 [iOS]: /platform-integration/ios/setup
@@ -74,36 +75,36 @@ set up the tools for your target platforms and configure your preferred editor:
 
 <a id="uninstall" aria-hidden="true"></a>
 
-## Manage or troubleshoot your installation {: #manage}
+## Gerencie ou resolva problemas da sua instalação {: #manage}
 
-If you already have Flutter installed,
-use the following guides to update, configure,
-troubleshoot, or remove your installation:
+Se você já tem o Flutter instalado,
+use os guias a seguir para atualizar, configurar,
+resolver problemas ou remover sua instalação:
 
 <div class="card-grid">
-  <Card title="Upgrade Flutter" link="/install/upgrade" outlined="true">
-    Upgrade the Flutter SDK to the latest release or switch release channels.
+  <Card title="Atualizar o Flutter" link="/install/upgrade" outlined="true">
+    Atualize o Flutter SDK para a versão mais recente ou troque de canal de release.
   </Card>
-  <Card title="SDK archive" link="/install/archive" outlined="true">
-    Download and install previous releases of the Flutter SDK.
+  <Card title="Arquivo do SDK" link="/install/archive" outlined="true">
+    Baixe e instale versões anteriores do Flutter SDK.
   </Card>
-  <Card title="Add Flutter to PATH" link="/install/add-to-path" outlined="true">
-    Configure your system's PATH environment variable to run
-    Flutter on the command line.
+  <Card title="Adicionar o Flutter ao PATH" link="/install/add-to-path" outlined="true">
+    Configure a variável de ambiente PATH do seu sistema para executar
+    o Flutter na linha de comando.
   </Card>
-  <Card title="Troubleshoot SDK" link="/install/troubleshoot" outlined="true">
-    Resolve common issues with your Flutter development environment.
+  <Card title="Resolver problemas do SDK" link="/install/troubleshoot" outlined="true">
+    Resolva problemas comuns do seu ambiente de desenvolvimento Flutter.
   </Card>
-  <Card title="Uninstall SDK" link="/install/uninstall" outlined="true">
-    Remove the Flutter SDK and related configuration files from your system.
+  <Card title="Desinstalar o SDK" link="/install/uninstall" outlined="true">
+    Remova o Flutter SDK e os arquivos de configuração relacionados do seu sistema.
   </Card>
 </div>
 
 <a id="next-steps" aria-hidden="true"></a>
 
-:::tip Ready to start building?
-Once your environment is set up,
-follow the [Flutter learning pathway][] to build your first Flutter app.
+:::tip Pronto para começar a criar?
+Depois de configurar seu ambiente,
+siga a [trilha de aprendizado do Flutter][Flutter learning pathway] para criar seu primeiro app Flutter.
 :::
 
 [Flutter learning pathway]: /learn/pathway

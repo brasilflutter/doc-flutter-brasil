@@ -1,21 +1,22 @@
 ---
-title: Install Flutter with VS Code
-shortTitle: Install with VS Code
-breadcrumb: With VS Code
+title: Instale o Flutter com o VS Code
+shortTitle: Instalar com o VS Code
+breadcrumb: Com o VS Code
 description: >-
-  Learn how to use VS Code or another Code OSS-based editor to quickly
-  install and set up the Flutter SDK.
+  Aprenda a usar o VS Code ou outro editor baseado no Code OSS para
+  instalar e configurar o Flutter SDK rapidamente.
 showBanner: false
+ia-translate: true
 ---
 
 {% render "docs/install/quick.md" site: site %}
 
 <a id="test-drive" aria-hidden="true"></a>
 
-## Continue your Flutter journey {: #next-steps}
+## Continue sua jornada com Flutter {: #next-steps}
 
-Now that you've successfully installed Flutter,
-set up development for a target platform or start learning
-to continue your journey with Flutter.
+Agora que você instalou o Flutter com sucesso,
+configure o desenvolvimento para uma plataforma de destino ou comece a aprender
+para continuar sua jornada com Flutter.
 
 {% render "docs/get-started/setup-next-steps.html", site: site %}

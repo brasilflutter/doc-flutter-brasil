@@ -1,24 +1,25 @@
 ---
-title: Quick install
-breadcrumb: Install
-description: This pages walks you through the quick install process for Flutter.
+title: Instalação rápida
+breadcrumb: Instalar
+description: Esta página mostra o passo a passo da instalação rápida do Flutter.
 layout: tutorial
+ia-translate: true
 ---
 
 
 {% render "docs/install/quick.md" site: site %}
 
-## Start learning!
+## Comece a aprender!
 
-Installing the Flutter SDK automatically installs Dart as well. You can now start building Flutter apps!
+Instalar o Flutter SDK também instala o Dart automaticamente. Agora você já pode começar a criar apps Flutter!
 
-<Card title="Optional: Start with Dart" additional-classes="display-card">
+<Card title="Opcional: comece pelo Dart" additional-classes="display-card">
   <p>
 
-If you're new to programming, start with the Dart Getting Started tutorial to learn the fundamentals of the Dart programming language. This tutorial was designed to lead into the Flutter Getting Started tutorial.
+Se você é novo em programação, comece pelo tutorial de primeiros passos do Dart para aprender os fundamentos da linguagem Dart. Esse tutorial foi pensado para levar ao tutorial de primeiros passos do Flutter.
 
   </p>
-  <a href="https://dart.dev/learn/tutorial" class="outlined-button">Start learning</a>
+  <a href="https://dart.dev/learn/tutorial" class="outlined-button">Começar a aprender</a>
 </Card>
 
-If you're already familiar with programming, you can skip the Dart tutorial and jump straight into the first Flutter lesson.
+Se você já tem familiaridade com programação, pode pular o tutorial de Dart e ir direto para a primeira lição de Flutter.

@@ -1,87 +1,88 @@
 ---
-title: Flutter learning pathway
-shortTitle: Learning pathway
+title: Trilha de aprendizado do Flutter
+shortTitle: Trilha de aprendizado
 description: >-
-  This learning pathway walks you through the basics of both Dart and Flutter.
+  Esta trilha de aprendizado apresenta o básico de Dart e de Flutter.
 layout: tutorial
+ia-translate: true
 ---
 
 <div class="video-wrapper">
-  <YouTubeEmbed id="2kjp9yAKpT4" title="Welcome to the Dart and Flutter Getting Started tutorial" fullWidth="true" />
+  <YouTubeEmbed id="2kjp9yAKpT4" title="Boas-vindas ao tutorial Primeiros passos com Dart e Flutter" fullWidth="true" />
 </div>
 
-Welcome to the Dart and Flutter Getting Started pathway.
-In it, you'll set up your development environment,
-learn how to write Dart code, and
-build three small Flutter apps step-by-step.
-This learning pathway spans
-the Dart and Flutter websites, YouTube, and your IDE.
-By the end, you'll have a solid foundation in both Dart and Flutter.
+Boas-vindas à trilha Primeiros passos com Dart e Flutter.
+Nela, você vai configurar seu ambiente de desenvolvimento,
+aprender a escrever código Dart e
+criar três pequenos apps Flutter passo a passo.
+Esta trilha de aprendizado passa pelos
+sites do Dart e do Flutter, pelo YouTube e pela sua IDE.
+No final, você terá uma base sólida tanto em Dart quanto em Flutter.
 
 <Stepper level="3" collapsible="false" actions="none">
 
-### Set up your development environment
+### Configure seu ambiente de desenvolvimento
 
-Before you can start building Flutter apps,
-you'll need to set up your development environment.
-Follow the installation guide to get Flutter and
-all required dependencies installed on your machine.
+Antes de começar a criar apps Flutter,
+você precisa configurar seu ambiente de desenvolvimento.
+Siga o guia de instalação para instalar o Flutter e
+todas as dependências necessárias na sua máquina.
 
-[Get Started →](/learn/pathway/quick-install)
+[Começar →](/learn/pathway/quick-install)
 
-### Complete the Dart Getting Started tutorial
+### Conclua o tutorial Primeiros passos com Dart
 
-Flutter uses the Dart programming language.
-If you're new to Dart, complete this interactive tutorial to
-learn the fundamentals—variables, functions, classes, and more.
+O Flutter usa a linguagem de programação Dart.
+Se você é novo em Dart, conclua este tutorial interativo para
+aprender os fundamentos: variáveis, funções, classes e muito mais.
 
-If you're in a hurry and already familiar with
-modern, object-oriented programming languages,
-you can safely skip this step.
+Se você está com pressa e já conhece
+linguagens de programação modernas orientadas a objetos,
+pode pular esta etapa sem problemas.
 
 <a href="{{site.dart-site}}/learn/tutorial" target="_blank">
-Dart Getting Started tutorial →
+Tutorial Primeiros passos com Dart →
 </a>
 
-### Complete the Flutter Getting Started tutorial
+### Conclua o tutorial Primeiros passos com Flutter
 
-Now that you have Dart skills under your belt, dive into Flutter!
-This hands-on tutorial walks you through
-building three small Flutter apps step-by-step.
+Agora que você já domina o Dart, mergulhe no Flutter!
+Este tutorial prático mostra, passo a passo,
+como criar três pequenos apps Flutter.
 
-[Flutter Getting Started tutorial →](/learn/pathway/tutorial)
+[Tutorial Primeiros passos com Flutter →](/learn/pathway/tutorial)
 
-### Understand how Flutter works
+### Entenda como o Flutter funciona
 
-Deepen your understanding of how Flutter works
-under the hood by watching this video series.
-Learn about the widget tree, rendering pipeline, and what makes Flutter unique.
-This series provides the knowledge you need to know to
-take full advantage of the framework.
+Aprofunde seu entendimento sobre como o Flutter funciona
+por baixo dos panos assistindo a esta série de vídeos.
+Aprenda sobre a árvore de widgets, o pipeline de renderização e o que torna o Flutter único.
+Esta série traz o conhecimento de que você precisa para
+aproveitar o framework ao máximo.
 
 
-[Watch: How Flutter Works →](/learn/pathway/how-flutter-works)
+[Assista: Como o Flutter funciona →](/learn/pathway/how-flutter-works)
 
 </Stepper>
 
-## Ready to start?
+## Pronto para começar?
 
-Get started by installing Flutter and setting up your development environment:
+Comece instalando o Flutter e configurando seu ambiente de desenvolvimento:
 
-[Start with Step 1: Quick Install →](/learn/pathway/quick-install)
+[Comece pela etapa 1: Instalação rápida →](/learn/pathway/quick-install)
 
-<img src="/assets/images/docs/learn/beginner.jpg" alt="Dash with question marks around her; looking curious." class="image-wrapper learn-image-wrapper">
+<img src="/assets/images/docs/learn/beginner.jpg" alt="Dash cercada de pontos de interrogação, com ar curioso." class="image-wrapper learn-image-wrapper">
 
 
 
 <Card title="Feedback" additional-classes="display-card">
 
-We're always looking for ways to improve the Getting Started experience.
-Moving forward, we plan to add more resources to this section of the website.
-We'd love to know what you think and what you'd like to see.
+Estamos sempre buscando maneiras de melhorar a experiência de primeiros passos.
+Daqui para frente, planejamos adicionar mais recursos a esta seção do site.
+Adoraríamos saber o que você acha e o que gostaria de ver.
 
-Please take a moment to share your feedback with us.
+Reserve um momento para compartilhar seu feedback com a gente.
 
-<a href="https://google.qualtrics.com/jfe/form/SV_6A9KxXR7XmMrNsy?page='index'" class="outlined-button">Leave feedback</a>
+<a href="https://google.qualtrics.com/jfe/form/SV_6A9KxXR7XmMrNsy?page='index'" class="outlined-button">Deixar feedback</a>
 
 </Card>

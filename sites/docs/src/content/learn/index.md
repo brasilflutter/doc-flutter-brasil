@@ -1,41 +1,42 @@
 ---
-title: Learn Flutter
-breadcrumb: Learn
-description: Find everything you need to start building Flutter apps.
+title: Aprenda Flutter
+breadcrumb: Aprender
+description: Encontre tudo o que você precisa para começar a criar apps Flutter.
 showToc: false
+ia-translate: true
 ---
 
 <img src='/assets/images/docs/learn/learn-flutter-anyway.png' 
-    alt="An image of Dash in front of a blackboard." class="image-wrapper learn-image-wrapper">
+    alt="Uma imagem do Dash na frente de um quadro-negro." class="image-wrapper learn-image-wrapper">
 
-## For beginners
+## Para iniciantes
 
-Start here for an overview of how to get set up, build Flutter apps, write Dart code, and understand how Flutter works.
+Comece aqui para ter uma visão geral de como configurar o ambiente, criar apps Flutter, escrever código Dart e entender como o Flutter funciona.
 
-<Card title="The Dart and Flutter Getting Started learning pathway" additional-classes="display-card">
+<Card title="Trilha de aprendizado Primeiros passos com Dart e Flutter" additional-classes="display-card">
   <p>
 
-    This is the **recommended** set of resources to start learning Flutter! Learn how to write Dart code in the first tutorial, then build a series of apps using Flutter in the second. You'll learn the essential best practices for Flutter app development, app architecture, fetching data from the network, and more. Great for beginners with minimal programming experience.
+    Este é o conjunto de recursos **recomendado** para começar a aprender Flutter! Aprenda a escrever código Dart no primeiro tutorial e, depois, crie uma série de apps com Flutter no segundo. Você vai aprender as boas práticas essenciais de desenvolvimento de apps Flutter, arquitetura de apps, como buscar dados da rede e muito mais. Ideal para iniciantes com pouca experiência em programação.
   </p>
-  <a href="/learn/pathway" class="outlined-button">Start learning</a>
+  <a href="/learn/pathway" class="outlined-button">Começar a aprender</a>
 </Card>
 
-## For experienced developers
+## Para desenvolvedores experientes
 
-Dive deeper into more specific topics in Flutter development with sample code, YouTube videos, codelabs, and more.
+Aprofunde-se em tópicos mais específicos do desenvolvimento Flutter com código de exemplo, vídeos no YouTube, codelabs e muito mais.
 
-<Card title="Learning resources index"  additional-classes="display-card">
+<Card title="Índice de recursos de aprendizado"  additional-classes="display-card">
   <p>
-    Find sample code, YouTube videos, codelabs, and more written by the experts on the Flutter team at Google. This index contains the resources you need to learn any aspect of Flutter.
+    Encontre código de exemplo, vídeos no YouTube, codelabs e muito mais, escritos por especialistas da equipe do Flutter no Google. Este índice reúne os recursos de que você precisa para aprender qualquer aspecto do Flutter.
   </p>
-  <a href="/reference/learning-resources" class="outlined-button">Explore all resources</a>
+  <a href="/reference/learning-resources" class="outlined-button">Explorar todos os recursos</a>
 </Card>
 
-<Card title="App Architecture case study"  additional-classes="display-card">
+<Card title="Estudo de caso de arquitetura de apps"  additional-classes="display-card">
   <p>
-    Learn the recommended app architecture to build a Flutter app. This guide contains everything you need to know to understand and implement MVVM architecture in a Flutter app.
+    Aprenda a arquitetura de app recomendada para criar um app Flutter. Este guia contém tudo o que você precisa saber para entender e implementar a arquitetura MVVM em um app Flutter.
   </p>
-  <a href="/app-architecture" class="outlined-button">Start learning</a>
+  <a href="/app-architecture" class="outlined-button">Começar a aprender</a>
 </Card>
 
 
