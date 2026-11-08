@@ -4,6 +4,8 @@
 > Para mudar este cabeçalho, edite `tool/traducao/todo_cabecalho.md`.
 
 Uma página conta como traduzida quando o frontmatter tem `ia-translate: true`.
+Parciais em `sites/docs/src/_includes/` (sem frontmatter) usam
+`<!-- ia-translate: true -->` na primeira linha.
 Upstream: [flutter/website](https://github.com/flutter/website). Para
 sincronizar: `git fetch upstream main && git merge upstream/main`.
 

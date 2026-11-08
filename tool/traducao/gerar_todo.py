@@ -2,7 +2,8 @@
 """Gera TODO-TRADUCAO.md com o status de tradução das páginas de docs.
 
 Uma página é considerada traduzida quando o frontmatter contém
-`ia-translate: true`. Execute a partir da raiz do repositório:
+`ia-translate: true`. Parciais em `_includes/` (sem frontmatter) são
+marcados com `<!-- ia-translate: true -->` na primeira linha. Execute a partir da raiz do repositório:
 
     python3 tool/traducao/gerar_todo.py
 """
@@ -12,6 +13,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT = ROOT / 'sites' / 'docs' / 'src' / 'content'
+INCLUDES = ROOT / 'sites' / 'docs' / 'src' / '_includes'
 SAIDA = ROOT / 'TODO-TRADUCAO.md'
 CABECALHO = ROOT / 'tool' / 'traducao' / 'todo_cabecalho.md'
 
@@ -28,13 +30,25 @@ def frontmatter(texto: str) -> str:
     return m.group(1) if m else ''
 
 
+def traduzida(texto: str) -> bool:
+    if re.search(r'^ia-translate:\s*true\s*$', frontmatter(texto), re.M):
+        return True
+    return texto.lstrip().startswith('<!-- ia-translate: true -->')
+
+
+def arquivos():
+    for md in sorted(CONTENT.rglob('*.md')):
+        yield md.relative_to(CONTENT).as_posix(), md
+    for md in sorted(INCLUDES.rglob('*.md')):
+        yield '_includes/' + md.relative_to(INCLUDES).as_posix(), md
+
+
 def main() -> None:
     secoes = defaultdict(list)
     total = traduzidas = linhas_pendentes = 0
-    for md in sorted(CONTENT.rglob('*.md')):
-        rel = md.relative_to(CONTENT).as_posix()
+    for rel, md in arquivos():
         texto = md.read_text(encoding='utf-8')
-        ok = re.search(r'^ia-translate:\s*true\s*$', frontmatter(texto), re.M)
+        ok = traduzida(texto)
         n = texto.count('\n')
         total += 1
         if ok:

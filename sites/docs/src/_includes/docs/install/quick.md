@@ -1,39 +1,41 @@
-Learn how to use [Visual Studio Code (VS Code)][VS Code] or any compatible
-Code OSS-based editor to quickly install and set up your
-Flutter development environment.
+<!-- ia-translate: true -->
 
-If you prefer a different editor or IDE,
-you can [install Flutter manually][].
+Aprenda a usar o [Visual Studio Code (VS Code)][VS Code] ou qualquer editor compatível
+baseado no Code OSS para instalar e configurar rapidamente seu
+ambiente de desenvolvimento Flutter.
+
+Se você prefere outro editor ou IDE,
+pode [instalar o Flutter manualmente][install Flutter manually].
 
 [VS Code]: https://code.visualstudio.com
 [install Flutter manually]: /install/manual
 
-## Confirm your development platform {: #dev-platform}
+## Confirme sua plataforma de desenvolvimento {: #dev-platform}
 
-These instructions are configured for **Windows**{:.selected-os-text}.
-If you're using a different operating system,
-select it from one of the following:
+Estas instruções estão configuradas para **Windows**{:.selected-os-text}.
+Se você usa outro sistema operacional,
+selecione-o entre as opções a seguir:
 
 <OSSelector />
 
-## Download prerequisite software {: #download-prerequisites}
+## Baixe os softwares necessários {: #download-prerequisites}
 
-For the smoothest Flutter setup,
-first install the following tools.
+Para uma configuração do Flutter mais tranquila,
+instale primeiro as ferramentas a seguir.
 
- 1. <h3>Set up Linux support</h3>
+ 1. <h3>Configure o suporte a Linux</h3>
 
-    If you haven't set up Linux support on your Chromebook before,
-    [Turn on Linux support][chromeos-linux].
+    Se você ainda não configurou o suporte a Linux no seu Chromebook,
+    [ative o suporte a Linux][chromeos-linux].
 
-    If you've already turned on Linux support,
-    ensure it's up to date following the
-    [Fix problems with Linux][chromeos-linux-update] instructions.
+    Se você já ativou o suporte a Linux,
+    confira se ele está atualizado seguindo as instruções de
+    [Corrigir problemas com o Linux][chromeos-linux-update].
 
- 1. <h3>Download and install prerequisite packages</h3>
+ 1. <h3>Baixe e instale os pacotes necessários</h3>
 
-    Using `apt-get` or your preferred installation mechanism,
-    install the latest versions of the following packages:
+    Usando o `apt-get` ou o mecanismo de instalação de sua preferência,
+    instale as versões mais recentes dos seguintes pacotes:
 
     - `curl`
     - `git`
@@ -42,80 +44,80 @@ first install the following tools.
     - `zip`
     - `libglu1-mesa`
 
-    If you want to use `apt-get`,
-    install these packages using the following commands:
+    Se você quiser usar o `apt-get`,
+    instale esses pacotes com os seguintes comandos:
 
     ```console
     $ sudo apt-get update -y && sudo apt-get upgrade -y
     $ sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
     ```
 
- 1. <h3>Download and install Visual Studio Code</h3>
+ 1. <h3>Baixe e instale o Visual Studio Code</h3>
 
-    To quickly install Flutter, then edit and debug your apps,
-    [install and set up Visual Studio Code][vscode-install]
-    (or your preferred Code OSS-based editor).
+    Para instalar o Flutter rapidamente e depois editar e depurar seus apps,
+    [instale e configure o Visual Studio Code][vscode-install]
+    (ou o editor baseado no Code OSS de sua preferência).
 
 {: .steps .chromeos-only}
 
 <div class="macos-only">
 
 :::warning
-**Note for Intel Macs:**
-Flutter is deprecating support for Intel-based Macs (x64).
-Future Flutter releases will require Apple Silicon.
-For details, check out the
-[macOS Intel deprecation strategy](https://docs.google.com/document/d/1ty3js_Eg2sNIbDuyYS_aV7h4jYdx1hEpX_mV135gO4s/edit?tab=t.0#heading=h.cx7d8y57ce6p).
+**Observação para Macs com Intel:**
+O Flutter está descontinuando o suporte a Macs com processador Intel (x64).
+Versões futuras do Flutter vão exigir Apple Silicon.
+Para mais detalhes, confira a
+[estratégia de descontinuação do macOS Intel](https://docs.google.com/document/d/1ty3js_Eg2sNIbDuyYS_aV7h4jYdx1hEpX_mV135gO4s/edit?tab=t.0#heading=h.cx7d8y57ce6p).
 :::
 
 </div>
 
- 1. <h3>Install the Xcode command-line tools</h3>
+ 1. <h3>Instale as ferramentas de linha de comando do Xcode</h3>
 
-    **If you already have Git installed,**
-    you can skip to the next step: Download and install Visual Studio Code.
+    **Se você já tem o Git instalado,**
+    pode pular para a próxima etapa: Baixe e instale o Visual Studio Code.
 
-    Download the Xcode command-line tools to get access to
-    the command-line tools that Flutter relies on, including Git.
-    This is also required when you target your builds for iOS or macOS.
+    Baixe as ferramentas de linha de comando do Xcode para ter acesso às
+    ferramentas de linha de comando das quais o Flutter depende, incluindo o Git.
+    Elas também são necessárias quando você gera builds para iOS ou macOS.
 
-    To download the tools, run the following command in your preferred terminal:
+    Para baixar as ferramentas, execute o seguinte comando no terminal de sua preferência:
 
     ```console
     $ xcode-select --install
     ```
 
-    If you haven't installed the tools already,
-    a dialog should open that confirms you'd like to install them.
-    Click **Install**, then once the installation is complete, click **Done**.
+    Se você ainda não instalou as ferramentas,
+    deve abrir uma caixa de diálogo pedindo para confirmar a instalação.
+    Clique em **Install** e, quando a instalação terminar, clique em **Done**.
 
- 1. <h3>Download and install Visual Studio Code</h3>
+ 1. <h3>Baixe e instale o Visual Studio Code</h3>
 
-    To quickly install Flutter, then edit and debug your apps,
-    [install and set up Visual Studio Code][vscode-install]
-    (or your preferred Code OSS-based editor).
+    Para instalar o Flutter rapidamente e depois editar e depurar seus apps,
+    [instale e configure o Visual Studio Code][vscode-install]
+    (ou o editor baseado no Code OSS de sua preferência).
 
 {: .steps .macos-only}
 
- 1. <h3>Install Git for Windows</h3>
+ 1. <h3>Instale o Git for Windows</h3>
 
-    Download and install the latest version of [Git for Windows][].
+    Baixe e instale a versão mais recente do [Git for Windows][].
 
-    For help installing or troubleshooting Git,
-    reference the [Git documentation][git-install].
+    Para obter ajuda com a instalação ou resolver problemas do Git,
+    consulte a [documentação do Git][git-install].
 
- 1. <h3>Download and install Visual Studio Code</h3>
+ 1. <h3>Baixe e instale o Visual Studio Code</h3>
 
-    To quickly install Flutter, then edit and debug your apps,
-    [install and set up Visual Studio Code][vscode-install]
-    (or your preferred Code OSS-based editor).
+    Para instalar o Flutter rapidamente e depois editar e depurar seus apps,
+    [instale e configure o Visual Studio Code][vscode-install]
+    (ou o editor baseado no Code OSS de sua preferência).
 
 {: .steps .windows-only}
 
- 1. <h3>Download and install prerequisite packages</h3>
+ 1. <h3>Baixe e instale os pacotes necessários</h3>
 
-    Using your preferred package manager or mechanism,
-    install the latest versions of the following packages:
+    Usando o gerenciador de pacotes ou o mecanismo de sua preferência,
+    instale as versões mais recentes dos seguintes pacotes:
 
     - `curl`
     - `git`
@@ -124,19 +126,19 @@ For details, check out the
     - `zip`
     - `libglu1-mesa`
 
-    On Debian-based distros with `apt-get`, such as Ubuntu,
-    install these packages using the following commands:
+    Em distribuições baseadas em Debian com `apt-get`, como o Ubuntu,
+    instale esses pacotes com os seguintes comandos:
 
     ```console
     $ sudo apt-get update -y && sudo apt-get upgrade -y
     $ sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
     ```
 
- 1. <h3>Download and install Visual Studio Code</h3>
+ 1. <h3>Baixe e instale o Visual Studio Code</h3>
 
-    To quickly install Flutter, then edit and debug your apps,
-    [install and set up Visual Studio Code][vscode-install]
-    (or your preferred Code OSS-based editor).
+    Para instalar o Flutter rapidamente e depois editar e depurar seus apps,
+    [instale e configure o Visual Studio Code][vscode-install]
+    (ou o editor baseado no Code OSS de sua preferência).
 
 {: .steps .linux-only}
 
@@ -148,81 +150,81 @@ For details, check out the
 
 <a id="install-flutter" aria-hidden="true"></a>
 
-## Install and set up Flutter {: #install}
+## Instale e configure o Flutter {: #install}
 
-Now that you've installed the prerequisites,
-use VS Code to download and set up the Flutter SDK:
+Agora que você instalou os pré-requisitos,
+use o VS Code para baixar e configurar o Flutter SDK:
 
- 1. <h3>Install the Flutter extension</h3>
+ 1. <h3>Instale a extensão do Flutter</h3>
 
-    Open VS Code, then install the
-    [Flutter extension from the VS Code Marketplace][flutter-vscode]
-    or press <kbd class="special-key">Cmd/Ctrl</kbd> +
-    <kbd>Shift</kbd> + <kbd>X</kbd> to open the **Extensions** view,
-    search for `Flutter`, and click **Install**.
-    Installing the Flutter extension also installs the Dart extension.
+    Abra o VS Code e instale a
+    [extensão do Flutter pelo VS Code Marketplace][flutter-vscode]
+    ou pressione <kbd class="special-key">Cmd/Ctrl</kbd> +
+    <kbd>Shift</kbd> + <kbd>X</kbd> para abrir a visualização **Extensions**,
+    pesquise por `Flutter` e clique em **Install**.
+    Instalar a extensão do Flutter também instala a extensão do Dart.
 
- 1. <h3>Install Flutter with VS Code</h3>
+ 1. <h3>Instale o Flutter com o VS Code</h3>
 
-    1. Open the Command Palette in VS Code.
+    1. Abra a Command Palette (paleta de comandos) no VS Code.
 
-       Go to **View** <span aria-label="and then">></span> **Command Palette**
-       or press <kbd class="special-key">Cmd/Ctrl</kbd> +
+       Vá em **View** <span aria-label="e depois">></span> **Command Palette**
+       ou pressione <kbd class="special-key">Cmd/Ctrl</kbd> +
        <kbd>Shift</kbd> + <kbd>P</kbd>.
 
-    1. In the Command Palette, type `flutter` and select
+    1. Na Command Palette, digite `flutter` e selecione
        **Flutter: New Project**.
 
-    1. VS Code prompts you to locate the Flutter SDK on your computer.
-       Select **Download SDK**.
+    1. O VS Code pede que você localize o Flutter SDK no seu computador.
+       Selecione **Download SDK**.
 
-    1. When the **Select Folder for Flutter SDK** dialog displays,
-       choose where you want to install Flutter and click **Clone Flutter**.
+    1. Quando a caixa de diálogo **Select Folder for Flutter SDK** aparecer,
+       escolha onde você quer instalar o Flutter e clique em **Clone Flutter**.
 
-       While downloading Flutter, VS Code displays this pop-up notification:
+       Enquanto baixa o Flutter, o VS Code exibe esta notificação:
 
        ```console
        Downloading the Flutter SDK. This may take a few minutes.
        ```
 
-       This download takes a few minutes.
-       If you suspect that the download has hung, click **Cancel** then
-       start the installation again.
+       Esse download leva alguns minutos.
+       Se você suspeitar que o download travou, clique em **Cancel** e
+       comece a instalação de novo.
 
-    1. Once the download finishes, click **Add SDK to PATH**.
+    1. Quando o download terminar, clique em **Add SDK to PATH**.
 
-       When successful, a notification displays:
+       Se der certo, uma notificação é exibida:
 
        ```console
        The Flutter SDK was added to your PATH
        ```
 
-    1. VS Code might display a Google Analytics notice.
-       If you agree, click **OK**.
+    1. O VS Code pode exibir um aviso sobre o Google Analytics.
+       Se você concordar, clique em **OK**.
 
-    1. To ensure that Flutter is available in all terminals:
+    1. Para garantir que o Flutter esteja disponível em todos os terminais:
 
-       1. Close, then reopen all terminal windows.
-       1. Restart VS Code.
+       1. Feche e abra de novo todas as janelas de terminal.
+       1. Reinicie o VS Code.
 
        {:type="a"}
 
- 1. <h3>Validate your setup</h3>
+ 1. <h3>Valide sua configuração</h3>
 
-    To verify your installation, open the Command Palette
+    Para verificar sua instalação, abra a Command Palette
     (<kbd class="special-key">Cmd/Ctrl</kbd> +
-    <kbd>Shift</kbd> + <kbd>P</kbd>) and select
-    **Flutter: Run Flutter Doctor**, or run `flutter doctor`
-    in your terminal.
+    <kbd>Shift</kbd> + <kbd>P</kbd>) e selecione
+    **Flutter: Run Flutter Doctor**, ou execute `flutter doctor`
+    no seu terminal.
 
-    In the output, you only need checkmarks (`[✓]`) for **Flutter**
-    and the platforms you plan to target
-    (for example, **Chrome** lets you build for the web immediately).
-    You can safely ignore `[!]` or `[✗]` warnings for tools like
-    Android Studio or Xcode until you're ready to target those platforms.
+    Na saída, você só precisa de marcações de sucesso (`[✓]`) para o **Flutter**
+    e para as plataformas que pretende usar como destino
+    (por exemplo, o **Chrome** permite criar para a web imediatamente).
+    Você pode ignorar com segurança os avisos `[!]` ou `[✗]` de ferramentas como
+    Android Studio ou Xcode até estar pronto para usar essas plataformas.
 
-    If you encounter any issues during installation,
-    consult [Flutter installation troubleshooting][troubleshoot].
+    Se encontrar algum problema durante a instalação,
+    consulte [Solução de problemas na instalação do Flutter][troubleshoot].
 
 {:.steps}
 

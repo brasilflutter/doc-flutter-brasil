@@ -1,18 +1,19 @@
 ---
-title: Add Flutter to your PATH
-shortTitle: Add to PATH
+title: Adicione o Flutter ao seu PATH
+shortTitle: Adicionar ao PATH
 description: >-
-  Learn how to add Flutter to your PATH after downloading the Flutter SDK.
+  Aprenda a adicionar o Flutter ao seu PATH depois de baixar o Flutter SDK.
+ia-translate: true
 ---
 
-Learn how to add Flutter to your `PATH` environment variable
-after downloading the SDK.
-Adding Flutter to your `PATH` allows you to use the
-`flutter` and `dart` command-line tools in terminals and IDEs.
+Aprenda a adicionar o Flutter à variável de ambiente `PATH`
+depois de baixar o SDK.
+Adicionar o Flutter ao seu `PATH` permite usar as
+ferramentas de linha de comando `flutter` e `dart` em terminais e IDEs.
 
 :::tip
-If you haven't downloaded Flutter yet,
-follow [Install Flutter with VS Code][] instead.
+Se você ainda não baixou o Flutter,
+siga o guia [Instale o Flutter com o VS Code][Install Flutter with VS Code].
 :::
 
 <div class="card-grid">
@@ -21,7 +22,7 @@ follow [Install Flutter with VS Code][] instead.
       <span class="card-title">Windows</span>
     </div>
     <div class="card-content">
-      <p>Add Flutter to your path on Windows.</p>
+      <p>Adicione o Flutter ao path no Windows.</p>
     </div>
   </a>
   <a class="card outlined-card" href="#macos">
@@ -29,7 +30,7 @@ follow [Install Flutter with VS Code][] instead.
       <span class="card-title">macOS</span>
     </div>
     <div class="card-content">
-      <p>Add Flutter to your path on macOS.</p>
+      <p>Adicione o Flutter ao path no macOS.</p>
     </div>
   </a>
   <a class="card outlined-card" href="#linux">
@@ -37,7 +38,7 @@ follow [Install Flutter with VS Code][] instead.
       <span class="card-title">Linux</span>
     </div>
     <div class="card-content">
-      <p>Add Flutter to your path on Linux.</p>
+      <p>Adicione o Flutter ao path no Linux.</p>
     </div>
   </a>
   <a class="card outlined-card" href="#chromeos">
@@ -45,7 +46,7 @@ follow [Install Flutter with VS Code][] instead.
       <span class="card-title">ChromeOS</span>
     </div>
     <div class="card-content">
-      <p>Add Flutter to your path on ChromeOS.</p>
+      <p>Adicione o Flutter ao path no ChromeOS.</p>
     </div>
   </a>
 </div>
@@ -54,28 +55,28 @@ follow [Install Flutter with VS Code][] instead.
 
 ## Windows
 
-To run `flutter` and `dart` commands in a terminal on Windows,
-add the Flutter SDK's `bin` directory to the `Path` environment variable.
+Para executar os comandos `flutter` e `dart` em um terminal no Windows,
+adicione o diretório `bin` do Flutter SDK à variável de ambiente `Path`.
 
 {% render "docs/install/path/windows.md" %}
 
 ## macOS
 
-To run `flutter` and `dart` commands in a terminal on macOS,
-add the Flutter SDK's `bin` directory to the `PATH` environment variable.
+Para executar os comandos `flutter` e `dart` em um terminal no macOS,
+adicione o diretório `bin` do Flutter SDK à variável de ambiente `PATH`.
 
 {% render "docs/install/path/macos.md" %}
 
 ## Linux
 
-To run `flutter` and `dart` commands in a terminal on Linux,
-add the Flutter SDK's `bin` directory to the `PATH` environment variable.
+Para executar os comandos `flutter` e `dart` em um terminal no Linux,
+adicione o diretório `bin` do Flutter SDK à variável de ambiente `PATH`.
 
 {% render "docs/install/path/linux.md" %}
 
 ## ChromeOS
 
-To run `flutter` and `dart` commands in a terminal on chromeOS,
-add the Flutter SDK's `bin` directory to the `PATH` environment variable.
+Para executar os comandos `flutter` e `dart` em um terminal no chromeOS,
+adicione o diretório `bin` do Flutter SDK à variável de ambiente `PATH`.
 
 {% render "docs/install/path/chromeos.md" %}
