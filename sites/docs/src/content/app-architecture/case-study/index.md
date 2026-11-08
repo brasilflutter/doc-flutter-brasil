@@ -1,86 +1,87 @@
 ---
-title: Architecture case study
-shortTitle: Architecture case study
+title: Estudo de caso de arquitetura
+shortTitle: Estudo de caso de arquitetura
 description: >-
-  A walk-through of a Flutter app that implements the MVVM architectural pattern.
+  Um passo a passo de um aplicativo Flutter que implementa o padrão arquitetural MVVM.
 prev:
-  title: Guide to app architecture
+  title: Guia para arquitetura de aplicativos
   path: /app-architecture/guide
 next:
-  title: UI Layer
+  title: Camada de UI
   path: /app-architecture/case-study/ui-layer
+ia-translate: true
 ---
 
-The code examples in this guide are from the [Compass sample application][],
-an app that helps users build and book itineraries for trips.
-It's a robust sample application with many features, routes, and screens.
-The app communicates with an HTTP server,
-has development and production environments,
-includes brand-specific styling, and contains high test coverage.
-In these ways and more, it simulates a real-world,
-feature-rich Flutter application.
+Os exemplos de código neste guia são do [aplicativo de exemplo Compass][Compass sample application],
+um aplicativo que ajuda os usuários a criar e reservar itinerários para viagens.
+É um aplicativo de amostra robusto com muitos recursos, rotas e telas.
+O aplicativo se comunica com um servidor HTTP,
+possui ambientes de desenvolvimento e produção,
+inclui estilo específico da marca e contém alta cobertura de testes.
+Dessas e de outras formas, ele simula um aplicativo Flutter
+do mundo real e rico em recursos.
 
 <div class="wrapping-row" style="margin-block-end: 2rem">
-  <DashImage figure image="app-architecture/case-study/splash_screen.png" alt="A screenshot of the splash screen of the compass app." img-style="max-height: 400px;" />
-  <DashImage figure image="app-architecture/case-study/home_screen.png" alt="A screenshot of the home screen of the compass app." img-style="max-height: 400px;" />
-  <DashImage figure image="app-architecture/case-study/search_form_screen.png" alt="A screenshot of the search form screen of the compass app." img-style="max-height: 400px;" />
-  <DashImage figure image="app-architecture/case-study/booking_screen.png" alt="A screenshot of the booking screen of the compass app." img-style="max-height: 400px;" />
+  <DashImage figure image="app-architecture/case-study/splash_screen.png" alt="Uma captura de tela da tela de abertura do aplicativo Compass." img-style="max-height: 400px;" />
+  <DashImage figure image="app-architecture/case-study/home_screen.png" alt="Uma captura de tela da tela inicial do aplicativo Compass." img-style="max-height: 400px;" />
+  <DashImage figure image="app-architecture/case-study/search_form_screen.png" alt="Uma captura de tela da tela de formulário de pesquisa do aplicativo Compass." img-style="max-height: 400px;" />
+  <DashImage figure image="app-architecture/case-study/booking_screen.png" alt="Uma captura de tela da tela de reserva do aplicativo Compass." img-style="max-height: 400px;" />
 </div>
 
-The Compass app's architecture most resembles the [MVVM architectural pattern][]
-as described in Flutter's [app architecture guidelines][].
-This architecture case study demonstrates how to
-implement those guidelines by walking through
-the "Home" feature of the compass app.
-If you aren't familiar with MVVM, you should read those guidelines first.
+A arquitetura do aplicativo Compass se assemelha mais ao [padrão arquitetural MVVM][MVVM architectural pattern]
+conforme descrito nas [diretrizes de arquitetura de aplicativos][app architecture guidelines] do Flutter.
+Este estudo de caso de arquitetura demonstra como
+implementar essas diretrizes percorrendo
+o recurso "Home" do aplicativo compass.
+Se você não está familiarizado com MVVM, você deve ler essas diretrizes primeiro.
 
-The Home screen of the Compass app displays user account information and
-a list of the user's saved trips.
-From this screen you can log out, open detailed trip pages,
-delete saved trips, and navigate to the first page of the core app flow,
-which allows the user to build a new itinerary.
+A tela inicial do aplicativo Compass exibe informações da conta do usuário e
+uma lista das viagens salvas do usuário.
+A partir desta tela, você pode fazer logout, abrir páginas detalhadas de viagens,
+excluir viagens salvas e navegar para a primeira página do fluxo principal do aplicativo,
+o que permite ao usuário criar um novo itinerário.
 
-In this case study, you'll learn the following:
+Neste estudo de caso, você aprenderá o seguinte:
 
-* How to implement Flutter's [app architecture guidelines][]
-  using repositories and services in the [data layer][] and
-  the MVVM architectural pattern in the [UI layer][]
-* How to use the [Command pattern][] to safely render UI as data changes
-* How to use [`ChangeNotifier`][] and [`Listenable`][] objects to manage state
-* How to implement [Dependency Injection][] using `package:provider`
-* How to [set up tests][] when following the recommended architecture
-* Effective [package structure][] for large Flutter apps
+* Como implementar as [diretrizes de arquitetura de aplicativos][app architecture guidelines] do Flutter
+  usando repositórios e serviços na [camada de dados][data layer] e
+  o padrão arquitetural MVVM na [camada de UI][UI layer]
+* Como usar o [padrão Command][Command pattern] para renderizar a UI com segurança à medida que os dados mudam
+* Como usar objetos [`ChangeNotifier`][] e [`Listenable`][] para gerenciar o estado
+* Como implementar a [Injeção de Dependência][Dependency Injection] usando `package:provider`
+* Como [configurar testes][set up tests] ao seguir a arquitetura recomendada
+* [Estrutura de pacotes eficaz][package structure] para grandes aplicativos Flutter
 
-This case-study was written to be read in order.
-Any given page might reference the previous pages.
+Este estudo de caso foi escrito para ser lido em ordem.
+Qualquer página pode referenciar as páginas anteriores.
 
-The code examples in this case-study include all the details needed to
-understand the architecture, but they're not complete, runnable snippets.
-If you prefer to follow along with the full app,
-you can find it on [GitHub][].
+Os exemplos de código neste estudo de caso incluem todos os detalhes necessários para
+entender a arquitetura, mas não são trechos completos e executáveis.
+Se você preferir acompanhar com o aplicativo completo,
+você pode encontrá-lo no [GitHub][].
 
-## Package structure
+## Estrutura do pacote {:#package-structure}
 
-Well-organized code is easier for multiple engineers to work on with
-minimal code conflicts and is easier for new engineers to
-navigate and understand.
-Code organization both benefits and benefits from well-defined architecture.
+Código bem organizado é mais fácil para vários engenheiros trabalharem com
+conflitos de código mínimos e é mais fácil para novos engenheiros
+navegar e entender.
+A organização do código beneficia e é beneficiada por uma arquitetura bem definida.
 
-There are two popular means of organizing code:
+Existem duas maneiras populares de organizar o código:
 
-1. By feature - The classes needed for each feature are grouped together. For
-   example, you might have an `auth` directory, which would contain files
-   like `auth_viewmodel.dart`, `login_usecase.dart`, `logout_usecase.dart`,
+1. Por feature (recurso) - As classes necessárias para cada recurso são agrupadas. Por
+   exemplo, você pode ter um diretório `auth`, que conteria arquivos
+   como `auth_viewmodel.dart`, `login_usecase.dart`, `logout_usecase.dart`,
    `login_screen.dart`, `logout_button.dart`, etc.
-2. By type - Each "type" of architecture is grouped together.
-   For example, you might have directories such as
-   `repositories`, `models`, `services`, and `viewmodels`.
+2. Por tipo - Cada "tipo" de arquitetura é agrupado.
+   Por exemplo, você pode ter diretórios como
+   `repositories`, `models`, `services` e `viewmodels`.
 
-The architecture recommended in this guide lends itself to
-a combination of the two.
-Data layer objects (repositories and services) aren't tied to a single feature,
-while UI layer objects (views and view models) are.
-The following is how the code is organized within the Compass application.
+A arquitetura recomendada neste guia se presta a
+uma combinação dos dois.
+Objetos da camada de dados (repositórios e serviços) não estão vinculados a um único recurso,
+enquanto objetos da camada de UI (views e view models) estão.
+A seguir, veja como o código está organizado no aplicativo Compass.
 
 <FileTree>
 
@@ -112,66 +113,66 @@ The following is how the code is organized within the Compass application.
   - main_staging.dart
   - main_development.dart
   - main.dart
-- test/ // Contains unit and widget tests.
+- test/ // Contém testes de unidade e de widget.
   - data/
   - domain/
   - ui/
   - utils/
-- testing/ // Contains mocks that other classes need to execute tests.
+- testing/ // Contém mocks que outras classes precisam para executar testes.
   - fakes/
   - models/
 
 </FileTree>
 
-Most of the application code lives in the
-`data`, `domain`, and `ui` folders.
-The data folder organizes code by type,
-because repositories and services can be used across
-different features and by multiple view models.
-The ui folder organizes the code by feature,
-because each feature has exactly one view and exactly one view model.
+A maior parte do código do aplicativo está nas pastas
+`data`, `domain` e `ui`.
+A pasta data organiza o código por tipo,
+porque repositórios e serviços podem ser usados em
+diferentes recursos e por vários view models.
+A pasta ui organiza o código por recurso,
+porque cada recurso tem exatamente uma view e exatamente um view model.
 
-Other notable features of this folder structure:
+Outros recursos notáveis desta estrutura de pastas:
 
-* The UI folder also contains a subdirectory named "core".
-  Core contains widgets and theme logic that is shared by multiple views,
-  such as buttons with your brand styling.
-* The domain folder contains the application data types, because they're
-  used by the data and ui layers.
-* The app contains three "main" files, which act as different entry points to
-  the application for development, staging, and production.
-* There are two test-related directories at the same level as `lib`: `test/` has
-  the test code, and its own structure matches `lib/`. `testing/` is a
-  subpackage that contains mocks and other testing utilities which can be used
-  in other packages' test code. The `testing/` folder could be described as a
-  version of your app that you don't ship. It's the content that is tested.
+* A pasta UI também contém um subdiretório chamado "core".
+  O core contém widgets e lógica de tema que são compartilhados por várias views,
+  como botões com o estilo da sua marca.
+* A pasta domain contém os tipos de dados do aplicativo, porque eles são
+  usados pelas camadas de dados e ui.
+* O aplicativo contém três arquivos "main", que atuam como diferentes pontos de entrada para
+  o aplicativo para desenvolvimento, teste e produção.
+* Existem dois diretórios relacionados a testes no mesmo nível que `lib`: `test/` possui
+  o código de teste e sua própria estrutura corresponde a `lib/`. `testing/` é um
+  subpacote que contém mocks e outros utilitários de teste que podem ser usados
+  no código de teste de outros pacotes. A pasta `testing/` poderia ser descrita como uma
+  versão do seu aplicativo que você não envia. É o conteúdo que é testado.
 
-There's additional code in the compass app that doesn't pertain to architecture.
-For the full package structure, [view it on GitHub][].
+Há código adicional no aplicativo compass que não pertence à arquitetura.
+Para a estrutura completa do pacote, [veja no GitHub][view it on GitHub].
 
-## Other architecture options
+## Outras opções de arquitetura {:#other-architecture-options}
 
-The example in this case-study demonstrates how one application abides by our
-recommended architectural rules, but there are many other example apps that
-could've been written. The UI of this app leans heavily on view models
-and `ChangeNotifier`, but it could've easily been written
-with streams, or with other libraries such as [`riverpod`][],
-[`flutter_bloc`][], and [`signals`][].
-The communication between layers of this app handled
-everything with method calls, including polling for new data.
-It could've instead used streams to expose data from a repository to
-a view model and still abide by the rules covered in this guide.
+O exemplo neste estudo de caso demonstra como um aplicativo segue nossas
+regras arquitetônicas recomendadas, mas existem muitos outros aplicativos de exemplo que
+poderiam ter sido escritos. A UI deste aplicativo depende muito de view models
+e `ChangeNotifier`, mas poderia facilmente ter sido escrito
+com streams ou com outras bibliotecas, como [`riverpod`][],
+[`flutter_bloc`][] e [`signals`][].
+A comunicação entre as camadas deste aplicativo tratou
+tudo com chamadas de método, incluindo a busca por novos dados.
+Poderia ter usado streams para expor dados de um repositório para
+um view model e ainda seguir as regras abordadas neste guia.
 
-Even if you do follow this guide exactly,
-and choose not to introduce additional libraries, you have decisions to make:
-Will you have a domain layer?
-If so, how will you manage data access?
-The answer depends so much on an individual team's needs that
-there isn't a single right answer.
-Regardless of how you answer these questions,
-the principles in this guide will help you write scalable Flutter apps.
+Mesmo se você seguir este guia exatamente,
+e optar por não introduzir bibliotecas adicionais, você tem decisões a tomar:
+Você terá uma camada de domínio?
+Se sim, como você gerenciará o acesso aos dados?
+A resposta depende tanto das necessidades de uma equipe individual que
+não existe uma única resposta certa.
+Independentemente de como você responder a essas perguntas,
+os princípios neste guia ajudarão você a escrever aplicativos Flutter escaláveis.
 
-And if you squint, aren't all architectures MVVM anyway?
+E se você observar bem, todas as arquiteturas não são MVVM de qualquer maneira?
 
 [Compass sample application]: https://github.com/flutter/samples/tree/main/compass_app
 [MVVM architectural pattern]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
@@ -192,7 +193,7 @@ And if you squint, aren't all architectures MVVM anyway?
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está evoluindo,
+nós [agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="case-study/index"
