@@ -1,47 +1,48 @@
 ---
-title: UI layer case study
-shortTitle: UI layer
+title: Estudo de caso da camada de UI
+shortTitle: Camada de UI
 description: >-
-  A walk-through of the UI layer of an app that implements MVVM architecture.
+  Um passo a passo da camada de UI de um aplicativo que implementa a arquitetura MVVM.
 prev:
-  title: Case study overview
+  title: Visão geral do estudo de caso
   path: /app-architecture/case-study
 next:
-  title: Data Layer
+  title: Camada de dados
   path: /app-architecture/case-study/data-layer
+ia-translate: true
 ---
 
-The [UI layer][] of each feature in your Flutter application should be
-made up of two components: a **[`View`][]** and
-a **[`ViewModel`][].**
+A [camada de UI][UI layer] de cada recurso em seu aplicativo Flutter deve ser
+composta por dois componentes: uma **[`View`][]** e
+um **[`ViewModel`][].**
 
-![A screenshot of the booking screen of the compass app.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-ui-layer-highlighted.png)
+![Uma captura de tela da tela de reserva do aplicativo compass.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-ui-layer-highlighted.png)
 
-In the most general sense, view models manage UI state,
-and views display UI state.
-Views and view models have a one-to-one relationship;
-for each view, there's exactly one corresponding view model that
-manages that view's state.
-Each pair of view and view model make up the UI for a single feature.
-For example, an app might have classes called
-`LogOutView` and a `LogOutViewModel`.
+Em termos gerais, os view models gerenciam o estado da UI,
+e as views exibem o estado da UI.
+As views e os view models têm uma relação um-para-um;
+para cada view, existe exatamente um view model correspondente que
+gerencia o estado dessa view.
+Cada par de view e view model compõe a UI de um único recurso.
+Por exemplo, um aplicativo pode ter classes chamadas
+`LogOutView` e `LogOutViewModel`.
 
-## Define a view model
+## Definir um view model
 
-A view model is a Dart class responsible for handling UI logic.
-View models take domain data models as input and expose that data as
-UI state to their corresponding views.
-They encapsulate logic that the view can attach to
-event handlers, like button presses, and
-manage sending these events to the data layer of the app,
-where data changes happen.
+Um view model é uma classe Dart responsável por lidar com a lógica da UI.
+Os view models recebem modelos de dados de domínio como entrada e expõem esses dados como
+estado da UI para suas views correspondentes.
+Eles encapsulam a lógica que a view pode anexar a
+manipuladores de eventos, como cliques de botão, e
+gerenciar o envio desses eventos para a camada de dados do aplicativo,
+onde as alterações de dados acontecem.
 
-The following code snippet is a class declaration for
-a view model class called the `HomeViewModel`.
-Its inputs are the [repositories][] that provide its data.
-In this case,
-the view model is dependent on the
-`BookingRepository` and `UserRepository` as arguments.
+O snippet de código a seguir é uma declaração de classe para
+uma classe view model chamada `HomeViewModel`.
+Suas entradas são os [repositórios][repositories] que fornecem seus dados.
+Neste caso,
+o view model depende do
+`BookingRepository` e `UserRepository` como argumentos.
 
 ```dart title=home_viewmodel.dart
 class HomeViewModel {
@@ -49,7 +50,7 @@ class HomeViewModel {
     required BookingRepository bookingRepository,
     required UserRepository userRepository,
   }) :
-    // Repositories are manually assigned because they're private members.
+    // Os repositórios são atribuídos manualmente porque são membros privados.
     _bookingRepository = bookingRepository,
     _userRepository = userRepository;
 
@@ -59,29 +60,29 @@ class HomeViewModel {
 }
 ```
 
-View models are always dependent on data repositories,
-which are provided as arguments to the view model's constructor.
-View models and repositories have a many-to-many relationship,
-and most view models will depend on multiple repositories.
+Os view models sempre dependem de repositórios de dados,
+que são fornecidos como argumentos para o construtor do view model.
+View models e repositórios têm uma relação de muitos para muitos,
+e a maioria dos view models dependerá de vários repositórios.
 
-As in the earlier `HomeViewModel` example declaration,
-repositories should be private members on the view model,
-otherwise views would have direct access to
-the data layer of the application.
+Como na declaração de exemplo `HomeViewModel` anterior,
+os repositórios devem ser membros privados no view model,
+caso contrário, as views teriam acesso direto a
+a camada de dados do aplicativo.
 
-### UI state
+### Estado da UI
 
-The output of a view model is data that a view needs to render, generally
-referred to as **UI State**, or just state. UI state is an immutable snapshot of
-data that is required to fully render a view.
+A saída de um view model são dados que uma view precisa para renderizar, geralmente
+referido como **Estado da UI**, ou apenas estado. O estado da UI é um snapshot imutável de
+dados necessários para renderizar totalmente uma view.
 
-![A screenshot of the booking screen of the compass app.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-ui-state-highlighted.png)
+![Uma captura de tela da tela de reserva do aplicativo compass.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-ui-state-highlighted.png)
 
-The view model exposes state as public members.
-On the view model in the following code example,
-the exposed data is a `User` object,
-as well as the user's saved itineraries which
-are exposed as an object of type `List<BookingSummary>`.
+O view model expõe o estado como membros públicos.
+No view model no exemplo de código a seguir,
+os dados expostos são um objeto `User`,
+assim como os itinerários salvos do usuário que
+são expostos como um objeto do tipo `List<BookingSummary>`.
 
 ```dart title=home_viewmodel.dart
 class HomeViewModel {
@@ -109,24 +110,24 @@ class HomeViewModel {
 }
 ```
 
-As mentioned, the UI state should be immutable.
-This is a crucial part of bug-free software.
+Como mencionado, o estado da UI deve ser imutável.
+Esta é uma parte crucial do software livre de bugs.
 
-The compass app uses the [`package:freezed`][] to
-enforce immutability on data classes. For example,
-the following code shows the `User` class definition.
-`freezed` provides deep immutability,
-and generates the implementation for useful methods like
-`copyWith` and `toJson`.
+O aplicativo compass usa o [`package:freezed`][] para
+impor imutabilidade em classes de dados. Por exemplo,
+o código a seguir mostra a definição da classe `User`.
+`freezed` fornece imutabilidade profunda,
+e gera a implementação para métodos úteis como
+`copyWith` e `toJson`.
 
 ```dart title=user.dart
 @freezed
 class User with _$User {
   const factory User({
-    /// The user's name.
+    /// O nome do usuário.
     required String name,
 
-    /// The user's picture URL.
+    /// A URL da foto do usuário.
     required String picture,
   }) = _User;
 
@@ -135,22 +136,22 @@ class User with _$User {
 ```
 
 :::note
-In the view model example,
-two objects are needed to render the view.
-As the UI state for any given model grows in complexity,
-a view model might have many more pieces of data from
-many more repositories exposed to the view.
-In some cases,
-you might want to create objects that specifically represent the UI state.
-For example, you could create a class named `HomeUiState`.
+No exemplo do view model,
+dois objetos são necessários para renderizar a view.
+À medida que o estado da UI para qualquer modelo aumenta em complexidade,
+um view model pode ter muito mais dados de
+muito mais repositórios expostos à view.
+Em alguns casos,
+você pode querer criar objetos que representem especificamente o estado da UI.
+Por exemplo, você pode criar uma classe chamada `HomeUiState`.
 :::
 
-### Updating UI state
+### Atualizando o estado da UI
 
-In addition to storing state,
-view models need to tell Flutter to re-render views when
-the data layer provides a new state.
-In the Compass app, view models extend [`ChangeNotifier`][] to achieve this.
+Além de armazenar o estado,
+os view models precisam informar ao Flutter para renderizar novamente as views quando
+a camada de dados fornece um novo estado.
+No aplicativo Compass, os view models estendem [`ChangeNotifier`][] para conseguir isso.
 
 ```dart title=home_viewmodel.dart
 class HomeViewModel [!extends ChangeNotifier!] {
@@ -172,32 +173,32 @@ class HomeViewModel [!extends ChangeNotifier!] {
 }
 ```
 
-`HomeViewModel.user` is a public member that the view depends on.
-When new data flows from the data layer and
-new state needs to be emitted, [`notifyListeners`][] is called.
+`HomeViewModel.user` é um membro público do qual a view depende.
+Quando novos dados fluem da camada de dados e
+um novo estado precisa ser emitido, [`notifyListeners`][] é chamado.
 
 <figure>
 
-![A screenshot of the booking screen of the compass app.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-update-ui-steps.png)
+![Uma captura de tela da tela de reserva do aplicativo compass.](/assets/images/docs/app-architecture/case-study/mvvm-case-study-update-ui-steps.png)
 
     <figcaption>
-This figure shows from a high-level how new data in the repository
-propagates up to the UI layer and triggers a re-build of your Flutter widgets.
+Esta figura mostra de forma geral como novos dados no repositório
+se propagam até a camada de UI e acionam uma reconstrução de seus widgets Flutter.
     </figcaption>
 </figure>
 
-1. New state is provided to the view model from a Repository.
-2. The view model updates its UI state to reflect the new data.
-3. `ViewModel.notifyListeners` is called, alerting the View of new UI State.
-4. The view (widget) re-renders.
+1. Um novo estado é fornecido ao view model de um Repositório.
+2. O view model atualiza seu estado de UI para refletir os novos dados.
+3. `ViewModel.notifyListeners` é chamado, alertando a View sobre o novo estado da UI.
+4. A view (widget) é renderizada novamente.
 
-For example, when the user navigates to the Home screen and the view model is
-created, the `_load` method is called.
-Until this method completes, the UI state is empty,
-the view displays a loading indicator.
-When the `_load` method completes, if it's successful,
-there's new data in the view model, and it must
-notify the view that new data is available.
+Por exemplo, quando o usuário navega para a tela inicial e o view model é
+criado, o método `_load` é chamado.
+Até que este método seja concluído, o estado da UI está vazio,
+a view exibe um indicador de carregamento.
+Quando o método `_load` é concluído, se for bem-sucedido,
+há novos dados no view model e ele deve
+notificar a view de que novos dados estão disponíveis.
 
 ```dart title=home_viewmodel.dart highlightLines=19
 class HomeViewModel extends ChangeNotifier {
@@ -225,14 +226,14 @@ class HomeViewModel extends ChangeNotifier {
 ```
 
 :::note
-`ChangeNotifier` and [`ListenableBuilder`][] (discussed later on this page) are
-part of the Flutter SDK,
-and provide a good solution for updating the UI when state changes.
-You can also use a robust third-party state management solution, such as
-[`package:riverpod`][], [`package:flutter_bloc`][], or [`package:signals`][].
-These libraries offer different tools for handling UI updates.
-Read more about using `ChangeNotifier` in
-our [state-management documentation][].
+`ChangeNotifier` e [`ListenableBuilder`][] (discutido mais adiante nesta página) são
+parte do SDK Flutter,
+e fornecem uma boa solução para atualizar a UI quando o estado muda.
+Você também pode usar uma solução robusta de gerenciamento de estado de terceiros, como
+[`package:riverpod`][], [`package:flutter_bloc`][] ou [`package:signals`][].
+Essas bibliotecas oferecem ferramentas diferentes para lidar com atualizações de UI.
+Leia mais sobre como usar `ChangeNotifier` em
+nossa [documentação de gerenciamento de estado][state-management documentation].
 :::
 
 [`package:riverpod`]: {{site.pub-pkg}}/riverpod
@@ -240,40 +241,39 @@ our [state-management documentation][].
 [`package:signals`]: {{site.pub-pkg}}/signals
 [state-management documentation]: /data-and-backend/state-mgmt/intro
 
-## Define a view
+## Definir uma view
 
-A view is a widget within your app.
-Often, a view represents one screen in your app that
-has its own route and includes a [`Scaffold`][] at the top of the
-widget subtree, such as the `HomeScreen`, but this isn't always the case.
+Uma view é um widget dentro do seu aplicativo.
+Frequentemente, uma view representa uma tela em seu aplicativo que
+tem sua própria rota e inclui um [`Scaffold`][] no topo do
+subárvore de widgets, como o `HomeScreen`, mas nem sempre é este o caso.
 
-Sometimes a view is a single UI element that
-encapsulates functionality that needs to be re-used throughout the app.
-For example, the Compass app has a view called `LogoutButton`,
-which can be dropped anywhere in the widget tree that a user might
-expect to find a logout button.
-The `LogoutButton` view has its own view model called `LogoutViewModel`.
-And on larger screens, there might be multiple views on screen that
-would take up the full screen on mobile.
+Às vezes, uma view é um único elemento de UI que
+encapsula a funcionalidade que precisa ser reutilizada em todo o aplicativo.
+Por exemplo, o aplicativo Compass tem uma view chamada `LogoutButton`,
+que pode ser colocada em qualquer lugar na árvore de widgets em que um usuário possa
+esperar encontrar um botão de logout.
+A view `LogoutButton` tem seu próprio view model chamado `LogoutViewModel`.
+E em telas maiores, pode haver várias views na tela que
+ocupariam a tela inteira no celular.
 
 :::note
-"View" is an abstract term, and one view doesn't equal one widget.
-Widgets are composable, and several can be combined to create one view.
-Therefore, view models don't have a one-to-one relationship with widgets,
-but rather a one-to-one relation with a *collection* of widgets.
+"View" é um termo abstrato e uma view não é igual a um widget.
+Os widgets são componíveis e vários podem ser combinados para criar uma view.
+Portanto, os view models não têm uma relação um-para-um com widgets,
+mas sim uma relação um-para-um com uma *coleção* de widgets.
 :::
 
-The widgets within a view have three responsibilities:
+Os widgets dentro de uma view têm três responsabilidades:
 
-* They display the data properties from the view model.
-* They listen for updates from the view model and re-render when new data is available.
-* They attach callbacks from the view model to event handlers, if applicable.
+*   Eles exibem as propriedades de dados do view model.
+*   Eles ouvem as atualizações do view model e renderizam novamente quando novos dados estão disponíveis.
+*   Eles anexam callbacks do view model a manipuladores de eventos, se aplicável.
 
-![A diagram showing a view's relationship to a view model.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified-View-highlighted.png)
+![Um diagrama mostrando a relação de uma view com um view model.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified-View-highlighted.png)
 
-
-Continuing the Home feature example,
-the following code shows the definition of the `HomeScreen` view.
+Continuando o exemplo do recurso Home,
+o código a seguir mostra a definição da view `HomeScreen`.
 
 ```dart title=home_screen.dart
 class HomeScreen extends StatelessWidget {
@@ -290,15 +290,15 @@ class HomeScreen extends StatelessWidget {
 }
 ```
 
-Most of the time, a view's only inputs should be a `key`,
-which all Flutter widgets take as an optional argument,
-and the view's corresponding view model.
+Na maioria das vezes, as únicas entradas de uma view devem ser uma `key`,
+que todos os widgets Flutter recebem como um argumento opcional,
+e o view model correspondente da view.
 
-### Display UI data in a view
+### Exibir dados da UI em uma view
 
-A view depends on a view model for its state. In the Compass app,
-the view model is passed in as an argument in the view's constructor.
-The following example code snippet is from the `HomeScreen` widget.
+Uma view depende de um view model para seu estado. No aplicativo Compass,
+o view model é passado como um argumento no construtor da view.
+O seguinte trecho de código de exemplo é do widget `HomeScreen`.
 
 ```dart title=home_screen.dart
 class HomeScreen extends StatelessWidget {
@@ -313,15 +313,15 @@ class HomeScreen extends StatelessWidget {
 }
 ```
 
-Within the widget, you can access the passed-in bookings from the `viewModel`.
-In the following code,
-the `booking` property is being provided to a sub-widget.
+Dentro do widget, você pode acessar as reservas passadas do `viewModel`.
+No código a seguir,
+a propriedade `booking` está sendo fornecida a um sub-widget.
 
 ```dart title=home_screen.dart
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Some code was removed for brevity.
+      // Algum código foi removido para brevidade.
       body: SafeArea(
         child: ListenableBuilder(
           listenable: viewModel,
@@ -348,21 +348,21 @@ the `booking` property is being provided to a sub-widget.
       ),
 ```
 
-### Update the UI
+### Atualizar a UI
 
-The `HomeScreen` widget listens for updates from the view model with
-the [`ListenableBuilder`][] widget.
-Everything in the widget subtree under the `ListenableBuilder` widget
-re-renders when the provided [`Listenable`][] changes.
-In this case, the provided `Listenable` is the view model.
-Recall that the view model is of type [`ChangeNotifier`][]
-which is a subtype of the `Listenable` type.
+O widget `HomeScreen` escuta as atualizações do view model com
+o widget [`ListenableBuilder`][].
+Tudo na subárvore de widgets sob o widget `ListenableBuilder`
+é renderizado novamente quando o [`Listenable`][] fornecido muda.
+Neste caso, o `Listenable` fornecido é o view model.
+Lembre-se de que o view model é do tipo [`ChangeNotifier`][]
+que é um subtipo do tipo `Listenable`.
 
 ```dart title=home_screen.dart
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    // Some code was removed for brevity.
+    // Algum código foi removido para brevidade.
       body: SafeArea(
         child: ListenableBuilder(
           listenable: viewModel,
@@ -395,24 +395,24 @@ Widget build(BuildContext context) {
 }
 ```
 
-### Handling user events
+### Tratamento de eventos do usuário
 
-Finally, a view needs to listen for *events* from users,
-so the view model can handle those events.
-This is achieved by exposing a callback method on the view model class which
-encapsulates all the logic.
+Finalmente, uma view precisa ouvir *eventos* dos usuários,
+para que o view model possa lidar com esses eventos.
+Isso é conseguido expondo um método de callback na classe view model que
+encapsula toda a lógica.
 
-![A diagram showing a view's relationship to a view model.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified-UI-highlighted.png)
+![Um diagrama mostrando a relação de uma view com um view model.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified-UI-highlighted.png)
 
-On the `HomeScreen`, users can delete previously booked events by swiping
-a [`Dismissible`][] widget.
+Na `HomeScreen`, os usuários podem excluir eventos reservados anteriormente deslizando
+um widget [`Dismissible`][].
 
-Recall this code from the previous snippet:
+Lembre-se deste código do trecho anterior:
 
 <CodePreview direction="row">
   <DashImage
     image="app-architecture/case-study/dismissible.webp"
-    alt="A clip that demonstrates the 'dismissible' functionality of the Compass app."
+    alt="Um clipe que demonstra a funcionalidade 'dismissible' do aplicativo Compass."
     img-style="max-height: 480px; border-radius: 12px; border: black 2px solid;"
     />
 
@@ -432,16 +432,16 @@ Recall this code from the previous snippet:
   ```
 </CodePreview>
 
-On the `HomeScreen`, a user's saved trip is represented by
-the `_Booking` widget. When a `_Booking` is dismissed,
-the `viewModel.deleteBooking` method is executed.
+Na `HomeScreen`, a viagem salva de um usuário é representada por
+o widget `_Booking`. Quando um `_Booking` é dispensado,
+o método `viewModel.deleteBooking` é executado.
 
-A saved booking is application state that persists beyond
-a session or the lifetime of a view,
-and only repositories should modify such application state.
-So, the `HomeViewModel.deleteBooking` method turns around and
-calls a method exposed by a repository in the data layer,
-as shown in the following code snippet.
+Uma reserva salva é um estado de aplicativo que persiste além
+de uma sessão ou da vida útil de uma view,
+e apenas os repositórios devem modificar esse estado do aplicativo.
+Portanto, o método `HomeViewModel.deleteBooking` se transforma e
+chama um método exposto por um repositório na camada de dados,
+conforme mostrado no seguinte trecho de código.
 
 ```dart title=home_viewmodel.dart highlightLines=3
 Future<Result<void>> _deleteBooking(int id) async {
@@ -455,7 +455,7 @@ Future<Result<void>> _deleteBooking(int id) async {
         return resultDelete;
     }
 
-    // Some code was omitted for brevity.
+    // Algum código foi omitido para brevidade.
     // final  resultLoadBookings = ...;
 
     return resultLoadBookings;
@@ -465,24 +465,24 @@ Future<Result<void>> _deleteBooking(int id) async {
 }
 ```
 
-In the Compass app,
-these methods that handle user events are called **commands**.
+No aplicativo Compass,
+esses métodos que tratam de eventos do usuário são chamados **comandos**.
 
-### Command objects
+### Objetos de comando
 
-Commands are responsible for the interaction that starts in the UI layer and
-flows back to the data layer. In this app specifically,
-a `Command` is also a type that helps update the UI safely,
-regardless of the response time or contents.
+Os comandos são responsáveis ​​pela interação que começa na camada de UI e
+flui de volta para a camada de dados. Neste aplicativo especificamente,
+um `Command` também é um tipo que ajuda a atualizar a UI com segurança,
+independentemente do tempo de resposta ou do conteúdo.
 
-The `Command` class wraps a method and
-helps handle the different states of that method,
-such as `running`, `complete`, and `error`.
-These states make it easy to display different UI,
-like loading indicators when `Command.running` is true.
+A classe `Command` envolve um método e
+ajuda a lidar com os diferentes estados desse método,
+como `running`, `complete` e `error`.
+Esses estados facilitam a exibição de uma UI diferente,
+como indicadores de carregamento quando `Command.running` é true.
 
-The following is code from the `Command` class.
-Some code has been omitted for demo purposes.
+A seguir está o código da classe `Command`.
+Algum código foi omitido para fins de demonstração.
 
 ```dart title=command.dart
 abstract class Command<T> extends ChangeNotifier {
@@ -490,17 +490,17 @@ abstract class Command<T> extends ChangeNotifier {
   bool running = false;
   Result<T>? _result;
 
-  /// true if action completed with error
+  /// true se a ação for concluída com erro
   bool get error => _result is Error;
 
-  /// true if action completed successfully
+  /// true se a ação for concluída com sucesso
   bool get completed => _result is Ok;
 
-  /// Internal execute implementation
+  /// Implementação interna de execução
   Future<void> _execute(action) async {
     if (_running) return;
 
-    // Emit running state - e.g. button shows loading state
+    // Emitir estado em execução - por exemplo, o botão mostra o estado de carregamento
     _running = true;
     _result = null;
     notifyListeners();
@@ -515,31 +515,31 @@ abstract class Command<T> extends ChangeNotifier {
 }
 ```
 
-The `Command` class itself extends `ChangeNotifier`,
-and within the method `Command.execute`,
-`notifyListeners` is called multiple times.
-This allows the view to handle different states with very little logic,
-which you'll see an example of later on this page.
+A própria classe `Command` estende `ChangeNotifier`,
+e dentro do método `Command.execute`,
+`notifyListeners` é chamado várias vezes.
+Isso permite que a view lide com diferentes estados com muito pouca lógica,
+do qual você verá um exemplo mais adiante nesta página.
 
-You may have also noticed that `Command` is an abstract class.
-It's implemented by concrete classes such as `Command0` `Command1`.
-The integer in the class name refers to
-the number of arguments that the underlying method expects.
-You can see examples of these implementation classes in
-the Compass app's [`utils` directory][].
+Você também pode ter notado que `Command` é uma classe abstrata.
+Ele é implementado por classes concretas como `Command0` `Command1`.
+O inteiro no nome da classe se refere a
+o número de argumentos que o método subjacente espera.
+Você pode ver exemplos dessas classes de implementação no
+[diretório `utils`][`utils` directory] do aplicativo Compass.
 
-:::tip Package option
-To use this pattern without writing your own command classes,
-consider using a package such as [`command_it`][],
-which provides command types to wrap actions and
-track their running, completed, and error states.
+:::tip Opção de pacote
+Para usar este padrão sem escrever suas próprias classes de comando,
+considere usar um pacote como o [`command_it`][],
+que fornece tipos de comando para encapsular ações e
+acompanhar seus estados de execução, conclusão e erro.
 :::
 
 [`command_it`]: {{site.pub-pkg}}/command_it
 
-### Ensuring views can render before data exists
+### Garantindo que as views possam ser renderizadas antes que os dados existam
 
-In view model classes, commands are created in the constructor.
+Nas classes view model, os comandos são criados no construtor.
 
 ```dart title=home_viewmodel.dart highlightLines=8-9,15-16,24-30
 class HomeViewModel extends ChangeNotifier {
@@ -548,7 +548,7 @@ class HomeViewModel extends ChangeNotifier {
    required UserRepository userRepository,
   }) : _bookingRepository = bookingRepository,
       _userRepository = userRepository {
-    // Load required data when this screen is built.
+    // Carregar dados necessários quando esta tela for construída.
     load = Command0(_load)..execute();
     deleteBooking = Command1(_deleteBooking);
   }
@@ -577,11 +577,11 @@ class HomeViewModel extends ChangeNotifier {
 }
 ```
 
-The `Command.execute` method is asynchronous,
-so it can't guarantee that the data will be available when
-the view wants to render. This gets at *why* the Compass app uses `Commands`.
-In the view's `Widget.build` method,
-the command is used to conditionally render different widgets.
+O método `Command.execute` é assíncrono,
+então ele não pode garantir que os dados estarão disponíveis quando
+a view quer renderizar. Isso chega ao *por que* o aplicativo Compass usa `Commands`.
+No método `Widget.build` da view,
+o comando é usado para renderizar condicionalmente diferentes widgets.
 
 ```dart title=home_screen.dart
 // ...
@@ -600,8 +600,8 @@ child: ListenableBuilder(
         );
      }
 
-    // The command has completed without error.
-    // Return the main view widget.
+    // O comando foi concluído sem erro.
+    // Retornar o widget de view principal.
     return child!;
   },
 ),
@@ -609,29 +609,29 @@ child: ListenableBuilder(
 // ...
 ```
 
-Because the `load` command is a property that exists on
-the view model rather than something ephemeral,
-it doesn't matter when the `load` method is called or when it resolves.
-For example, if the load command resolves before
-the `HomeScreen` widget was even created,
-it isn't a problem because the `Command` object still exists,
-and exposes the correct state.
+Como o comando `load` é uma propriedade que existe em
+o view model em vez de algo efêmero,
+não importa quando o método `load` é chamado ou quando ele é resolvido.
+Por exemplo, se o comando de carregamento for resolvido antes
+que o widget `HomeScreen` fosse criado,
+não é um problema porque o objeto `Command` ainda existe,
+e expõe o estado correto.
 
-This pattern standardizes how common UI problems are solved in the app,
-making your codebase less error-prone and more scalable,
-but it's not a pattern that every app will want to implement.
-Whether you want to use it is highly dependent on
-other architectural choices you make.
-Many libraries that help you manage state have
-their own tools to solve these problems.
-For example, if you were to use
-[streams][] and [`StreamBuilders`][] in your app,
-the [`AsyncSnapshot`][] classes provided by Flutter have
-this functionality built in.
+Este padrão padroniza como os problemas comuns de UI são resolvidos no aplicativo,
+tornando sua base de código menos propensa a erros e mais escalável,
+mas não é um padrão que todos os aplicativos desejam implementar.
+Se você deseja usá-lo depende muito de
+outras escolhas arquitetônicas que você faz.
+Muitas bibliotecas que ajudam você a gerenciar o estado têm
+suas próprias ferramentas para resolver esses problemas.
+Por exemplo, se você fosse usar
+[streams][] e [`StreamBuilders`][] em seu aplicativo,
+as classes [`AsyncSnapshot`][] fornecidas pelo Flutter têm
+essa funcionalidade integrada.
 
-:::note Real world example
-While building the Compass app, we found a bug that was solved by using
-the Command pattern. [Read about it on GitHub][].
+:::note Exemplo do mundo real
+Ao construir o aplicativo Compass, encontramos um bug que foi resolvido usando
+o padrão Command. [Leia sobre isso no GitHub][Read about it on GitHub].
 :::
 
 [UI layer]: /app-architecture/guide#ui-layer
@@ -654,7 +654,7 @@ the Command pattern. [Read about it on GitHub][].
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está evoluindo,
+nós [agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="case-study/ui-layer"

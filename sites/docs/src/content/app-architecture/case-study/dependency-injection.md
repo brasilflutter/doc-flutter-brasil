@@ -1,47 +1,48 @@
 ---
-title: Communicating between layers
-shortTitle: Dependency injection
+title: Comunicação entre camadas
+shortTitle: Injeção de dependência
 description: >-
-  How to implement dependency injection to communicate between MVVM layers.
+  Como implementar a injeção de dependência para comunicar entre as camadas MVVM.
 prev:
-  title: Data layer
+  title: Camada de dados
   path: /app-architecture/case-study/data-layer
 next:
-  title: Testing
+  title: Testando
   path: /app-architecture/case-study/testing
+ia-translate: true
 ---
 
-Along with defining clear responsibilities for each component of the architecture,
-it's important to consider how the components communicate.
-This refers to both the rules that dictate communication,
-and the technical implementation of how components communicate.
-An app's architecture should answer the following questions:
+Além de definir responsabilidades claras para cada componente da arquitetura,
+é importante considerar como os componentes se comunicam.
+Isso se refere tanto às regras que ditam a comunicação,
+quanto à implementação técnica de como os componentes se comunicam.
+A arquitetura de um aplicativo deve responder às seguintes perguntas:
 
-* Which components are allowed to communicate with which other components
-  (including components of the same type)?
-* What do these components expose as output to each other?
-* How is any given layer 'wired up' to another layer?
+* Quais componentes têm permissão para se comunicar com quais outros componentes
+  (incluindo componentes do mesmo tipo)?
+* O que esses componentes expõem como saída uns para os outros?
+* Como qualquer camada é 'conectada' a outra camada?
 
-![A diagram showing the components of app architecture.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified.png)
+![Um diagrama mostrando os componentes da arquitetura do aplicativo.](/assets/images/docs/app-architecture/guide/feature-architecture-simplified.png)
 
-Using this diagram as a guide, the rules of engagement are as follows:
+Usando este diagrama como um guia, as regras de engajamento são as seguintes:
 
-| Component  | Rules of engagement                                                                                                                                                                                                                                               |
+| Componente  | Regras de engajamento                                                                                                                                                                                                                                                         |
 |------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| View       | <ol><li> A view is only aware of exactly one view model, and is never aware of any other layer or component. When created, Flutter passes the view model to the view as an argument, exposing the view model's data and command callbacks to the view. </li></ol> |
-| ViewModel  | <ol><li>A ViewModel belongs to exactly one view, which can see its data, but the model never needs to know that a view exists.</li><li>A view model is aware of one or more repositories, which are passed into the view model's constructor.</li></ol>           |
-| Repository | <ol><li>A repository can be aware of many services, which are passed as arguments into the repository constructor.</li><li>A repository can be used by many view models, but it never needs to be aware of them.</li></ol>                                        |
-| Service    | <ol><li>A service can be used by many repositories, but it never needs to be aware of a repository (or any other object).</li></ol>                                                                                                                               |
+| View       | <ol><li> Uma view só tem conhecimento de exatamente um view model e nunca tem conhecimento de nenhuma outra camada ou componente. Quando criada, o Flutter passa o view model para a view como um argumento, expondo os dados do view model e os callbacks de comando para a view. </li></ol> |
+| ViewModel  | <ol><li>Um ViewModel pertence a exatamente uma view, que pode ver seus dados, mas o model nunca precisa saber que uma view existe.</li><li>Um view model tem conhecimento de um ou mais repositórios, que são passados para o construtor do view model.</li></ol>         |
+| Repositório | <ol><li>Um repositório pode ter conhecimento de muitos serviços, que são passados como argumentos para o construtor do repositório.</li><li>Um repositório pode ser usado por muitos view models, mas nunca precisa ter conhecimento deles.</li></ol>                                  |
+| Serviço    | <ol><li>Um serviço pode ser usado por muitos repositórios, mas nunca precisa ter conhecimento de um repositório (ou qualquer outro objeto).</li></ol>                                                                                                                             |
 
 {:.table .table-striped}
 
-## Dependency injection
+## Injeção de dependência
 
-This guide has shown how these different components communicate
-with each other by using inputs and outputs.
-In every case, communication between two layers is facilitated by passing
-a component into the constructor methods (of the components that
-consume its data), such as a `Service` into a `Repository.`
+Este guia mostrou como esses diferentes componentes se comunicam
+uns com os outros usando entradas e saídas.
+Em todos os casos, a comunicação entre duas camadas é facilitada pela passagem
+de um componente para os métodos construtores (dos componentes que
+consomem seus dados), como um `Service` em um `Repository.`
 
 ```dart
 class MyRepository {
@@ -52,19 +53,19 @@ class MyRepository {
 }
 ```
 
-One thing that's missing, however, is object creation. Where,
-in an application, is the `MyService` instance created so that it can be
-passed into `MyRepository`?
-This answer to this question involves a
-pattern known as [dependency injection][].
+Uma coisa que está faltando, no entanto, é a criação de objetos. Onde,
+em um aplicativo, a instância `MyService` é criada para que ela possa ser
+passada para `MyRepository`?
+A resposta para esta pergunta envolve um
+padrão conhecido como [injeção de dependência][dependency injection].
 
-In the Compass app, *dependency injection* is handled using
-[`package:provider`][]. Based on their experience building Flutter apps,
-teams at Google recommend using `package:provider` to implement
-dependency injection.
+No aplicativo Compass, a *injeção de dependência* é gerenciada usando
+[`package:provider`][]. Com base em sua experiência na criação de aplicativos Flutter,
+as equipes do Google recomendam o uso de `package:provider` para implementar
+a injeção de dependência.
 
-Services and repositories are exposed to the top level of the widget tree of
-the Flutter application as `Provider` objects.
+Serviços e repositórios são expostos ao nível superior da árvore de widgets do
+aplicativo Flutter como objetos `Provider`.
 
 ```dart title=dependencies.dart
 runApp(
@@ -90,25 +91,25 @@ runApp(
           apiClient: context.read(),
         ) as ContinentRepository,
       ),
-      // In the Compass app, additional service and repository providers live here.
+      // No aplicativo Compass, provedores de serviços e repositórios adicionais estão aqui.
     ],
     child: const MainApp(),
   ),
 );
 ```
 
-Services are exposed only so they can immediately be
-injected into repositories via the `BuildContext.read` method from `provider`,
-as shown in the preceding snippet.
-Repositories are then exposed so that they can be
-injected into view models as needed.
+Os serviços são expostos apenas para que possam ser imediatamente
+injetados em repositórios através do método `BuildContext.read` do `provider`,
+conforme mostrado no snippet anterior.
+Os repositórios são então expostos para que possam ser
+injetados em view models conforme necessário.
 
-Slightly lower in the widget tree, view models that correspond to
-a full screen are created in the [`package:go_router`][] configuration,
-where provider is again used to inject the necessary repositories.
+Um pouco mais abaixo na árvore de widgets, os view models que correspondem a
+uma tela inteira são criados na configuração [`package:go_router`][],
+onde o provider é usado novamente para injetar os repositórios necessários.
 
 ```dart title=router.dart
-// This code was modified for demo purposes.
+// Este código foi modificado para fins de demonstração.
 GoRouter router(
   AuthRepository authRepository,
 ) =>
@@ -144,8 +145,8 @@ GoRouter router(
     );
 ```
 
-Within the view model or repository, the injected component should be private.
-For example, the `HomeViewModel` class looks like this:
+Dentro do view model ou repositório, o componente injetado deve ser privado.
+Por exemplo, a classe `HomeViewModel` se parece com isto:
 
 ```dart title=home_viewmodel.dart
 class HomeViewModel extends ChangeNotifier {
@@ -162,14 +163,14 @@ class HomeViewModel extends ChangeNotifier {
 }
 ```
 
-Private methods prevent the view, which has access to the view model, from
-calling methods on the repository directly.
+Métodos privados impedem que a view, que tem acesso ao view model,
+chame métodos no repositório diretamente.
 
-This concludes the code walkthrough of the Compass app. This page only walked
-through the architecture-related code, but it doesn't tell the whole story. Most
-utility code, widget code, and UI styling was ignored. Browse the code in
-the [Compass app repository][] for a complete
-example of a robust Flutter application built following these principles.
+Isso conclui o passo a passo do código do aplicativo Compass. Esta página apenas passou
+pelo código relacionado à arquitetura, mas não conta toda a história. A maior parte
+do código de utilitários, código de widgets e estilo de UI foi ignorada. Navegue pelo código no
+[repositório do aplicativo Compass][Compass app repository] para um exemplo completo
+de um aplicativo Flutter robusto construído seguindo esses princípios.
 
 [`package:provider`]: {{site.pub-pkg}}/provider
 [`package:go_router`]: {{site.pub-pkg}}/go_router
@@ -178,7 +179,7 @@ example of a robust Flutter application built following these principles.
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está evoluindo,
+[agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="case-study/dependency-injection"

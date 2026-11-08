@@ -1,55 +1,57 @@
 ---
-title: Feature integration
+title: Integração de funcionalidades
 description: >
-  How to integrate with other Flutter features.
+  Como integrar com outros recursos do Flutter.
 prev:
-  title: User experience
+  title: Experiência do usuário
   path: /ai/ai-toolkit/user-experience
 next:
-  title: Custom LLM providers
+  title: Provedores de LLM personalizados
   path: /ai/ai-toolkit/custom-llm-providers
+ia-translate: true
 ---
 
-In addition to the features that are provided automatically by the
-[`LlmChatView`][], a number of integration points allow your app to blend
-seamlessly with other features to provide additional functionality:
+Além dos recursos que são fornecidos automaticamente pelo
+[`LlmChatView`][], vários pontos de integração permitem que seu aplicativo
+se misture perfeitamente com outros recursos para fornecer
+funcionalidades adicionais:
 
-* **Welcome messages**: Display an initial greeting to users.
-* **Suggested prompts**: Offer users predefined prompts to guide interactions.
-* **System instructions**: Provide the LLM with specific input to influence its
-  responses.
-* **Disable attachments and audio input**: Remove optional parts of the chat UI.
-* **Manage cancel or error behavior**: Change the user cancellation or LLM error
-  behavior.
-* **Manage history**: Every LLM provider allows for managing chat history, which
-  is useful for clearing it, changing it dynamically and storing it between
-  sessions.
-* **Chat serialization/deserialization**: Store and retrieve conversations
-  between app sessions.
-* **Custom response widgets**: Introduce specialized UI components to present
-  LLM responses.
-* **Custom styling**: Define unique visual styles to match the chat appearance
-  to the overall app.
-* **Chat without UI**: Interact directly with the LLM providers without
-  affecting the user's current chat session.
-* **Custom LLM providers**: Build your own LLM provider for integration of chat
-  with your own model backend.
-* **Rerouting prompts**: Debug, log, or reroute messages meant for the provider
-  to track down issues or route prompts dynamically.
+* **Mensagens de boas-vindas**: Exiba uma saudação inicial aos usuários.
+* **Sugestões de prompts**: Ofereça aos usuários prompts predefinidos para guiar as interações.
+* **Instruções do sistema**: Forneça ao LLM entradas específicas para influenciar
+  suas respostas.
+* **Desativar anexos e entrada de áudio**: Remova partes opcionais da UI do chat.
+* **Gerenciar o comportamento de cancelamento ou erro**: Altere o comportamento
+  quando o usuário cancela ou quando ocorre um erro do LLM.
+* **Gerenciamento do histórico**: Todo provedor de LLM permite o gerenciamento do
+  histórico de chat, o que é útil para limpá-lo, alterá-lo dinamicamente e
+  armazená-lo entre as sessões.
+* **Serialização/desserialização de chat**: Armazene e recupere conversas entre
+  sessões do aplicativo.
+* **Widgets de resposta personalizados**: Introduza componentes de UI especializados
+  para apresentar respostas de LLM.
+* **Estilo personalizado**: Defina estilos visuais únicos para combinar a aparência
+  do chat com o aplicativo geral.
+* **Chat sem UI**: Interaja diretamente com os provedores de LLM sem afetar a sessão
+  de chat atual do usuário.
+* **Provedores de LLM personalizados**: Crie seu próprio provedor de LLM para
+  integração do chat com seu próprio backend de modelo.
+* **Redirecionamento de prompts**: Depure, registre ou redirecione mensagens
+  destinadas ao provedor para rastrear problemas ou rotear prompts dinamicamente.
 
 [`LlmChatView`]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmChatView-class.html
 
-## Welcome messages
+## Mensagens de boas-vindas
 
-The chat view allows you to provide a custom welcome message to set context for
-the user:
+A visualização de chat permite que você forneça uma mensagem de boas-vindas
+personalizada para definir o contexto para o usuário:
 
-![Example welcome
-message](/assets/images/docs/ai-toolkit/example-of-welcome-message.png)
+![Exemplo de mensagem de
+boas-vindas](/assets/images/docs/ai-toolkit/example-of-welcome-message.png)
 
-You can initialize the `LlmChatView` with a welcome message by setting the
-`welcomeMessage` parameter:
+Você pode inicializar o `LlmChatView` com uma mensagem de boas-vindas
+definindo o parâmetro `welcomeMessage`:
 
 ```dart
 class ChatPage extends StatelessWidget {
@@ -70,23 +72,24 @@ class ChatPage extends StatelessWidget {
 }
 ```
 
-To see a complete example of setting the welcome message, check out the [welcome
-example][].
+Para ver um exemplo completo de como definir a mensagem de boas-vindas,
+consulte o [exemplo de boas-vindas][welcome example].
 
 [welcome example]:
     https://github.com/flutter/ai/blob/main/example/lib/welcome/welcome.dart
 
-## Suggested prompts
+## Sugestões de prompts
 
-You can provide a set of suggested prompts to give the user some idea of what
-the chat session has been optimized for:
+Você pode fornecer um conjunto de sugestões de prompts para dar ao usuário uma
+ideia do objetivo para o qual a sessão de chat foi otimizada:
 
-![Example suggested
+![Exemplo de sugestões de
 prompts](/assets/images/docs/ai-toolkit/example-of-suggested-prompts.png)
 
-The suggestions are only shown when there is no existing chat history. Clicking
-one sends it immediately as a request to the underlying LLM. To set the list of
- suggestions, construct the `LlmChatView` with the `suggestions` parameter:
+As sugestões são mostradas apenas quando não há histórico de chat existente.
+Clicar em uma delas a envia imediatamente como uma solicitação ao LLM
+subjacente. Para definir a lista de sugestões, construa o `LlmChatView` com o
+parâmetro `suggestions`:
 
 ```dart
 class ChatPage extends StatelessWidget {
@@ -111,23 +114,24 @@ class ChatPage extends StatelessWidget {
 }
 ```
 
-To see a complete example of setting up suggestions for the user, take a look at
-the [suggestions example][].
+Para ver um exemplo completo de como configurar sugestões para o usuário, dê uma
+olhada no [exemplo de sugestões][suggestions example].
 
 [suggestions example]:
     https://github.com/flutter/ai/blob/main/example/lib/suggestions/suggestions.dart
 
-## LLM instructions
+## Instruções de LLM
 
-To optimize an LLM's responses based on the needs of your app, you'll want to
-give it instructions. For example, the [recipes example app][] uses the
-`systemInstructions` parameter of the `GenerativeModel` class to tailor the LLM
-to focus on delivering recipes based on the user's instructions:
+Para otimizar as respostas de um LLM com base nas necessidades do seu
+aplicativo, você vai querer fornecer instruções a ele. Por exemplo, o
+[aplicativo de exemplo de receitas][recipes example app] usa o parâmetro
+`systemInstructions` da classe `GenerativeModel` para adaptar o LLM para se
+concentrar na entrega de receitas com base nas instruções do usuário:
 
 ```dart
 class _HomePageState extends State<HomePage> {
   ...
-  // create a new provider with the given history and the current settings
+  // cria um novo provedor com o histórico fornecido e as configurações atuais
   LlmProvider _createProvider([List<ChatMessage>? history]) => FirebaseProvider(
       history: history,
         ...,
@@ -148,51 +152,54 @@ You should keep things casual and friendly. You may generate multiple recipes in
 }
 ```
 
-Setting system instructions is unique to each provider; the `FirebaseProvider`
-allows you to provide them through the `systemInstruction` parameter.
+Definir instruções do sistema é exclusivo para cada provedor; o
+`FirebaseProvider` permite que você as forneça por meio do parâmetro
+`systemInstruction`.
 
-Notice that, in this case, we're bringing in user preferences as part of the
-creation of the LLM provider passed to the `LlmChatView` constructor. We set the
-instructions as part of the creation process each time the user changes their
-preferences. The recipes app allows the user to change their food preferences
-using a drawer on the scaffold:
+Observe que, neste caso, estamos trazendo as preferências do usuário como parte
+da criação do provedor de LLM passado para o construtor `LlmChatView`.
+Definimos as instruções como parte do processo de criação cada vez que o
+usuário altera suas preferências. O aplicativo de receitas permite que o
+usuário altere suas preferências alimentares usando um drawer no scaffold:
 
-![Example of refining
+![Exemplo de refinamento de
 prompt](/assets/images/docs/ai-toolkit/setting-food-preferences.png)
 
-Whenever the user changes their food preferences, the recipes app creates a new
-model to use the new preferences:
+Sempre que o usuário altera suas preferências alimentares, o aplicativo de
+receitas cria um novo modelo para usar as novas preferências:
 
 ```dart
 class _HomePageState extends State<HomePage> {
   ...
   void _onSettingsSave() => setState(() {
-        // move the history over from the old provider to the new one
+        // move o histórico do provedor antigo para o novo
         final history = _provider.history.toList();
         _provider = _createProvider(history);
       });
 }
 ```
 
-## Function calling
+## Chamada de funções
 
-To enable the LLM to perform actions on behalf of the user, you can provide a
-set of tools (functions) that the LLM can call. The `FirebaseProvider` supports
-function calling out of the box. It handles the loop of sending the user's
-prompt, receiving a function call request from the LLM, executing the function,
-and sending the result back to the LLM until a final text response is generated.
+Para permitir que o LLM execute ações em nome do usuário, você pode fornecer um
+conjunto de ferramentas (funções) que o LLM pode chamar. O `FirebaseProvider`
+oferece suporte a chamada de funções nativamente. Ele cuida do ciclo de enviar
+o prompt do usuário, receber uma solicitação de chamada de função do LLM,
+executar a função e enviar o resultado de volta ao LLM até que uma resposta de
+texto final seja gerada.
 
-To use function calling, you need to define your tools and pass them to the
-`FirebaseProvider`. Check out the [function calling example][] for details.
+Para usar a chamada de funções, você precisa definir suas ferramentas e
+passá-las para o `FirebaseProvider`. Confira o
+[exemplo de chamada de funções][function calling example] para mais detalhes.
 
 [function calling example]:
     https://github.com/flutter/ai/blob/main/example/lib/function_calls/function_calls.dart
 
-## Disable attachments and audio input
+## Desativar anexos e entrada de áudio
 
-If you'd like to disable attachments (the **+** button) or audio input (the mic
-button), you can do so with the `enableAttachments` and `enableVoiceNotes`
-parameters to the `LlmChatView` constructor:
+Se você quiser desativar os anexos (o botão **+**) ou a entrada de áudio (o
+botão de microfone), você pode fazer isso com os parâmetros `enableAttachments`
+e `enableVoiceNotes` do construtor `LlmChatView`:
 
 ```dart
 class ChatPage extends StatelessWidget {
@@ -214,15 +221,15 @@ class ChatPage extends StatelessWidget {
 }
 ```
 
-Both of these flags default to `true`.
+Ambas as flags têm `true` como padrão.
 
-## Custom speech-to-text
+## Speech-to-text personalizado
 
-By default, the AI Toolkit uses the `LlmProvider` to pass to the `LlmChatView`
-to provide the speech-to-text implementation. If you'd like to provide your own
-implementation, for example to use a device-specific service, you can do so by
-implementing the `SpeechToText` interface and passing it to the `LlmChatView`
-constructor:
+Por padrão, o AI Toolkit usa o `LlmProvider` passado para o `LlmChatView` para
+fornecer a implementação de speech-to-text (conversão de fala em texto). Se
+você quiser fornecer sua própria implementação, por exemplo, para usar um
+serviço específico do dispositivo, você pode fazer isso implementando a
+interface `SpeechToText` e passando-a para o construtor `LlmChatView`:
 
 ```dart
 LlmChatView(
@@ -231,23 +238,23 @@ LlmChatView(
 )
 ```
 
-Check out the [custom STT example][] for details.
+Confira o [exemplo de STT personalizado][custom STT example] para mais detalhes.
 
 [custom STT example]:
     https://github.com/flutter/ai/tree/main/example/lib/custom_stt
 
-## Manage cancel or error behavior
+## Gerenciar o comportamento de cancelamento ou erro
 
-By default, when the user cancels an LLM request, the LLM's response will be
-appended with the string "CANCEL" and a message will pop up that the user has
-canceled the request. Likewise, in the event of an LLM error, like a dropped
-network connection, the LLM's response will be appended with the string "ERROR"
-and an alert dialog will pop up with the details of the error.
+Por padrão, quando o usuário cancela uma solicitação ao LLM, a string "CANCEL"
+será anexada à resposta do LLM e uma mensagem aparecerá informando que o
+usuário cancelou a solicitação. Da mesma forma, no caso de um erro do LLM, como
+uma queda na conexão de rede, a string "ERROR" será anexada à resposta do LLM e
+uma caixa de diálogo de alerta aparecerá com os detalhes do erro.
 
-You can override the cancel and error behavior with the `cancelMessage`,
-`errorMessage`, `onCancelCallback` and `onErrorCallback` parameters of the
-`LlmChatView`. For example, the following code replaces the default cancellation
-handling behavior:
+Você pode substituir o comportamento de cancelamento e de erro com os
+parâmetros `cancelMessage`, `errorMessage`, `onCancelCallback` e
+`onErrorCallback` do `LlmChatView`. Por exemplo, o código a seguir substitui o
+tratamento padrão de cancelamento:
 
 ```dart
 class ChatPage extends StatelessWidget {
@@ -271,14 +278,14 @@ class ChatPage extends StatelessWidget {
 }
 ```
 
-You can override any or all of these parameters and the `LlmChatView` will use
-its defaults for anything you don't override.
+Você pode substituir qualquer um desses parâmetros, ou todos eles, e o
+`LlmChatView` usará seus padrões para tudo o que você não substituir.
 
-## Manage history
+## Gerenciando o histórico
 
-The [standard interface that defines all LLM providers][providerIF] that can
-plug into the chat view includes the ability to get and set history for the
-provider:
+A [interface padrão que define todos os provedores de LLM][providerIF] que podem
+ser conectados à visualização de chat inclui a capacidade de obter e definir o
+histórico do provedor:
 
 ```dart
 abstract class LlmProvider implements Listenable {
@@ -300,48 +307,48 @@ abstract class LlmProvider implements Listenable {
 [providerIF]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmProvider-class.html
 
-When the history for a provider changes, it calls the `notifyListener` method
-exposed by the `Listenable` base class. This means that you manually
-subscribe/unsubscribe with the `add` and `remove` methods or use it to construct
-an instance of the `ListenableBuilder` class.
+Quando o histórico de um provedor muda, ele chama o método `notifyListener`
+exposto pela classe base `Listenable`. Isso significa que você se
+inscreve/cancela a inscrição manualmente com os métodos `add` e `remove` ou o
+usa para construir uma instância da classe `ListenableBuilder`.
 
-The `generateStream` method calls into the underlying LLM without affecting the
-history. Calling the `sendMessageStream` method changes the history by adding
-two new messages to the provider's history—one for the user message and one for
-the LLM response—when the response is completed. The chat view uses
-`sendMessageStream` when it processes a user's chat prompt and `generateStream`
-when it's processing the user's voice input.
+O método `generateStream` chama o LLM subjacente sem afetar o histórico. Chamar
+o método `sendMessageStream` altera o histórico adicionando duas novas mensagens
+ao histórico do provedor — uma para a mensagem do usuário e uma para a resposta
+do LLM — quando a resposta é concluída. A visualização de chat usa
+`sendMessageStream` quando processa um prompt de chat do usuário e
+`generateStream` quando está processando a entrada de voz do usuário.
 
-To see or set the history, you can access the `history` property:
+Para ver ou definir o histórico, você pode acessar a propriedade `history`:
 
 ```dart
 void _clearHistory() => _provider.history = [];
 ```
 
-The ability to access a provider's history is also useful when it comes to
-recreating a provider while maintaining the history:
+A capacidade de acessar o histórico de um provedor também é útil quando se
+trata de recriar um provedor, mantendo o histórico:
 
 ```dart
 class _HomePageState extends State<HomePage> {
   ...
   void _onSettingsSave() => setState(() {
-        // move the history over from the old provider to the new one
+        // move o histórico do provedor antigo para o novo
         final history = _provider.history.toList();
         _provider = _createProvider(history);
       });
 }
 ```
 
-The `_createProvider` method creates a new provider with the history from the
-previous provider _and_ the new user preferences. It's seamless for the user;
-they can keep chatting away but now the LLM gives them responses taking their
-new food preferences into account. For example:
+O método `_createProvider` cria um novo provedor com o histórico do provedor
+anterior _e_ as novas preferências do usuário. É transparente para o usuário;
+ele pode continuar conversando, mas agora o LLM fornece respostas levando em
+consideração suas novas preferências alimentares. Por exemplo:
 
 
 ```dart
 class _HomePageState extends State<HomePage> {
   ...
-  // create a new provider with the given history and the current settings
+  // cria um novo provedor com o histórico fornecido e as configurações atuais
   LlmProvider _createProvider([List<ChatMessage>? history]) =>
     FirebaseProvider(
       history: history,
@@ -351,33 +358,35 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-To see history in action, check out the [recipes example app][] and the [history
-example app][].
+Para ver o histórico em ação, confira o
+[aplicativo de exemplo de receitas][recipes example app] e o
+[aplicativo de exemplo de histórico][history example app].
 
 [history example app]:
     https://github.com/flutter/ai/blob/main/example/lib/history/history.dart
 [recipes example app]: https://github.com/flutter/ai/tree/main/example/lib/recipes
 
-## Chat serialization/deserialization
+## Serialização/desserialização de chat
 
-To save and restore chat history between sessions of an app requires the ability
-to serialize and deserialize each user prompt, including the attachments, and
-each LLM response. Both kinds of messages (the user prompts and LLM responses),
-are exposed in the `ChatMessage` class. Serialization can be accomplished by
-using the `toJson` method of each `ChatMessage` instance.
+Para salvar e restaurar o histórico de chat entre sessões de um aplicativo, é
+necessária a capacidade de serializar e desserializar cada prompt do usuário,
+incluindo os anexos, e cada resposta do LLM. Ambos os tipos de mensagens (os
+prompts do usuário e as respostas do LLM) são expostos na classe `ChatMessage`.
+A serialização pode ser realizada usando o método `toJson` de cada instância de
+`ChatMessage`.
 
 ```dart
 Future<void> _saveHistory() async {
-  // get the latest history
+  // obtém o histórico mais recente
   final history = _provider.history.toList();
 
-  // write the new messages
+  // escreve as novas mensagens
   for (var i = 0; i != history.length; ++i) {
-    // skip if the file already exists
+    // pula se o arquivo já existir
     final file = await _messageFile(i);
     if (file.existsSync()) continue;
 
-    // write the new message to disk
+    // escreve a nova mensagem no disco
     final map = history[i].toJson();
     final json = JsonEncoder.withIndent('  ').convert(map);
     await file.writeAsString(json);
@@ -385,12 +394,12 @@ Future<void> _saveHistory() async {
 }
 ```
 
-Likewise, to deserialize, use the static `fromJson` method of the `ChatMessage`
-class:
+Da mesma forma, para desserializar, use o método estático `fromJson` da classe
+`ChatMessage`:
 
 ```dart
 Future<void> _loadHistory() async {
-  // read the history from disk
+  // lê o histórico do disco
   final history = <ChatMessage>[];
   for (var i = 0;; ++i) {
     final file = await _messageFile(i);
@@ -400,34 +409,37 @@ Future<void> _loadHistory() async {
     history.add(ChatMessage.fromJson(map));
   }
 
-  // set the history on the controller
+  // define o histórico no controlador
   _provider.history = history;
 }
 ```
 
-To ensure fast turnaround when serializing, we recommend only writing each user
-message once. Otherwise, the user must wait for your app to write every message
-every time and, in the face of binary attachments, that could take a while.
+Para garantir um retorno rápido ao serializar, recomendamos escrever cada
+mensagem do usuário apenas uma vez. Caso contrário, o usuário deve esperar que
+seu aplicativo escreva todas as mensagens todas as vezes e, diante de anexos
+binários, isso pode levar um tempo.
 
-To see this in action, check out the [history example app][].
+Para ver isso em ação, consulte o
+[aplicativo de exemplo de histórico][history example app].
 
 [history example app]:
     https://github.com/flutter/ai/blob/main/example/lib/history/history.dart
 
-## Custom response widgets
+## Widgets de resposta personalizados
 
-By default, the LLM response shown by the chat view is formatted Markdown.
-However, in some cases, you want to create a custom widget to show the LLM
-response that's specific to and integrated with your app. For example, when the
-user requests a recipe in the [recipes example app][], the LLM response is used
-to create a widget that's specific to showing recipes just like the rest of the
-app does and to provide for an **Add** button in case the user would like to add
-the recipe to their database:
+Por padrão, a resposta do LLM exibida pela visualização de chat é formatada em
+Markdown. No entanto, em alguns casos, você deseja criar um widget
+personalizado para mostrar a resposta do LLM que seja específica e integrada ao
+seu aplicativo. Por exemplo, quando o usuário solicita uma receita no
+[aplicativo de exemplo de receitas][recipes example app], a resposta do LLM é
+usada para criar um widget específico para exibir receitas, como o resto do
+aplicativo, e para fornecer um botão **Adicionar** caso o usuário queira
+adicionar a receita ao seu banco de dados:
 
-![Add recipe button](/assets/images/docs/ai-toolkit/add-recipe-button.png)
+![Botão Adicionar receita](/assets/images/docs/ai-toolkit/add-recipe-button.png)
 
-This is accomplished by setting the `responseBuilder` parameter of the
-`LlmChatView` constructor:
+Isso é realizado definindo o parâmetro `responseBuilder` do construtor
+`LlmChatView`:
 
 ```dart
 LlmChatView(
@@ -439,8 +451,9 @@ LlmChatView(
 ),
 ```
 
-In this particular example, the `RecipeResponseView` widget is constructed with
-the LLM provider's response text and uses that to implement its `build` method:
+Neste exemplo específico, o widget `RecipeResponseView` é construído com o
+texto de resposta do provedor de LLM e o usa para implementar seu método
+`build`:
 
 ```dart
 class RecipeResponseView extends StatelessWidget {
@@ -452,21 +465,21 @@ class RecipeResponseView extends StatelessWidget {
     final children = <Widget>[];
     String? finalText;
 
-    // created with the response from the LLM as the response streams in, so
-    // many not be a complete response yet
+    // criado com a resposta do LLM à medida que as respostas chegam, então
+    // pode não ser uma resposta completa ainda
     try {
       final map = jsonDecode(response);
       final recipesWithText = map['recipes'] as List<dynamic>;
       finalText = map['text'] as String?;
 
       for (final recipeWithText in recipesWithText) {
-        // extract the text before the recipe
+        // extrai o texto antes da receita
         final text = recipeWithText['text'] as String?;
         if (text != null && text.isNotEmpty) {
           children.add(MarkdownBody(data: text));
         }
 
-        // extract the recipe
+        // extrai a receita
         final json = recipeWithText['recipe'] as Map<String, dynamic>;
         final recipe = Recipe.fromJson(json);
         children.add(const Gap(16));
@@ -479,7 +492,7 @@ class RecipeResponseView extends StatelessWidget {
           ],
         ));
 
-        // add a button to add the recipe to the list
+        // adiciona um botão para adicionar a receita à lista
         children.add(const Gap(16));
         children.add(OutlinedButton(
           onPressed: () => RecipeRepository.addNewRecipe(recipe),
@@ -501,21 +514,22 @@ class RecipeResponseView extends StatelessWidget {
 }
 ```
 
-This code parses the text to extract introductory text and the recipe from the
-LLM, bundling them together with an **Add Recipe** button to show in place of
-the Markdown.
+Este código analisa o texto para extrair o texto introdutório e a receita do
+LLM, agrupando-os com um botão **Adicionar Receita** para exibir no lugar do
+Markdown.
 
-Notice that we're parsing the LLM response as JSON. It's common to set the
-provider into JSON mode and to provide a schema to restrict the format of its
-responses to ensure that we've got something we can parse. Each provider exposes
-this functionality in its own way, but the `FirebaseProvider` class enables
-this with a `GenerationConfig` object that the recipes example uses as follows:
+Observe que estamos analisando a resposta do LLM como JSON. É comum definir o
+provedor no modo JSON e fornecer um esquema para restringir o formato de suas
+respostas para garantir que temos algo que podemos analisar. Cada provedor
+expõe essa funcionalidade de sua própria maneira, mas a classe
+`FirebaseProvider` habilita isso com um objeto `GenerationConfig` que o exemplo
+de receitas usa da seguinte forma:
 
 ```dart
 class _HomePageState extends State<HomePage> {
   ...
 
-  // create a new provider with the given history and the current settings
+  // cria um novo provedor com o histórico fornecido e as configurações atuais
   LlmProvider _createProvider([List<ChatMessage>? history]) => FirebaseProvider(
         ...
         model: FirebaseAI.geminiAI().generativeModel(
@@ -552,21 +566,22 @@ well as any trailing text commentary you care to provide:
 }
 ```
 
-This code initializes the `GenerationConfig` object by setting the
-`responseMimeType` parameter to `'application/json'` and the `responseSchema`
-parameter to an instance of the `Schema` class that defines the structure of the
-JSON that you're prepared to parse. In addition, it's good practice to also ask
-for JSON and to provide a description of that JSON schema in the system
-instructions, which we've done here.
+Este código inicializa o objeto `GenerationConfig` definindo o parâmetro
+`responseMimeType` para `'application/json'` e o parâmetro `responseSchema`
+para uma instância da classe `Schema` que define a estrutura do JSON que você
+está preparado para analisar. Além disso, é uma boa prática também pedir em
+JSON e fornecer uma descrição desse esquema JSON nas instruções do sistema, o
+que fizemos aqui.
 
-To see this in action, check out the [recipes example app][].
+Para ver isso em ação, confira o
+[aplicativo de exemplo de receitas][recipes example app].
 
-## Custom styling
+## Estilo personalizado
 
-The chat view comes out of the box with a set of default styles for the
-background, the text field, the buttons, the icons, the suggestions, and so on.
-You can fully customize those styles by setting your own by using the `style`
-parameter to the `LlmChatView` constructor:
+A visualização de chat vem pronta com um conjunto de estilos padrão para o
+fundo, o campo de texto, os botões, os ícones, as sugestões e assim por diante.
+Você pode personalizar totalmente esses estilos definindo os seus próprios
+usando o parâmetro `style` no construtor `LlmChatView`:
 
 ```dart
 LlmChatView(
@@ -575,20 +590,23 @@ LlmChatView(
 ),
 ```
 
-For example, the [custom styles example app][custom-ex] uses this feature to
-implement an app with a Halloween theme:
+Por exemplo, o [aplicativo de exemplo de estilos personalizados][custom-ex] usa
+esse recurso para implementar um aplicativo com um tema de Halloween:
 
-![Halloween-themed demo app](/assets/images/docs/ai-toolkit/demo-app.png)
+![Aplicativo de demonstração com tema de Halloween](/assets/images/docs/ai-toolkit/demo-app.png)
 
-For a complete list of the styles available in the `LlmChatViewStyle` class,
-check out the [reference documentation][]. You can also customize the appearance
-of the voice recorder using the `voiceNoteRecorderStyle` parameter of the
-`LlmChatViewStyle` class, which is demonstrated in the [styles
-example][styles-ex].
+Para obter uma lista completa dos estilos disponíveis na classe
+`LlmChatViewStyle`, consulte a
+[documentação de referência][reference documentation]. Você também pode
+personalizar a aparência do gravador de voz usando o parâmetro
+`voiceNoteRecorderStyle` da classe `LlmChatViewStyle`, o que é demonstrado no
+[exemplo de estilos][styles-ex].
 
-To see custom styles in action, in addition to the [custom styles
-example][custom-ex] and the [styles example][styles-ex], check out the [dark
-mode example][] and the [demo app][].
+Para ver estilos personalizados em ação, além do
+[exemplo de estilos personalizados][custom-ex] e do
+[exemplo de estilos][styles-ex], confira o
+[exemplo de modo escuro][dark mode example] e o
+[aplicativo de demonstração][demo app].
 
 [custom-ex]:
     https://github.com/flutter/ai/blob/main/example/lib/custom_styles/custom_styles.dart
@@ -599,29 +617,29 @@ mode example][] and the [demo app][].
 [reference documentation]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmChatViewStyle-class.html
 
-## Chat without UI
+## Chat sem UI
 
-You don't have to use the chat view to access the functionality of the
-underlying provider. In addition to being able to simply call it with whatever
-proprietary interface it provides, you can also use it with the [LlmProvider
-interface][].
+Você não precisa usar a visualização de chat para acessar a funcionalidade do
+provedor subjacente. Além de poder simplesmente chamá-lo com qualquer interface
+proprietária que ele forneça, você também pode usá-lo com a
+[interface LlmProvider][LlmProvider interface].
 
 [LlmProvider interface]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmProvider-class.html
 
-As an example, the recipes example app provides a Magic button on the page for
-editing recipes. The purpose of that button is to update an existing recipe in
-your database with your current food preferences. Pressing the button allows you
-to preview the recommended changes and decide whether you'd like to apply them
-or not:
+Como exemplo, o aplicativo de exemplo de receitas fornece um botão Mágico na
+página para editar receitas. O propósito desse botão é atualizar uma receita
+existente em seu banco de dados com suas preferências alimentares atuais.
+Pressionar o botão permite que você visualize as alterações recomendadas e
+decida se deseja aplicá-las ou não:
 
-![User decides whether to update recipe in
-database](/assets/images/docs/ai-toolkit/apply-changes-decision.png)
+![Usuário decide se atualiza a receita no banco de
+dados](/assets/images/docs/ai-toolkit/apply-changes-decision.png)
 
-Instead of using the same provider that the chat portion of the app uses, which
-would insert spurious user messages and LLM responses into the user's chat
-history, the Edit Recipe page instead creates its own provider and uses it
-directly:
+Em vez de usar o mesmo provedor que a parte de chat do aplicativo usa, o que
+inseriria mensagens de usuário espúrias e respostas de LLM no histórico de chat
+do usuário, a página Editar Receita cria seu próprio provedor e o usa
+diretamente:
 
 ```dart
 class _EditRecipePageState extends State<EditRecipePage> {
@@ -674,24 +692,24 @@ class _EditRecipePageState extends State<EditRecipePage> {
 }
 ```
 
-The call to `sendMessageStream` creates entries in the provider's history, but
-since it's not associated with a chat view, they won't be shown. If it's
-convenient, you can also accomplish the same thing by calling `generateStream`,
-which allows you to reuse an existing provider without affecting the chat
-history.
+A chamada para `sendMessageStream` cria entradas no histórico do provedor, mas
+como não está associada a uma visualização de chat, elas não serão exibidas. Se
+for conveniente, você também pode realizar a mesma coisa chamando
+`generateStream`, o que permite reutilizar um provedor existente sem afetar o
+histórico de chat.
 
-To see this in action, check out the [Edit Recipe page][] of the recipes
-example.
+Para ver isso em ação, confira a [página Editar Receita][Edit Recipe page] do
+exemplo de receitas.
 
 [Edit Recipe page]:
     https://github.com/flutter/ai/blob/main/example/lib/recipes/pages/edit_recipe_page.dart
 
-## Rerouting prompts
+## Redirecionamento de prompts
 
-If you'd like to debug, log, or manipulate the connection between the chat view
-and the underlying provider, you can do so with an implementation of an
-[`LlmStreamGenerator`][] function. You then pass that function to the
-`LlmChatView` in the `messageSender` parameter:
+Se você quiser depurar, registrar ou manipular a conexão entre a visualização
+de chat e o provedor subjacente, você pode fazer isso com uma implementação de
+uma função [`LlmStreamGenerator`][]. Em seguida, você passa essa função para o
+`LlmChatView` no parâmetro `messageSender`:
 
 [`LlmStreamGenerator`]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmStreamGenerator.html
@@ -713,34 +731,36 @@ class ChatPage extends StatelessWidget {
     String prompt, {
     required Iterable<Attachment> attachments,
   }) async* {
-    // log the message and attachments
+    // registra a mensagem e os anexos
     debugPrint('# Sending Message');
     debugPrint('## Prompt\n$prompt');
     debugPrint('## Attachments\n${attachments.map((a) => a.toString())}');
 
-    // forward the message on to the provider
+    // encaminha a mensagem para o provedor
     final response = _provider.sendMessageStream(
       prompt,
       attachments: attachments,
     );
 
-    // log the response
+    // registra a resposta
     final text = await response.join();
     debugPrint('## Response\n$text');
 
-    // return it
+    // retorna
     yield text;
   }
 }
 ```
 
-This example logs the user prompts and LLM responses as they go back and forth.
-When providing a function as a `messageSender`, it's your responsibility to call
-the underlying provider. If you don't, it won't get the message. This capability
-allows you to do advanced things like routing to a provider dynamically or
-Retrieval Augmented Generation (RAG).
+Este exemplo registra os prompts do usuário e as respostas do LLM conforme eles
+vão e voltam. Ao fornecer uma função como `messageSender`, é sua
+responsabilidade chamar o provedor subjacente. Se você não o fizer, ele não
+receberá a mensagem. Essa capacidade permite que você faça coisas avançadas
+como rotear para um provedor dinamicamente ou Geração Aumentada por Recuperação
+(RAG, Retrieval Augmented Generation).
 
-To see this in action, check out the [logging example app][].
+Para ver isso em ação, consulte o
+[aplicativo de exemplo de registro][logging example app].
 
 [logging example app]:
     https://github.com/flutter/ai/blob/main/example/lib/logging/logging.dart

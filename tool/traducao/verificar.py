@@ -69,7 +69,9 @@ def main():
         else:
             for nome, rx in PADROES.items():
                 ne, np_ = len(rx.findall(en)), len(rx.findall(pt))
-                if ne != np_:
+                # Âncoras explícitas a mais são permitidas: servem para manter
+                # o slug em inglês de títulos traduzidos.
+                if ne != np_ and not (nome == 'âncoras {:#}' and np_ > ne):
                     erros.append(f'{nome}: en={ne} pt={np_}')
             faltando = rotulos(pt) - rotulos(en)
             if faltando:

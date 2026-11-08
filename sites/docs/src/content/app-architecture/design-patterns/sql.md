@@ -1,91 +1,92 @@
 ---
-title: "Persistent storage architecture: SQL"
-description: Save complex application data to a user's device with SQL.
+title: "Arquitetura de armazenamento persistente: SQL"
+description: Salve dados complexos de aplicativos no dispositivo de um usuário com SQL.
 contentTags:
   - data
   - SQL
 iconPath: /assets/images/docs/app-architecture/design-patterns/sql-icon.svg
 order: 2
+ia-translate: true
 ---
 
 <?code-excerpt path-base="app-architecture/todo_data_service"?>
 
-Most Flutter applications,
-no matter how small or big they are,
-might require storing data on the user’s device at some point.
-For example, API keys,
-user preferences or data that should be available offline.
+A maioria dos aplicativos Flutter,
+não importa quão pequenos ou grandes eles sejam,
+pode exigir o armazenamento de dados no dispositivo do usuário em algum momento.
+Por exemplo, chaves de API,
+preferências do usuário ou dados que devem estar disponíveis offline.
 
-In this recipe,
-you will learn how to integrate persistent storage for complex data using SQL
-in a Flutter application following the Flutter Architecture design pattern.
+Nesta receita,
+você aprenderá como integrar o armazenamento persistente de dados complexos usando SQL
+em um aplicativo Flutter seguindo o padrão de design de arquitetura Flutter.
 
-To learn how to store simpler key-value data,
-take a look at the Cookbook recipe:
-[Persistent storage architecture: Key-value data][].
+Para aprender como armazenar dados de chave-valor mais simples,
+dê uma olhada na receita do Cookbook:
+[Arquitetura de armazenamento persistente: dados de chave-valor][Persistent storage architecture: Key-value data].
 
-To read this recipe,
-you should be familiar with SQL and SQLite.
-If you need help, you can read the [Persist data with SQLite][] recipe
-before reading this one.
+Para ler esta receita,
+você deve estar familiarizado com SQL e SQLite.
+Se precisar de ajuda, você pode ler a receita
+[Persistir dados com SQLite][Persist data with SQLite] antes de ler esta.
 
-This example uses [`sqflite`][] with the [`sqflite_common_ffi`][] plugin,
-which combined support for mobile and desktop.
-Support for web is provided in the experimental plugin
-[`sqflite_common_ffi_web`][] but it's not included in this example.
+Este exemplo usa [`sqflite`][] com o plugin [`sqflite_common_ffi`][],
+que combinado oferece suporte para dispositivos móveis e desktop.
+O suporte para web é fornecido no plugin experimental
+[`sqflite_common_ffi_web`][], mas não está incluído neste exemplo.
 
-## Example application: ToDo list application
+## Aplicativo de exemplo: aplicativo de lista de tarefas
 
-The example application consists of a single screen with an app bar at the top,
-a list of items, and a text field input at the bottom.
+O aplicativo de exemplo consiste em uma única tela com uma barra de aplicativo na parte superior,
+uma lista de itens e uma entrada de campo de texto na parte inferior.
 
 <img src='/assets/images/docs/cookbook/architecture/todo_app_light.png'
-class="site-mobile-screenshot" alt="ToDo application in light mode" >
+class="site-mobile-screenshot" alt="Aplicativo ToDo em modo claro" >
 
-The body of the application contains the `TodoListScreen`.
-This screen contains a `ListView` of `ListTile` items,
-each one representing a ToDo item.
-At the bottom, a `TextField` allows users to create new ToDo items
-by writing the task description and then tapping on the “Add” `FilledButton`.
+O corpo do aplicativo contém o `TodoListScreen`.
+Esta tela contém uma `ListView` de itens `ListTile`,
+cada um representando um item ToDo.
+Na parte inferior, um `TextField` permite que os usuários criem novos itens ToDo
+escrevendo a descrição da tarefa e, em seguida, tocando no `FilledButton` "Adicionar".
 
-Users can tap on the delete `IconButton` to delete the ToDo item.
+Os usuários podem tocar no `IconButton` de exclusão para excluir o item ToDo.
 
-The list of ToDo items is stored locally using a database service,
-and restored when the user starts the application.
+A lista de itens ToDo é armazenada localmente usando um serviço de banco de dados,
+e restaurada quando o usuário inicia o aplicativo.
 
 :::note
-The full, runnable source-code for this example is
-available in [`/examples/app-architecture/todo_data_service/`][].
+O código-fonte completo e executável para este exemplo está
+disponível em [`/examples/app-architecture/todo_data_service/`][].
 :::
 
-## Storing complex data with SQL
+## Armazenando dados complexos com SQL
 
-This functionality follows the recommended [Flutter Architecture design][],
-containing a UI layer and a data layer.
-Additionally, in the domain layer you will find the data model used.
+Essa funcionalidade segue o [design de arquitetura do Flutter][Flutter Architecture design] recomendado,
+contendo uma camada de UI e uma camada de dados.
+Além disso, na camada de domínio você encontrará o modelo de dados usado.
 
-- UI layer with `TodoListScreen` and `TodoListViewModel`
-- Domain layer with `Todo` data class
-- Data layer with `TodoRepository` and `DatabaseService`
+- Camada de UI com `TodoListScreen` e `TodoListViewModel`
+- Camada de domínio com classe de dados `Todo`
+- Camada de dados com `TodoRepository` e `DatabaseService`
 
-### ToDo list presentation layer
+### Camada de apresentação da lista de tarefas
 
-The `TodoListScreen` is a Widget that contains the UI in charge of displaying
-and creating the ToDo items.
-It follows the [MVVM pattern][]
-and is accompanied by the `TodoListViewModel`,
-which contains the list of ToDo items
-and three commands to load, add, and delete ToDo items.
+O `TodoListScreen` é um Widget que contém a UI responsável por exibir
+e criar os itens ToDo.
+Ele segue o [padrão MVVM][MVVM pattern]
+e é acompanhado pelo `TodoListViewModel`,
+que contém a lista de itens ToDo
+e três comandos para carregar, adicionar e excluir itens ToDo.
 
-This screen is divided into two parts,
-one containing the list of ToDo items,
-implemented using a `ListView`,
-and the other is a `TextField`
-and a `Button`, used for creating new ToDo items.
+Esta tela é dividida em duas partes,
+uma contendo a lista de itens ToDo,
+implementada usando um `ListView`,
+e a outra é um `TextField`
+e um `Button`, usado para criar novos itens ToDo.
 
-The `ListView` is wrapped by a `ListenableBuilder`,
-which listens to changes in the `TodoListViewModel`,
-and shows a `ListTile` for each ToDo item.
+O `ListView` é envolvido por um `ListenableBuilder`,
+que ouve as mudanças no `TodoListViewModel`,
+e mostra um `ListTile` para cada item ToDo.
 
 <?code-excerpt "lib/ui/todo_list/widgets/todo_list_screen.dart (ListenableBuilder)" replace="/child: //g;/^\),$/)/g"?>
 ```dart
@@ -109,9 +110,9 @@ ListenableBuilder(
 )
 ```
 
-The list of ToDo items is defined in the `TodoListViewModel`,
-and loaded by the `load` command.
-This method calls the `TodoRepository` and fetches the list of ToDo items.
+A lista de itens ToDo é definida no `TodoListViewModel`,
+e carregada pelo comando `load`.
+Este método chama o `TodoRepository` e busca a lista de itens ToDo.
 
 <?code-excerpt "lib/ui/todo_list/viewmodel/todo_list_viewmodel.dart (TodoListViewModel)"?>
 ```dart
@@ -137,9 +138,9 @@ Future<Result<void>> _load() async {
 }
 ```
 
-Pressing the `FilledButton`,
-executes the `add` command
-and passes in the text controller value.
+Pressionar o `FilledButton`,
+executa o comando `add`
+e passa o valor do controlador de texto.
 
 <?code-excerpt "lib/ui/todo_list/widgets/todo_list_screen.dart (FilledButton)" replace="/^\),$/)/g"?>
 ```dart
@@ -151,15 +152,15 @@ FilledButton.icon(
 )
 ```
 
-The `add` command then calls the `TodoRepository.createTodo()` method
-with the task description text and it creates a new ToDo item.
+O comando `add` então chama o método `TodoRepository.createTodo()`
+com o texto de descrição da tarefa e cria um novo item ToDo.
 
-The `createTodo()` method returns the newly created ToDo,
-which is then added to the `_todo` list in the view model.
+O método `createTodo()` retorna o ToDo recém-criado,
+que é então adicionado à lista `_todo` no view model.
 
-ToDo items contain a unique identifier generated by the database.
-This is why the view model doesn’t create the ToDo item,
-but rather the `TodoRepository` does.
+Os itens ToDo contêm um identificador exclusivo gerado pelo banco de dados.
+É por isso que o view model não cria o item ToDo,
+mas sim o `TodoRepository`.
 
 <?code-excerpt "lib/ui/todo_list/viewmodel/todo_list_viewmodel.dart (Add)"?>
 ```dart
@@ -181,8 +182,8 @@ Future<Result<void>> _add(String task) async {
 }
 ```
 
-Finally, the `TodoListScreen` also listens to the result in the `add` command.
-When the action completes, the `TextEditingController` is cleared.
+Finalmente, o `TodoListScreen` também ouve o resultado no comando `add`.
+Quando a ação é concluída, o `TextEditingController` é limpo.
 
 <?code-excerpt "lib/ui/todo_list/widgets/todo_list_screen.dart (Add)"?>
 ```dart
@@ -195,7 +196,7 @@ void _onAdd() {
 }
 ```
 
-When a user taps on the `IconButton` in the `ListTile`, the delete command is executed.
+Quando um usuário toca no `IconButton` no `ListTile`, o comando de exclusão é executado.
 
 <?code-excerpt "lib/ui/todo_list/widgets/todo_list_screen.dart (Delete)" replace="/trailing: //g;/^\),$/)/g"?>
 ```dart
@@ -205,10 +206,10 @@ IconButton(
 )
 ```
 
-Then, the view model calls the `TodoRepository.deleteTodo()` method,
-passing the unique ToDo item identifier.
-A correct result removes the ToDo item from the view
-model *and* the screen.
+Então, o view model chama o método `TodoRepository.deleteTodo()`,
+passando o identificador exclusivo do item ToDo.
+Um resultado correto remove o item ToDo do view
+model *e* da tela.
 
 <?code-excerpt "lib/ui/todo_list/viewmodel/todo_list_viewmodel.dart (Delete)"?>
 ```dart
@@ -230,16 +231,16 @@ Future<Result<void>> _delete(int id) async {
 }
 ```
 
-### Todo list domain layer
+### Camada de domínio da lista de tarefas
 
-The domain layer of this example application contains
-the `Todo` item data model.
+A camada de domínio deste aplicativo de exemplo contém
+o modelo de dados do item `Todo`.
 
-Items are presented by an immutable data class.
-In this case, the application uses the `freezed` package to generate the code.
+Os itens são apresentados por uma classe de dados imutável.
+Nesse caso, o aplicativo usa o pacote `freezed` para gerar o código.
 
-The class has two properties, an ID represented by an `int`,
-and a task description, represented by a `String`.
+A classe tem duas propriedades, um ID representado por um `int`,
+e uma descrição de tarefa, representada por uma `String`.
 
 <?code-excerpt "lib/business/model/todo.dart (Todo)"?>
 ```dart
@@ -255,24 +256,24 @@ abstract class Todo with _$Todo {
 }
 ```
 
-### Todo list data layer
+### Camada de dados da lista de tarefas
 
-The data layer of this functionality is composed of two classes,
-the `TodoRepository` and the `DatabaseService`.
+A camada de dados desta funcionalidade é composta por duas classes,
+o `TodoRepository` e o `DatabaseService`.
 
-The `TodoRepository` acts as the source of truth for all the ToDo items.
-View models must use this repository to access to the ToDo list,
-and it should not expose any implementation details on how they are stored.
+O `TodoRepository` atua como a fonte da verdade para todos os itens ToDo.
+Os view models devem usar este repositório para acessar a lista ToDo,
+e ele não deve expor nenhum detalhe de implementação sobre como eles são armazenados.
 
-Internally, the `TodoRepository` uses the `DatabaseService`,
-which implements the access to the SQL database using the `sqflite` package.
-You can implement the same `DatabaseService` using other storage packages
-like `sqlite3`, `drift` or even cloud storage solutions like `firebase_database`.
+Internamente, o `TodoRepository` usa o `DatabaseService`,
+que implementa o acesso ao banco de dados SQL usando o pacote `sqflite`.
+Você pode implementar o mesmo `DatabaseService` usando outros pacotes de armazenamento
+como `sqlite3`, `drift` ou mesmo soluções de armazenamento em nuvem como `firebase_database`.
 
-The `TodoRepository` checks if the database is open
-before every request and opens it if necessary.
+O `TodoRepository` verifica se o banco de dados está aberto
+antes de cada solicitação e o abre se necessário.
 
-It implements the `fetchTodos()`, `createTodo()`, and `deleteTodo()` methods.
+Ele implementa os métodos `fetchTodos()`, `createTodo()` e `deleteTodo()`.
 
 <?code-excerpt "lib/data/repositories/todo_repository.dart (TodoRepository)"?>
 ```dart
@@ -304,11 +305,11 @@ class TodoRepository {
 }
 ```
 
-The `DatabaseService` implements the access to the SQLite database
-using the `sqflite` package.
+O `DatabaseService` implementa o acesso ao banco de dados SQLite
+usando o pacote `sqflite`.
 
-It’s a good idea to define the table and column names as constants
-to avoid typos when writing SQL code.
+É uma boa ideia definir a tabela e os nomes das colunas como constantes
+para evitar erros de digitação ao escrever código SQL.
 
 <?code-excerpt "lib/data/services/database_service.dart (Table)"?>
 ```dart
@@ -317,8 +318,8 @@ static const String _idColumnName = '_id';
 static const String _taskColumnName = 'task';
 ```
 
-The `open()` method opens the existing database,
-or creates a new one if it doesn’t exist.
+O método `open()` abre o banco de dados existente,
+ou cria um novo se ele não existir.
 
 <?code-excerpt "lib/data/services/database_service.dart (Open)"?>
 ```dart
@@ -337,13 +338,13 @@ Future<void> open() async {
 }
 ```
 
-Note that the column `id` is set as `primary key` and `autoincrement`;
-this means that each newly inserted item
-is assigned a new value for the `id` column.
+Observe que a coluna `id` é definida como `chave primária` e `autoincremento`;
+isso significa que a cada item recém-inserido
+é atribuído um novo valor para a coluna `id`.
 
-The `insert()` method creates a new ToDo item in the database,
-and returns a newly created Todo instance.
-The `id` is generated as mentioned before.
+O método `insert()` cria um novo item ToDo no banco de dados,
+e retorna uma instância ToDo recém-criada.
+O `id` é gerado como mencionado anteriormente.
 
 <?code-excerpt "lib/data/services/database_service.dart (Insert)"?>
 ```dart
@@ -359,13 +360,13 @@ Future<Result<Todo>> insert(String task) async {
 }
 ```
 
-All the `DatabaseService` operations use the `Result` class to return a value,
-as recommended by the [Flutter architecture recommendations][].
-This facilitates handling errors in further steps in the application code.
+Todas as operações `DatabaseService` usam a classe `Result` para retornar um valor,
+conforme recomendado pelas [recomendações de arquitetura do Flutter][Flutter architecture recommendations].
+Isso facilita o tratamento de erros em etapas posteriores no código do aplicativo.
 
-The `getAll()` method performs a database query,
-obtaining all the values in the `id` and `task` columns.
-For each entry, it creates a `Todo` class instance.
+O método `getAll()` executa uma consulta de banco de dados,
+obtendo todos os valores nas colunas `id` e `task`.
+Para cada entrada, ele cria uma instância da classe `Todo`.
 
 <?code-excerpt "lib/data/services/database_service.dart (GetAll)"?>
 ```dart
@@ -390,11 +391,11 @@ Future<Result<List<Todo>>> getAll() async {
 }
 ```
 
-The `delete()` method performs a database delete operation
-based on the ToDo item `id`.
+O método `delete()` executa uma operação de exclusão de banco de dados
+com base no `id` do item ToDo.
 
-In this case, if no items were deleted an error is returned,
-indicating that something went wrong.
+Neste caso, se nenhum item foi excluído, um erro é retornado,
+indicando que algo deu errado.
 
 <?code-excerpt "lib/data/services/database_service.dart (Delete)"?>
 ```dart
@@ -416,23 +417,23 @@ Future<Result<void>> delete(int id) async {
 ```
 
 :::note
-In some cases, you might want to close the database when you are done with it.
-For example, when the user leaves the screen,
-or after a certain time has passed.
+Em alguns casos, você pode querer fechar o banco de dados quando terminar de usá-lo.
+Por exemplo, quando o usuário sai da tela,
+ou depois que um determinado tempo se passou.
 
-This depends on the database implementation
-as well as your application requirements.
-It’s recommended that you check with the database package authors
-for recommendations.
+Isso depende da implementação do banco de dados
+assim como os requisitos do seu aplicativo.
+É recomendável que você verifique com os autores do pacote do banco de dados
+para obter recomendações.
 :::
 
-## Putting it all together
+## Juntando tudo
 
-In the `main()` method of your application,
-first initialize the `DatabaseService`,
-which requires different initialization code on different platforms.
-Then, pass the newly created `DatabaseService` into the `TodoRepository`
-which is itself passed into the `MainApp` as a constructor argument dependency.
+No método `main()` do seu aplicativo,
+primeiro inicialize o `DatabaseService`,
+que requer um código de inicialização diferente em diferentes plataformas.
+Em seguida, passe o `DatabaseService` recém-criado para o `TodoRepository`
+que é ele próprio passado para o `MainApp` como uma dependência de argumento do construtor.
 
 <?code-excerpt "lib/main.dart (MainTodo)"?>
 ```dart
@@ -458,9 +459,9 @@ void main() {
 }
 ```
 
-Then, when the `TodoListScreen` is created,
-also create the `TodoListViewModel`
-and pass the `TodoRepository` to it as dependency.
+Então, quando o `TodoListScreen` é criado,
+também crie o `TodoListViewModel`
+e passe o `TodoRepository` para ele como dependência.
 
 <?code-excerpt "lib/main.dart (TodoListScreen)" replace="/body: //g;/^\),$/)/g"?>
 ```dart

@@ -1,367 +1,360 @@
 ---
-title: Guide to app architecture
-shortTitle: Architecture guide
+title: Guia para arquitetura de aplicativos
+shortTitle: Guia de arquitetura
 description: >-
-  The recommended way to architect a Flutter app.
+  A maneira recomendada de arquitetar um aplicativo Flutter.
 prev:
-    title: Common architecture concepts
+    title: Conceitos comuns de arquitetura
     path: /app-architecture/concepts
 next:
-  title: Architecture case study
+  title: Estudo de caso de arquitetura
   path: /app-architecture/case-study
+ia-translate: true
 ---
 
-The following pages demonstrate how to build an app using best practices.
-The recommendations in this guide can be applied to most apps,
-making them easier to scale, test, and maintain.
-However, they're guidelines, not steadfast rules,
-and you should adapt them to your unique requirements.
+As páginas a seguir demonstram como construir um aplicativo usando as boas práticas.
+As recomendações neste guia podem ser aplicadas à maioria dos aplicativos,
+tornando-os mais fáceis de escalar, testar e manter.
+No entanto, elas são diretrizes, não regras inflexíveis,
+e você deve adaptá-las às suas necessidades específicas.
 
-This section provides a high-level overview of how Flutter applications
-can be architected. It explains the layers of an application,
-along with the classes that exist within each layer.
-The section after this provides concrete code samples and
-walks through a Flutter application that's implemented these recommendations.
+Esta seção fornece uma visão geral de alto nível de como os aplicativos Flutter podem ser
+arquitetados. Ela explica as camadas de um aplicativo,
+juntamente com as classes que existem dentro de cada camada.
+A seção seguinte fornece exemplos de código concretos e
+percorre um aplicativo Flutter que implementou essas recomendações.
 
-## Overview of project structure
+## Visão geral da estrutura do projeto
 
-[Separation-of-concerns][] is the most important principle to follow when
-designing your Flutter app.
-Your Flutter application should split into two broad layers,
-the UI layer and the Data layer.
+[Separação de preocupações][Separation-of-concerns] (Separation of concerns) é o princípio mais importante a ser seguido ao
+projetar seu aplicativo Flutter.
+Seu aplicativo Flutter deve ser dividido em duas grandes camadas,
+a camada de UI e a camada de Dados.
 
-Each layer is further split into different components,
-each of which has distinct responsibilities, a well-defined interface,
-boundaries and dependencies.
-This guide recommends you split your application into the following components:
+Cada camada é ainda dividida em diferentes componentes,
+cada um com responsabilidades distintas, uma interface bem definida,
+limites e dependências.
+Este guia recomenda que você divida seu aplicativo nos seguintes componentes:
 
-* Views
-* View models
-* Repositories
-* Services
+* Views (Visões)
+* View models (Modelos da view)
+* Repositórios
+* Services (Serviços)
 
 ### MVVM
 
-If you've encountered the [Model-View-ViewModel architectural pattern][] (MVVM),
-this will be familiar.
-MVVM is an architectural pattern that separates a
-feature of an application into three parts:
-the `Model`, the `ViewModel` and the `View`.
-Views and view models make up the UI layer of an application.
-Repositories and services represent the data of an application,
-or the model layer of MVVM.
-Each of these components is defined in the next section.
+Se você já se deparou com o [padrão arquitetural Model-View-ViewModel][Model-View-ViewModel architectural pattern] (MVVM),
+isso será familiar.
+MVVM é um padrão arquitetural que separa uma
+funcionalidade de um aplicativo em três partes:
+o `Model`, o `ViewModel` e a `View`.
+Views e view models compõem a camada de UI de um aplicativo.
+Repositórios e serviços representam os dados de um aplicativo,
+ou a camada de modelo do MVVM.
+Cada um desses componentes é definido na próxima seção.
 
-<img src='/assets/images/docs/app-architecture/guide/mvvm-intro-with-layers.png' alt="MVVM architectural pattern">
+<img src='/assets/images/docs/app-architecture/guide/mvvm-intro-with-layers.png' alt="Padrão arquitetural MVVM">
 
-Every feature in an application will contain one view to describe the UI and
-one view model to handle logic,
-one or more repositories as the sources of truth for your application data,
-and zero or more services that interact with external APIs,
-like client servers and platform plugins.
+Cada funcionalidade em um aplicativo conterá uma view para descrever a UI e
+um view model para lidar com a lógica,
+um ou mais repositórios como as fontes da verdade para os dados do seu aplicativo,
+e zero ou mais services que interagem com APIs externas,
+como servidores cliente e plugins de plataforma.
 
-A single feature of an application might require all of the following objects:
+Uma única funcionalidade de um aplicativo pode exigir todos os seguintes objetos:
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-example.png' alt="An example of the Dart objects that might exist in one feature using the architecture described on page.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-example.png' alt="Um exemplo dos objetos Dart que podem existir em uma funcionalidade usando a arquitetura descrita na página.">
 
-Each of these objects and the arrows that connect them will be explained
-thoroughly by the end of this page. Throughout this guide,
-the following simplified version of that diagram will be used as an anchor.
+Cada um desses objetos e as setas que os conectam serão explicados
+minuciosamente ao final desta página. Ao longo deste guia,
+a seguinte versão simplificada desse diagrama será usada como uma âncora.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified.png' alt="A simplified diagram of the architecture described on this page.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified.png' alt="Um diagrama simplificado da arquitetura descrita nesta página.">
 
 :::note
-Apps with complex logic might also have a logic layer that sits in between the
-UI layer and data layer. This logic layer is commonly called the *domain layer*.
-The domain layer contains additional components often called *interactors* or
-*use-cases*. The domain layer is covered later in this guide.
+Aplicativos com lógica complexa também podem ter uma camada de lógica que se encontra entre
+a camada de UI e a camada de dados. Essa camada de lógica é comumente chamada de *camada de domínio*.
+A camada de domínio contém componentes adicionais frequentemente chamados de *interatores* ou
+*use-cases* (casos de uso). A camada de domínio é abordada posteriormente neste guia.
 :::
 
 [Model-View-ViewModel architectural pattern]: https://en.wikipedia.org/wiki/Model–view–viewmodel
 
-## UI layer
+## Camada de UI
 
-An application's UI layer is responsible for interacting with the user.
-It displays an application's data to the user and receives user input,
-such as tap events and form inputs.
+A camada de UI de um aplicativo é responsável por interagir com o usuário.
+Ela exibe os dados de um aplicativo para o usuário e recebe entrada do usuário,
+como eventos de toque e entradas de formulário.
 
-The UI reacts to data changes or user input.
-When the UI receives new data from a Repository,
-it should re-render to display that new data.
-When the user interacts with the UI,
-it should change to reflect that interaction.
+A UI reage a mudanças de dados ou entradas do usuário.
+Quando a UI recebe novos dados de um Repositório,
+ela deve renderizar novamente para exibir esses novos dados.
+Quando o usuário interage com a UI,
+ela deve mudar para refletir essa interação.
 
-The UI layer is made up of two architectural components,
-based on the MVVM design pattern:
+A camada de UI é composta por dois componentes arquitetônicos,
+baseados no padrão de projeto MVVM:
 
-* **Views** describe how to present application data to the user.
-  Specifically, they refer to *compositions of widgets* that make a feature.
-  For instance, a view is often (but not always) a screen that
-  has a `Scaffold` widget, along with
-  all of the widgets below it in the widget tree.
-  Views are also responsible for passing events to
-  the view model in response to user interactions.
-* **View models** contain the logic that converts app data into *UI State*,
-  because data from repositories is often formatted differently from
-  the data that needs to be displayed.
-  For example, you might need to combine data from multiple repositories,
-  or you might want to filter a list of data records.
+* **Views** descrevem como apresentar os dados do aplicativo ao usuário.
+  Especificamente, elas se referem a *composições de widgets* que compõem uma funcionalidade.
+  Por exemplo, uma view é frequentemente (mas nem sempre) uma tela que
+  possui um widget `Scaffold`, juntamente com
+  todos os widgets abaixo dele na árvore de widgets.
+  As views também são responsáveis por passar eventos para
+  o view model em resposta às interações do usuário.
+* **View models** contêm a lógica que converte os dados do aplicativo em *Estado da UI*,
+  porque os dados dos repositórios geralmente são formatados de maneira diferente dos
+  dados que precisam ser exibidos.
+  Por exemplo, pode ser necessário combinar dados de vários repositórios,
+  ou você pode querer filtrar uma lista de registros de dados.
 
-Views and view models should have a one-to-one relationship.
+Views e view models devem ter uma relação um-para-um.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-UI-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the view and view model objects highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-UI-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com os objetos view e view model destacados.">
 
-In the simplest terms,
-a view model manages the UI state and the view displays that state.
-Using views and view models, your UI layer can maintain state during
-configuration changes (such as screen rotations),
-and you can test the logic of your UI independently of Flutter widgets.
+Em termos mais simples,
+um view model gerencia o estado da UI e a view exibe esse estado.
+Usando views e view models, sua camada de UI pode manter o estado durante
+mudanças de configuração (como rotações de tela),
+e você pode testar a lógica de sua UI independentemente dos widgets Flutter.
 
 :::note
-'View' is an abstract term, and one view doesn't equal one widget.
-Widgets are composable, and several can be combined to create one view.
-Therefore, view models don't have a one-to-one relationship with widgets,
-but rather a one-to-one relationship with a *collection* of widgets.
+'View' é um termo abstrato, e uma view não é igual a um widget.
+Widgets são combináveis, e vários podem ser combinados para criar uma view.
+Portanto, view models não têm uma relação um-para-um com widgets,
+mas sim uma relação um-para-um com uma *coleção* de widgets.
 :::
 
-A feature of an application is user centric,
-and therefore defined by the UI layer.
-Every instance of a paired *view* and *view model* defines one feature in your app.
-This is often a screen in your app, but it doesn't have to be.
-For example, consider logging in and out.
-Logging in is generally done on a specific screen whose
-only purpose is to provide the user with a way to log in.
-In the application code, the login screen would be
-made up of a `LoginViewModel` class and a `LoginView` class.
+Uma funcionalidade de um aplicativo é centrada no usuário,
+e, portanto, definida pela camada de UI.
+Cada instância de um par de *view* e *view model* define uma funcionalidade em seu aplicativo.
+Essa funcionalidade geralmente é uma tela em seu aplicativo, mas não precisa ser.
+Por exemplo, considere fazer login e logout.
+O login geralmente é feito em uma tela específica cujo
+único propósito é fornecer ao usuário uma maneira de fazer login.
+No código do aplicativo, a tela de login seria
+composta por uma classe `LoginViewModel` e uma classe `LoginView`.
 
-On the other hand,
-logging out of an app is generally not done on a dedicated screen.
-The ability to log out is generally presented to the user as a button in
-a menu, a user account screen, or any number of different locations.
-It's often presented in multiple locations.
-In such scenarios, you might have a `LogoutViewModel` and a `LogoutView` which
-only contains a single button that can be dropped into other widgets.
+Por outro lado,
+o logout de um aplicativo geralmente não é feito em uma tela dedicada.
+A capacidade de fazer logout geralmente é apresentada ao usuário como um botão em
+um menu, uma tela de conta de usuário ou qualquer número de locais diferentes.
+Geralmente é apresentado em vários locais.
+Em cenários como esse, você pode ter um `LogoutViewModel` e um `LogoutView` que
+contém apenas um único botão que pode ser colocado em outros widgets.
 
 ### Views
 
-In Flutter, views are the widget classes of your application.
-Views are the primary method of rendering UI,
-and shouldn't contain any business logic.
-They should be passed all data they need to render from the view model.
+No Flutter, views são as classes de widget do seu aplicativo.
+Views são o principal método de renderização da UI,
+e não devem conter nenhuma lógica de negócios.
+Todos os dados de que precisam para renderizar devem ser passados pelo view model.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-View-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the view object highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-View-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com o objeto view destacado.">
 
-The only logic a view should contain is:
+A única lógica que uma view deve conter é:
 
-* Simple if-statements to show and hide widgets based on a flag or nullable
-  field in the view model
-* Animation logic
-* Layout logic based on device information, like screen size or orientation.
-* Simple routing logic
+* Instruções if simples para mostrar e ocultar widgets com base em uma flag ou campo null
+  no view model
+* Lógica de animação
+* Lógica de layout com base em informações do dispositivo, como tamanho ou orientação da tela.
+* Lógica de roteamento simples
 
-All logic related to data should be handled in the view model.
+Toda a lógica relacionada a dados deve ser tratada no view model.
 
 ### View models
 
-A view model exposes the application data necessary to render a view.
-In the architecture design described on this page,
-most of the logic in your Flutter application lives in view models.
+Um view model expõe os dados do aplicativo necessários para renderizar uma view.
+No design de arquitetura descrito nesta página,
+a maior parte da lógica do seu aplicativo Flutter reside em view models.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-ViewModel-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the view model object highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-ViewModel-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com o objeto view model destacado.">
 
-A view model's main responsibilities include:
+As principais responsabilidades de um view model incluem:
 
-* Retrieving application data from repositories and transforming it into a
-  format suitable for presentation in the view.
-  For example, it might filter, sort, or aggregate data.
-* Maintaining the current state needed in the view,
-  so that the view can rebuild without losing data.
-  For example, it might contain boolean flags to
-  conditionally render widgets in the view, or a field that
-  tracks which section of a carousel is active on screen.
-* Exposes callbacks (called **commands**) to the view that can be
-  attached to an event handler, like a button press or form submission.
+* Recuperar dados do aplicativo de repositórios e transformá-los em um
+  formato adequado para apresentação na view.
+  Por exemplo, ele pode filtrar, classificar ou agregar dados.
+* Manter o estado atual necessário na view,
+  para que a view possa ser reconstruída sem perder dados.
+  Por exemplo, ele pode conter flags booleanas para
+  renderizar widgets condicionalmente na view, ou um campo que
+  rastreia qual seção de um carrossel está ativa na tela.
+* Expor callbacks (chamados de **commands**) à view que podem ser
+  anexados a um manipulador de eventos, como um pressionamento de botão ou envio de formulário.
 
-Commands are named for the [command pattern][],
-and are Dart functions that allow views to
-execute complex logic without knowledge of its implementation.
-Commands are written as members of the view model class to
-be called by the gesture handlers in the view class.
+Os commands recebem esse nome devido ao [command pattern][],
+e são funções Dart que permitem que views
+executem lógica complexa sem conhecimento de sua implementação.
+Os commands são escritos como membros da classe view model para
+serem chamados pelos manipuladores de gestos na classe view.
 
-You can find examples of views, view models, and commands on
-the [UI layer][] portion of the [App architecture case study][].
+Você pode encontrar exemplos de views, view models e commands em
+a parte da [camada de UI][UI layer] do [Estudo de caso de arquitetura de aplicativo][App architecture case study].
 
-For a gentle introduction to MVVM in Flutter,
-check out the [state management fundamentals][].
+Para uma introdução suave ao MVVM no Flutter,
+confira os [fundamentos de gerenciamento de estado][state management fundamentals].
 
 [UI layer]: /app-architecture/case-study/ui-layer
 [App architecture case study]: /app-architecture/case-study
 [state management fundamentals]: /data-and-backend/state-mgmt/intro
 
-## Data layer
+## Camada de dados
 
-The data layer of an app handles your business data and logic.
-Two pieces of architecture make up the data layer: services and repositories.
-These pieces should have well-defined inputs and outputs
-to simplify their reusability and testability.
+A camada de dados de um aplicativo lida com os dados e a lógica de negócios.
+Duas partes da arquitetura compõem a camada de dados: serviços e repositórios.
+Essas partes devem ter entradas e saídas bem definidas
+para simplificar sua reutilização e testabilidade.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Data-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the Data layer highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Data-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com a camada de dados destacada.">
 
-Using MVVM language, services and repositories make up your *model layer*.
+Usando a linguagem MVVM, serviços e repositórios compõem sua *camada de modelo*.
 
-### Repositories
+### Repositórios
 
-[Repository][] classes are the source of truth for your model data.
-They're responsible for polling data from services,
-and transforming that raw data into **domain models**.
-Domain models represent the data that the application needs,
-formatted in a way that your view model classes can consume.
-There should be a repository class for
-each different type of data handled in your app.
+As classes de [Repositório][Repository] são a fonte da verdade para os dados do seu modelo.
+Elas são responsáveis por pesquisar dados de serviços,
+e transformar esses dados brutos em **modelos de domínio**.
+Modelos de domínio representam os dados que o aplicativo precisa,
+formatados de uma forma que suas classes de view model possam consumir.
+Deve haver uma classe de repositório para
+cada tipo diferente de dados gerenciados em seu aplicativo.
 
-Repositories handle the business logic associated with services, such as:
+Os repositórios lidam com a lógica de negócios associada aos serviços, como:
 
-* Caching
-* Error handling
-* Retry logic
-* Refreshing data
-* Polling services for new data
-* Refreshing data based on user actions
+* Caching (Armazenamento em cache)
+* Tratamento de erros
+* Lógica de retry
+* Atualização de dados
+* Pesquisa de serviços por novos dados
+* Atualização de dados com base nas ações do usuário
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Repository-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the Repository object highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Repository-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com o objeto Repositório destacado.">
 
-Repositories output application data as domain models.
-For example, a social media app might have a
-`UserProfileRepository` class that exposes a `Stream<UserProfile?>`,
-which emits a new value whenever the user signs in or out.
+Os repositórios geram dados de aplicativo como modelos de domínio.
+Por exemplo, um aplicativo de mídia social pode ter uma
+classe `UserProfileRepository` que expõe um `Stream<UserProfile?>`,
+que emite um novo valor sempre que o usuário faz login ou logout.
 
-The models output by repositories are consumed by view models.
-Repositories and view models have a many-to-many relationship.
-A view model can use many repositories to get the data it needs,
-and a repository can be used by many view models.
+Os modelos gerados pelos repositórios são consumidos pelos view models.
+Repositórios e view models têm uma relação muitos para muitos.
+Um view model pode usar vários repositórios para obter os dados de que precisa,
+e um repositório pode ser usado por vários view models.
 
-Repositories should never be aware of each other.
-If your application has business logic that needs data from two repositories,
-you should combine the data in the view model or in the domain layer,
-especially if your repository-to-view-model relationship is complex.
+Os repositórios nunca devem estar cientes uns dos outros.
+Se seu aplicativo tiver lógica de negócios que precisa de dados de dois repositórios,
+você deve combinar os dados no view model ou na camada de domínio,
+especialmente se sua relação repositório-para-view-model for complexa.
 
-#### Managing app-wide session state
+#### Gerenciando o estado de sessão de todo o aplicativo
 
-Because repositories are the single source of truth for application data,
-they are also the ideal place to manage **app-wide lifecycle state**—state that
-needs to be shared across multiple view models but shouldn't persist beyond the
-current application session.
+Como os repositórios são a fonte única da verdade para os dados do aplicativo,
+eles também são o lugar ideal para gerenciar o **estado de ciclo de vida de todo o aplicativo**: o estado que
+precisa ser compartilhado entre vários view models, mas não deve persistir além da
+sessão atual do aplicativo.
 
-Examples of app-wide lifecycle state include an active user session,
-in-memory data caches, or transient application settings.
-Because view models and repositories have a many-to-many relationship,
-multiple view models can depend on the same repository instance
-(typically managed through a service locator or dependency injection container).
-This allows distinct features to reactively observe and modify
-the same shared state through streams and methods exposed by the repository,
-without violating the clean one-to-one boundary between a view and its view model.
+Exemplos de estado de ciclo de vida de todo o aplicativo incluem uma sessão de usuário ativa,
+caches de dados em memória ou configurações transitórias do aplicativo.
+Como view models e repositórios têm uma relação de muitos para muitos,
+vários view models podem depender da mesma instância de repositório
+(normalmente gerenciada por meio de um service locator ou de um contêiner de injeção de dependência).
+Isso permite que funcionalidades distintas observem e modifiquem de forma reativa
+o mesmo estado compartilhado por meio de streams e métodos expostos pelo repositório,
+sem violar a fronteira limpa de um-para-um entre uma view e seu view model.
 
 ### Services
 
-Services are in the lowest layer of your application.
-They wrap API endpoints and expose asynchronous response objects,
-such as `Future` and `Stream` objects.
-They're only used to isolate data-loading, and they hold no state.
-Your app should have one service class per data source.
-Examples of endpoints that services might wrap include:
+Os serviços estão na camada mais baixa do seu aplicativo.
+Eles encapsulam endpoints de API e expõem objetos de resposta assíncronos,
+como objetos `Future` e `Stream`.
+Eles são usados apenas para isolar o carregamento de dados e não mantêm nenhum estado.
+Seu aplicativo deve ter uma classe de serviço por fonte de dados.
+Exemplos de endpoints que os serviços podem encapsular incluem:
 
-* The underlying platform, like iOS and Android APIs
-* REST endpoints
-* Local files
+* A plataforma subjacente, como APIs iOS e Android
+* Endpoints REST
+* Arquivos locais
 
-As a rule of thumb, services are most helpful when
-the necessary data lives outside of your application's Dart code -
-which is true of each of the preceding examples.
+Como regra geral, os serviços são mais úteis quando
+os dados necessários residem fora do código Dart do seu aplicativo -
+o que é verdade para cada um dos exemplos anteriores.
 
-Services and repositories have a many-to-many relationship.
-A single Repository can use several services,
-and a service can be used by multiple repositories.
+Serviços e repositórios têm uma relação muitos para muitos.
+Um único Repositório pode usar vários serviços,
+e um serviço pode ser usado por vários repositórios.
 
-<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Service-highlighted.png'
-  alt="A simplified diagram of the architecture described on this page with the Service object highlighted.">
+<img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Service-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com o objeto Serviço destacado.">
 
-## Optional: Domain layer
+## Opcional: Camada de domínio
 
-As your app grows and adds features, you might need to abstract away logic
-that adds too much complexity to your view models.
-These classes are often called interactors or **use-cases**.
+À medida que seu aplicativo cresce e adiciona recursos, você pode precisar abstrair a lógica
+que adiciona muita complexidade aos seus view models.
+Essas classes são frequentemente chamadas de interatores ou **use-cases** (casos de uso).
 
-Use-cases are responsible for making interactions between
-the UI and Data layers simpler and more reusable.
-They take data from repositories and make it suitable for the UI layer.
+Os use-cases são responsáveis por tornar as interações entre
+as camadas de UI e de Dados mais simples e reutilizáveis.
+Eles pegam dados de repositórios e os tornam adequados para a camada de UI.
 
-<img src='/assets/images/docs/app-architecture/guide/mvvm-intro-with-domain-layer.png'
-  alt="MVVM design pattern with an added domain layer object">
+<img src='/assets/images/docs/app-architecture/guide/mvvm-intro-with-domain-layer.png' alt="Padrão de projeto MVVM com um objeto de camada de domínio adicionado">
 
-Use-cases are primarily used to encapsulate business logic that would otherwise
-live in the view model and meets one or more of the following conditions:
+Os use-cases são usados principalmente para encapsular a lógica de negócios que, de outra forma,
+estaria no view model e atende a uma ou mais das seguintes condições:
 
-1. Requires merging data from multiple repositories
-2. Is exceedingly complex
-3. The logic will be reused by different view models
+1. Requer a junção de dados de vários repositórios
+2. É extremamente complexo
+3. A lógica será reutilizada por diferentes view models
 
-This layer is optional because not all applications or features within an
-application have these requirements.
-If you suspect your application would
-benefit from this additional layer, consider the pros and cons:
+Essa camada é opcional porque nem todos os aplicativos ou funcionalidades dentro de um
+aplicativo têm esses requisitos.
+Se você suspeitar que seu aplicativo se
+beneficiaria dessa camada adicional, considere os prós e contras:
 
-
-| Pros                                                                     | Cons                                                                                       |
+| Prós                                                                     | Contras                                                                                       |
 |--------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| ✅ Avoid code duplication in view models                                  | ❌ Increases complexity of your architecture, adding more classes and higher cognitive load |
-| ✅ Improve testability by separating complex business logic from UI logic | ❌ Testing requires additional mocks                                                        |
-| ✅ Improve code readability in view models                                | ❌ Adds additional boilerplate to your code                                                 |
+| ✅ Evitar duplicação de código em view models                                  | ❌ Aumenta a complexidade de sua arquitetura, adicionando mais classes e maior carga cognitiva |
+| ✅ Melhora a testabilidade separando a lógica de negócios complexa da lógica de UI | ❌ O teste requer mocks adicionais                                                        |
+| ✅ Melhora a legibilidade do código em view models                                | ❌ Adiciona boilerplate adicional ao seu código                                                 |
 
 {:.table .table-striped}
 
-### Data access with use-cases
+### Acesso a dados com use-cases
 
-Another consideration when adding a Domain layer is whether view models will
-continue to have access to repository data directly, or if you'll enforce
-view models to go through use-cases to get their data. Put another way,
-will you add use-cases as you need them?
-Perhaps when you notice repeated logic in your view models?
-Or, will you create a use-case each time a view model needs data,
-even if the logic in the use-case is simple?
+Outra consideração ao adicionar uma camada de domínio é se os view models
+continuarão a ter acesso direto aos dados do repositório, ou se você aplicará
+view models para passar por use-cases para obter seus dados. Em outras palavras,
+você adicionará use-cases conforme precisar deles?
+Talvez quando você perceber lógica repetida em seus view models?
+Ou, você criará um caso de uso cada vez que um view model precisar de dados,
+mesmo que a lógica no caso de uso seja simples?
 
-If you choose to do the latter,
-it intensifies the earlier outlined pros and cons.
-Your application code will be extremely modular and testable,
-but it also adds a significant amount of unnecessary overhead.
+Se você optar por fazer o último,
+ele intensifica os prós e contras descritos anteriormente.
+O código do seu aplicativo será extremamente modular e testável,
+mas também adiciona uma quantidade significativa de sobrecarga desnecessária.
 
-A good approach is to add use-cases only when needed.
-If you find that your view models are
-accessing data through use-cases most of the time,
-you can always refactor your code to utilize use-cases exclusively.
-The example app used later in this guide has use-cases for some features,
-but also has view models that interact with repositories directly.
-A complex feature might ultimately end up looking like this:
+Uma boa abordagem é adicionar use-cases apenas quando necessário.
+Se você descobrir que seus view models estão
+acessando dados por meio de use-cases na maioria das vezes,
+você sempre pode refatorar seu código para utilizar use-cases exclusivamente.
+O aplicativo de exemplo usado posteriormente neste guia tem use-cases para algumas funcionalidades,
+mas também tem view models que interagem diretamente com repositórios.
+Uma funcionalidade complexa pode acabar se parecendo com isso:
 
 <img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-with-logic-layer.png'
-alt="A simplified diagram of the architecture described on this page with a use case object.">
+alt="Um diagrama simplificado da arquitetura descrita nesta página com um objeto de caso de uso.">
 
-This method of adding use-cases is defined by the following rules:
+Este método de adicionar use-cases é definido pelas seguintes regras:
 
-* Use-cases depend on repositories
-* Use-cases and repositories have a many-to-many relationship
-* View models depend on one or more use-cases *and* one or more repositories
+* Use-cases dependem de repositórios
+* Use-cases e repositórios têm uma relação muitos para muitos
+* View models dependem de um ou mais use-cases *e* um ou mais repositórios
 
-This method of using use-cases ends up looking
-less like a layered lasagna, and more like a plated dinner with
-two mains (UI and data layers) and a side (domain layer).
-Use-cases are just utility classes that have well-defined inputs and outputs.
-This approach is flexible and extendable,
-but it requires greater diligence to maintain order.
+Este método de usar use-cases acaba parecendo
+menos uma lasanha em camadas, e mais um jantar com
+dois pratos principais (camadas de UI e dados) e um acompanhamento (camada de domínio).
+Use-cases são apenas classes de utilitário que têm entradas e saídas bem definidas.
+Essa abordagem é flexível e extensível,
+mas requer maior diligência para manter a ordem.
 
 [Separation-of-concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
 [command pattern]: https://en.wikipedia.org/wiki/Command_pattern
@@ -369,7 +362,7 @@ but it requires greater diligence to maintain order.
 
 ## Feedback
 
-As this section of the website is evolving,
-we [welcome your feedback][]!
+Como esta seção do site está evoluindo,
+nós [agradecemos seu feedback][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_4T0XuR9Ts29acw6?page="guide"

@@ -1,149 +1,150 @@
 ---
-title: Understanding constraints
-description: Flutter's model for widget constraints, sizing, positioning, and how they interact.
+title: Entendendo restrições
+description: O modelo do Flutter para restrições, dimensionamento, posicionamento de widgets e como eles interagem.
 showToc: false
+ia-translate: true
 ---
 
 <?code-excerpt path-base="layout/constraints/"?>
 
-<img src='/assets/images/docs/ui/layout/article-hero-image.png' alt="Hero image from the article">
+<img src='/assets/images/docs/ui/layout/article-hero-image.png' alt="Imagem de destaque do artigo">
 
 :::note
-If you are experiencing specific layout errors,
-you might check out [Common Flutter errors][].
+Se você está enfrentando erros de layout específicos,
+talvez queira conferir [Erros comuns do Flutter][Common Flutter errors].
 :::
 
 [Common Flutter errors]: /testing/common-errors
 
-When someone learning Flutter asks you why some widget
-with `width: 100` isn't 100 pixels wide,
-the default answer is to tell them to put that widget
-inside of a `Center`, right?
+Quando alguém aprendendo Flutter pergunta por que um widget
+com `width: 100` não tem 100 pixels de largura,
+a resposta padrão é dizer que ele deve colocar o widget
+dentro de um `Center`, certo?
 
-**Don't do that.**
+**Não faça isso.**
 
-If you do, they'll come back again and again,
-asking why some `FittedBox` isn't working,
-why that `Column` is overflowing, or what
-`IntrinsicWidth` is supposed to be doing.
+Se você fizer isso, eles voltarão várias vezes,
+perguntando por que algum `FittedBox` não está funcionando,
+por que aquela `Column` está transbordando ou o que
+`IntrinsicWidth` deveria estar fazendo.
 
-Instead, first tell them that Flutter layout is very different
-from HTML layout (which is probably where they're coming from),
-and then make them memorize the following rule:
+Em vez disso, primeiro diga que o layout do Flutter é muito diferente
+do layout HTML (provavelmente de onde eles estão vindo),
+e então faça-os memorizar a seguinte regra:
 
 <center><font size="+2">
-<b>Constraints go down. Sizes go up. Parent sets position.</b>
+<b>Restrições descem. Tamanhos sobem. O pai define a posição.</b>
 </font></center>
 
-Flutter layout can't really be understood without knowing
-this rule, so Flutter developers should learn it early on.
+O layout do Flutter não pode ser realmente entendido sem conhecer
+esta regra, então os desenvolvedores Flutter devem aprendê-la logo no início.
 
-In more detail:
+Em mais detalhes:
 
-* A widget gets its own **constraints** from its **parent**.
-  A _constraint_ is just a set of 4 doubles:
-  a minimum and maximum width, and a minimum and maximum height.
-* Then the widget goes through its own list of **children**.
-  One by one, the widget tells its children what their
-  **constraints** are (which can be different for each child),
-  and then asks each child what size it wants to be.
-* Then, the widget positions its **children**
-  (horizontally in the `x` axis, and vertically in the `y` axis),
-  one by one.
-* And, finally, the widget tells its parent about its own **size**
-  (within the original constraints, of course).
+* Um widget recebe suas próprias **restrições** de seu **pai**.
+  Uma _restrição_ é apenas um conjunto de 4 doubles:
+  uma largura mínima e máxima e uma altura mínima e máxima.
+* Em seguida, o widget percorre sua própria lista de **filhos**.
+  Um por um, o widget diz a seus filhos quais são suas
+  **restrições** (que podem ser diferentes para cada filho),
+  e então pergunta a cada filho qual tamanho ele deseja ter.
+* Depois, o widget posiciona seus **filhos**
+  (horizontalmente no eixo `x` e verticalmente no eixo `y`),
+  um por um.
+* E, finalmente, o widget informa ao seu pai sobre seu próprio **tamanho**
+  (dentro das restrições originais, é claro).
 
-For example, if a composed widget contains a column
-with some padding, and wants to lay out its two children
-as follows:
+Por exemplo, se um widget composto contiver uma coluna
+com algum padding e quiser organizar seus dois filhos
+da seguinte maneira:
 
-<img src='/assets/images/docs/ui/layout/children.png' alt="Visual layout">
+<img src='/assets/images/docs/ui/layout/children.png' alt="Layout visual">
 
-The negotiation goes something like this:
+A negociação acontece mais ou menos assim:
 
-**Widget**: "Hey parent, what are my constraints?"
+**Widget**: "Ei, pai, quais são as minhas restrições?"
 
-**Parent**: "You must be from `0` to `300` pixels wide,
-   and `0` to `85` tall."
+**Pai**: "Você deve ter de `0` a `300` pixels de largura
+   e de `0` a `85` de altura."
 
-**Widget**: "Hmmm, since I want to have `5` pixels of padding,
-   then my children can have at most `290` pixels of width
-   and `75` pixels of height."
+**Widget**: "Hmmm, como eu quero ter `5` pixels de padding,
+   então meus filhos podem ter no máximo `290` pixels de largura
+   e `75` pixels de altura."
 
-**Widget**: "Hey first child, You must be from `0` to `290`
-   pixels wide, and `0` to `75` tall."
+**Widget**: "Ei, primeiro filho, você deve ter de `0` a `290`
+   pixels de largura e de `0` a `75` de altura."
 
-**First child**: "OK, then I wish to be `290` pixels wide,
-   and `20` pixels tall."
+**Primeiro filho**: "OK, então eu quero ter `290` pixels de largura
+   e `20` pixels de altura."
 
-**Widget**: "Hmmm, since I want to put my second child below the
-   first one, this leaves only `55` pixels of height for
-   my second child."
+**Widget**: "Hmmm, já que quero colocar meu segundo filho abaixo do
+   primeiro, isso deixa apenas `55` pixels de altura para
+   o meu segundo filho."
 
-**Widget**: "Hey second child, You must be from `0` to `290` wide,
-   and `0` to `55` tall."
+**Widget**: "Ei, segundo filho, você deve ter de `0` a `290` de largura
+   e de `0` a `55` de altura."
 
-**Second child**: "OK, I wish to be `140` pixels wide,
-   and `30` pixels tall."
+**Segundo filho**: "OK, eu quero ter `140` pixels de largura
+   e `30` pixels de altura."
 
-**Widget**: "Very well. My first child has position `x: 5` and `y: 5`,
-   and my second child has `x: 80` and `y: 25`."
+**Widget**: "Muito bem. Meu primeiro filho tem posição `x: 5` e `y: 5`,
+   e meu segundo filho tem `x: 80` e `y: 25`."
 
-**Widget**: "Hey parent, I've decided that my size is going to be `300`
-   pixels wide, and `60` pixels tall."
+**Widget**: "Ei, pai, decidi que meu tamanho será de `300`
+   pixels de largura e `60` pixels de altura."
 
-## Limitations
+## Limitações
 
-Flutter's layout engine is designed to be a one-pass process.
-This means that Flutter lays out its widgets very efficiently,
-but does result in a few limitations:
+O mecanismo de layout do Flutter foi projetado para ser um processo de
+passagem única. Isso significa que o Flutter faz o layout de seus widgets
+de forma muito eficiente, mas resulta em algumas limitações:
 
-* A widget can decide its own size only within the
-  constraints given to it by its parent.
-  This means a widget usually
-  **can't have any size it wants**.
+* Um widget pode decidir seu próprio tamanho apenas dentro das
+  restrições dadas a ele por seu pai.
+  Isso significa que um widget geralmente
+  **não pode ter qualquer tamanho que desejar**.
 
-* A widget **can't know and doesn't decide its own position
-  in the screen**, since it's the widget's parent who decides
-  the position of the widget.
+* Um widget **não pode saber e não decide sua própria posição
+  na tela**, já que é o pai do widget que decide
+  a posição do widget.
 
-* Since the parent's size and position, in its turn,
-  also depends on its own parent, it's impossible to
-  precisely define the size and position of any widget
-  without taking into consideration the tree as a whole.
+* Como o tamanho e a posição do pai, por sua vez,
+  também dependem de seu próprio pai, é impossível
+  definir com precisão o tamanho e a posição de qualquer widget
+  sem levar em consideração a árvore como um todo.
 
-* If a child wants a different size from its parent and
-  the parent doesn't have enough information to align it,
-  then the child's size might be ignored.
-  **Be specific when defining alignment.**
+* Se um filho quer um tamanho diferente do de seu pai e
+  o pai não tem informações suficientes para alinhá-lo,
+  então o tamanho do filho pode ser ignorado.
+  **Seja específico ao definir o alinhamento.**
 
-In Flutter, widgets are rendered by their underlying
-[`RenderBox`][] objects. Many boxes in Flutter,
-especially those that just take a single child,
-pass their constraint on to their children.
+No Flutter, widgets são renderizados pelos seus
+objetos [`RenderBox`][] subjacentes. Muitos boxes no Flutter,
+especialmente os que recebem apenas um único filho,
+passam suas restrições para seus filhos.
 
-Generally, there are three kinds of boxes,
-in terms of how they handle their constraints:
+Geralmente, há três tipos de boxes,
+com base em como eles lidam com suas restrições:
 
-* Those that try to be as big as possible.
-  For example, the boxes used by [`Center`][] and
+* Aqueles que tentam ser o maior possível.
+  Por exemplo, os boxes usados por [`Center`][] e
   [`ListView`][].
-* Those that try to be the same size as their children.
-  For example, the boxes used by [`Transform`][] and
+* Aqueles que tentam ter o mesmo tamanho que seus filhos.
+  Por exemplo, os boxes usados por [`Transform`][] e
   [`Opacity`][].
-* Those that try to be a particular size.
-  For example, the boxes used by [`Image`][] and
+* Aqueles que tentam ter um tamanho específico.
+  Por exemplo, os boxes usados por [`Image`][] e
   [`Text`][].
 
-Some widgets, for example [`Container`][],
-vary from type to type based on their constructor arguments.
-The [`Container`][] constructor defaults
-to trying to be as big as possible, but if you give it a `width`,
-for instance, it tries to honor that and be that particular size.
+Alguns widgets, como o [`Container`][],
+variam de tipo para tipo com base nos argumentos do construtor.
+O construtor de [`Container`][] tenta, por padrão,
+ser o maior possível, mas se você definir uma `width`,
+por exemplo, ele tentará respeitá-la e ter esse tamanho específico.
 
-Others, for example [`Row`][] and [`Column`][] (flex boxes)
-vary based on the constraints they are given,
-as described in the [Flex](#flex) section.
+Outros, como [`Row`][] e [`Column`][] (boxes flex),
+variam com base nas restrições recebidas,
+como descrito na seção [Flex](#flex).
 
 [`Center`]: {{site.api}}/flutter/widgets/Center-class.html
 [`Column`]: {{site.api}}/flutter/widgets/Column-class.html
@@ -155,11 +156,11 @@ as described in the [Flex](#flex) section.
 [`Text`]: {{site.api}}/flutter/widgets/Text-class.html
 [`Transform`]: {{site.api}}/flutter/widgets/Transform-class.html
 
-## Examples
+## Exemplos
 
-For an interactive experience, use the following DartPad.
-Use the numbered horizontal scrolling bar to switch between
-29 different examples.
+Para uma experiência interativa, use o seguinte DartPad.
+Use a barra de rolagem horizontal numerada para alternar entre
+29 exemplos diferentes.
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Constraints DartPad hands-on example" run="true"
@@ -1305,61 +1306,61 @@ class Example29 extends Example {
 //////////////////////////////////////////////////
 ```
 
-If you prefer, you can grab the code from
-[this GitHub repo][].
+Se preferir, você pode pegar o código
+[deste repositório no GitHub][this GitHub repo].
 
-The examples are explained in the following sections.
+Os exemplos são explicados nas seções a seguir.
 
 [this GitHub repo]: https://github.com/marcglasberg/flutter_layout_article
 
-### Example 1
+### Exemplo 1 {:#example-1}
 
-<img src='/assets/images/docs/ui/layout/layout-1.png' alt="Example 1 layout">
+<img src='/assets/images/docs/ui/layout/layout-1.png' alt="Layout do exemplo 1">
 
 <?code-excerpt "lib/main.dart (Example1)" replace="/(return |;)//g"?>
 ```dart
 Container(color: red)
 ```
 
-The screen is the parent of the `Container`, and it
-forces the `Container` to be exactly the same size as the screen.
+A tela é o pai do `Container`, e ela força o `Container`
+a ter exatamente o mesmo tamanho da tela.
 
-So the `Container` fills the screen and paints it red.
+Então o `Container` preenche a tela e a pinta de vermelho.
 
-### Example 2
+### Exemplo 2 {:#example-2}
 
-<img src='/assets/images/docs/ui/layout/layout-2.png' alt="Example 2 layout">
+<img src='/assets/images/docs/ui/layout/layout-2.png' alt="Layout do exemplo 2">
 
 <?code-excerpt "lib/main.dart (Example2)" replace="/(return |;)//g"?>
 ```dart
 Container(width: 100, height: 100, color: red)
 ```
 
-The red `Container` wants to be 100 × 100,
-but it can't, because the screen forces it to be
-exactly the same size as the screen.
+O `Container` vermelho quer ter 100 × 100,
+mas não pode, porque a tela o obriga a ter
+exatamente o mesmo tamanho da tela.
 
-So the `Container` fills the screen.
+Então o `Container` preenche a tela.
 
-### Example 3
+### Exemplo 3 {:#example-3}
 
-<img src='/assets/images/docs/ui/layout/layout-3.png' alt="Example 3 layout">
+<img src='/assets/images/docs/ui/layout/layout-3.png' alt="Layout do exemplo 3">
 
 <?code-excerpt "lib/main.dart (Example3)" replace="/(return |;)//g"?>
 ```dart
 Center(child: Container(width: 100, height: 100, color: red))
 ```
 
-The screen forces the `Center` to be exactly the same size
-as the screen, so the `Center` fills the screen.
+A tela obriga o `Center` a ter exatamente o mesmo tamanho
+que a tela, então o `Center` preenche a tela.
 
-The `Center` tells the `Container` that it can be any size it
-wants, but not bigger than the screen. Now the `Container`
-can indeed be 100 × 100.
+O `Center` diz ao `Container` que ele pode ter qualquer tamanho que
+quiser, mas não maior que a tela. Agora o `Container`
+pode realmente ter 100 × 100.
 
-### Example 4
+### Exemplo 4 {:#example-4}
 
-<img src='/assets/images/docs/ui/layout/layout-4.png' alt="Example 4 layout">
+<img src='/assets/images/docs/ui/layout/layout-4.png' alt="Layout do exemplo 4">
 
 <?code-excerpt "lib/main.dart (Example4)" replace="/(return |;)//g"?>
 ```dart
@@ -1369,17 +1370,17 @@ Align(
 )
 ```
 
-This is different from the previous example in that it uses
-`Align` instead of `Center`.
+Este exemplo é diferente do anterior porque usa
+`Align` em vez de `Center`.
 
-`Align` also tells the `Container` that it can be any size it
-wants, but if there is empty space it won't center the `Container`.
-Instead, it aligns the container to the bottom-right of the
-available space.
+`Align` também diz ao `Container` que ele pode ter qualquer
+tamanho que desejar, mas se houver espaço vazio, ele
+não centralizará o `Container`. Em vez disso, alinha
+o container ao canto inferior direito do espaço disponível.
 
-### Example 5
+### Exemplo 5 {:#example-5}
 
-<img src='/assets/images/docs/ui/layout/layout-5.png' alt="Example 5 layout">
+<img src='/assets/images/docs/ui/layout/layout-5.png' alt="Layout do exemplo 5">
 
 <?code-excerpt "lib/main.dart (Example5)" replace="/(return |;)//g"?>
 ```dart
@@ -1392,42 +1393,42 @@ Center(
 )
 ```
 
-The screen forces the `Center` to be exactly the
-same size as the screen, so the `Center` fills the screen.
+A tela força o `Center` a ter exatamente o mesmo tamanho que a tela,
+então o `Center` preenche a tela.
 
-The `Center` tells the `Container` that it can be any size it wants,
-but not bigger than the screen. The `Container` wants to be
-of infinite size, but since it can't be bigger than the screen,
-it just fills the screen.
+O `Center` diz ao `Container` que ele pode ter qualquer
+tamanho que desejar, mas não maior que a tela.
+O `Container` deseja ter tamanho infinito, mas como
+não pode ser maior que a tela, apenas preenche a tela.
 
-### Example 6
+### Exemplo 6 {:#example-6}
 
-<img src='/assets/images/docs/ui/layout/layout-6.png' alt="Example 6 layout">
+<img src='/assets/images/docs/ui/layout/layout-6.png' alt="Layout do exemplo 6">
 
 <?code-excerpt "lib/main.dart (Example6)" replace="/(return |;)//g"?>
 ```dart
 Center(child: Container(color: red))
 ```
 
-The screen forces the `Center` to be exactly the
-same size as the screen, so the `Center` fills the screen.
+A tela força o `Center` a ter exatamente o mesmo
+tamanho que a tela, então o `Center` preenche a tela.
 
-The `Center` tells the `Container` that it can be any
-size it wants, but not bigger than the screen.
-Since the `Container` has no child and no fixed size,
-it decides it wants to be as big as possible,
-so it fills the whole screen.
+O `Center` diz ao `Container` que ele pode ter qualquer
+tamanho que desejar, mas não maior que a tela.
+Como o `Container` não tem filho e não tem
+tamanho fixo, decide que quer ser o maior possível,
+então preenche a tela inteira.
 
-But why does the `Container` decide that?
-Simply because that's a design decision by those who
-created the `Container` widget. It could have been
-created differently, and you have to read the
-[`Container`][] API documentation to understand
-how it behaves, depending on the circumstances.
+Mas por que o `Container` decide isso?
+Simplesmente porque é uma decisão de design de quem
+criou o widget `Container`. Ele poderia ter sido
+criado de forma diferente, e você precisa ler a
+documentação da API de [`Container`][] para entender
+como ele se comporta, dependendo das circunstâncias.
 
-### Example 7
+### Exemplo 7 {:#example-7}
 
-<img src='/assets/images/docs/ui/layout/layout-7.png' alt="Example 7 layout">
+<img src='/assets/images/docs/ui/layout/layout-7.png' alt="Layout do exemplo 7">
 
 <?code-excerpt "lib/main.dart (Example7)" replace="/(return |;)//g"?>
 ```dart
@@ -1439,26 +1440,26 @@ Center(
 )
 ```
 
-The screen forces the `Center` to be exactly the same
-size as the screen, so the `Center` fills the screen.
+A tela força o `Center` a ter exatamente o mesmo
+tamanho que a tela, então o `Center` preenche a tela.
 
-The `Center` tells the red `Container` that it can be any size
-it wants, but not bigger than the screen. Since the red
-`Container` has no size but has a child,
-it decides it wants to be the same size as its child.
+O `Center` diz ao `Container` vermelho que ele pode ter qualquer
+tamanho que desejar, mas não maior que a tela. Como o `Container`
+vermelho não tem tamanho, mas tem um filho, ele decide que
+quer ter o mesmo tamanho que seu filho.
 
-The red `Container` tells its child that it can be any size
-it wants, but not bigger than the screen.
+O `Container` vermelho diz ao seu filho que ele pode ter qualquer
+tamanho que desejar, mas não maior que a tela.
 
-The child is a green `Container` that wants to
-be 30 × 30. Given that the red `Container` sizes itself to
-the size of its child, it is also 30 × 30.
-The red color isn't visible because the green `Container`
-entirely covers the red `Container`.
+O filho é um `Container` verde que deseja ter 30 × 30.
+Como o `Container` vermelho ajusta seu tamanho ao tamanho
+de seu filho, ele também tem 30 × 30. A cor vermelha não
+é visível porque o `Container` verde cobre completamente
+o `Container` vermelho.
 
-### Example 8
+### Exemplo 8 {:#example-8}
 
-<img src='/assets/images/docs/ui/layout/layout-8.png' alt="Example 8 layout">
+<img src='/assets/images/docs/ui/layout/layout-8.png' alt="Layout do exemplo 8">
 
 <?code-excerpt "lib/main.dart (Example8)" replace="/(return |;)//g"?>
 ```dart
@@ -1471,16 +1472,15 @@ Center(
 )
 ```
 
-The red `Container` sizes itself to its children's size,
-but it takes its own padding into consideration.
-So it is also 30 × 30 plus padding.
-The red color is visible because of the padding,
-and the green `Container` has the same size as
-in the previous example.
+O `Container` vermelho ajusta seu tamanho ao tamanho de seus
+filhos, mas leva em consideração seu próprio padding.
+Então ele também tem 30 × 30 mais o padding. A cor vermelha é
+visível por causa do padding, e o `Container` verde tem
+o mesmo tamanho que no exemplo anterior.
 
-### Example 9
+### Exemplo 9 {:#example-9}
 
-<img src='/assets/images/docs/ui/layout/layout-9.png' alt="Example 9 layout">
+<img src='/assets/images/docs/ui/layout/layout-9.png' alt="Layout do exemplo 9">
 
 <?code-excerpt "lib/main.dart (Example9)" replace="/(return |;)//g"?>
 ```dart
@@ -1495,19 +1495,18 @@ ConstrainedBox(
 )
 ```
 
-You might guess that the `Container` has to be
-between 70 and 150 pixels, but you would be wrong.
-The `ConstrainedBox` only imposes **additional** constraints
-from those it receives from its parent.
+Você pode imaginar que o `Container` deve ter entre 70 e 150 pixels,
+mas estaria errado. O `ConstrainedBox` impõe apenas
+restrições **adicionais** àquelas que recebe de seu pai.
 
-Here, the screen forces the `ConstrainedBox` to be exactly
-the same size as the screen, so it tells its child `Container`
-to also assume the size of the screen, thus ignoring its
-`constraints` parameter.
+Aqui, a tela força o `ConstrainedBox` a ter exatamente o
+mesmo tamanho que a tela, então ele diz ao seu filho
+`Container` para também assumir o tamanho da tela,
+ignorando assim seu parâmetro `constraints`.
 
-### Example 10
+### Exemplo 10 {:#example-10}
 
-<img src='/assets/images/docs/ui/layout/layout-10.png' alt="Example 10 layout">
+<img src='/assets/images/docs/ui/layout/layout-10.png' alt="Layout do exemplo 10">
 
 <?code-excerpt "lib/main.dart (Example10)" replace="/(return |;)//g"?>
 ```dart
@@ -1524,17 +1523,17 @@ Center(
 )
 ```
 
-Now, `Center` allows `ConstrainedBox` to be any size up to
-the screen size. The `ConstrainedBox` imposes **additional**
-constraints from its `constraints` parameter onto its child.
+Agora, `Center` permite que `ConstrainedBox` tenha qualquer
+tamanho até o tamanho da tela. O `ConstrainedBox` impõe
+restrições **adicionais** de seu parâmetro `constraints` ao seu filho.
 
-The Container must be between 70 and 150 pixels.
-It wants to have 10 pixels,
-so it ends up having 70 (the minimum).
+O Container deve ter entre 70 e 150 pixels.
+Ele quer ter 10 pixels,
+então acaba tendo 70 (o mínimo).
 
-### Example 11
+### Exemplo 11 {:#example-11}
 
-<img src='/assets/images/docs/ui/layout/layout-11.png' alt="Example 11 layout">
+<img src='/assets/images/docs/ui/layout/layout-11.png' alt="Layout do exemplo 11">
 
 <?code-excerpt "lib/main.dart (Example11)" replace="/(return |;)//g"?>
 ```dart
@@ -1551,17 +1550,17 @@ Center(
 )
 ```
 
-`Center` allows `ConstrainedBox` to be any size up to the
-screen size. The `ConstrainedBox` imposes **additional**
-constraints from its `constraints` parameter onto its child.
+`Center` permite que `ConstrainedBox` tenha qualquer tamanho
+até o tamanho da tela. O `ConstrainedBox` impõe restrições
+**adicionais** de seu parâmetro `constraints` ao seu filho.
 
-The `Container` must be between 70 and 150 pixels.
-It wants to have 1000 pixels,
-so it ends up having 150 (the maximum).
+O `Container` deve ter entre 70 e 150 pixels.
+Ele quer ter 1000 pixels,
+então acaba tendo 150 (o máximo).
 
-### Example 12
+### Exemplo 12 {:#example-12}
 
-<img src='/assets/images/docs/ui/layout/layout-12.png' alt="Example 12 layout">
+<img src='/assets/images/docs/ui/layout/layout-12.png' alt="Layout do exemplo 12">
 
 <?code-excerpt "lib/main.dart (Example12)" replace="/(return |;)//g"?>
 ```dart
@@ -1578,17 +1577,17 @@ Center(
 )
 ```
 
-`Center` allows `ConstrainedBox` to be any size up to the
-screen size. The `ConstrainedBox` imposes **additional**
-constraints from its `constraints` parameter onto its child.
+`Center` permite que `ConstrainedBox` tenha qualquer tamanho
+até o tamanho da tela. O `ConstrainedBox` impõe restrições
+**adicionais** de seu parâmetro `constraints` ao seu filho.
 
-The `Container` must be between 70 and 150 pixels.
-It wants to have 100 pixels, and that's the size it has,
-since that's between 70 and 150.
+O `Container` deve ter entre 70 e 150 pixels.
+Ele quer ter 100 pixels, e é esse o tamanho que tem,
+já que está entre 70 e 150.
 
-### Example 13
+### Exemplo 13 {:#example-13}
 
-<img src='/assets/images/docs/ui/layout/layout-13.png' alt="Example 13 layout">
+<img src='/assets/images/docs/ui/layout/layout-13.png' alt="Layout do exemplo 13">
 
 <?code-excerpt "lib/main.dart (Example13)" replace="/(return |;)//g"?>
 ```dart
@@ -1597,13 +1596,13 @@ UnconstrainedBox(
 )
 ```
 
-The screen forces the `UnconstrainedBox` to be exactly
-the same size as the screen. However, the `UnconstrainedBox`
-lets its child `Container` be any size it wants.
+A tela força o `UnconstrainedBox` a ter exatamente o
+mesmo tamanho que a tela. No entanto, o `UnconstrainedBox`
+permite que seu filho `Container` tenha qualquer tamanho que desejar.
 
-### Example 14
+### Exemplo 14 {:#example-14}
 
-<img src='/assets/images/docs/ui/layout/layout-14.png' alt="Example 14 layout">
+<img src='/assets/images/docs/ui/layout/layout-14.png' alt="Layout do exemplo 14">
 
 <?code-excerpt "lib/main.dart (Example14)" replace="/(return |;)//g"?>
 ```dart
@@ -1612,18 +1611,18 @@ UnconstrainedBox(
 )
 ```
 
-The screen forces the `UnconstrainedBox` to be exactly
-the same size as the screen, and `UnconstrainedBox`
-lets its child `Container` be any size it wants.
+A tela força o `UnconstrainedBox` a ter exatamente o mesmo tamanho
+que a tela, e o `UnconstrainedBox` permite que seu filho
+`Container` tenha qualquer tamanho que desejar.
 
-Unfortunately, in this case the `Container` is
-4000 pixels wide and is too big to fit in
-the `UnconstrainedBox`, so the `UnconstrainedBox` displays
-the much dreaded "overflow warning".
+Infelizmente, neste caso, o `Container` tem 4000 pixels de
+largura e é grande demais para caber no `UnconstrainedBox`,
+então o `UnconstrainedBox` exibe o tão temido
+"aviso de overflow" ("overflow warning").
 
-### Example 15
+### Exemplo 15 {:#example-15}
 
-<img src='/assets/images/docs/ui/layout/layout-15.png' alt="Example 15 layout">
+<img src='/assets/images/docs/ui/layout/layout-15.png' alt="Layout do exemplo 15">
 
 <?code-excerpt "lib/main.dart (Example15)" replace="/(return |;)//g"?>
 ```dart
@@ -1636,22 +1635,22 @@ OverflowBox(
 )
 ```
 
-The screen forces the `OverflowBox` to be exactly the same
-size as the screen, and `OverflowBox` lets its child `Container`
-be any size it wants.
+A tela força o `OverflowBox` a ter exatamente o mesmo tamanho
+que a tela, e o `OverflowBox` permite que seu filho `Container`
+tenha qualquer tamanho que desejar.
 
-`OverflowBox` is similar to `UnconstrainedBox`;
-the difference is that it won't display any warnings
-if the child doesn't fit the space.
+O `OverflowBox` é semelhante ao `UnconstrainedBox`;
+a diferença é que ele não exibirá nenhum aviso se o
+filho não couber no espaço.
 
-In this case, the `Container` has 4000 pixels of width,
-and is too big to fit in the `OverflowBox`,
-but the `OverflowBox` simply shows as much as it can,
-with no warnings given.
+Neste caso, o `Container` tem 4000 pixels de largura
+e é grande demais para caber no `OverflowBox`, mas o
+`OverflowBox` simplesmente mostra o máximo
+que pode, sem avisos.
 
-### Example 16
+### Exemplo 16 {:#example-16}
 
-<img src='/assets/images/docs/ui/layout/layout-16.png' alt="Example 16 layout">
+<img src='/assets/images/docs/ui/layout/layout-16.png' alt="Layout do exemplo 16">
 
 <?code-excerpt "lib/main.dart (Example16)" replace="/(return |;)//g"?>
 ```dart
@@ -1660,17 +1659,17 @@ UnconstrainedBox(
 )
 ```
 
-This won't render anything, and you'll see an error in the console.
+Isso não renderizará nada, e você verá um erro no console.
 
-The `UnconstrainedBox` lets its child be any size it wants,
-however its child is a `Container` with infinite size.
+O `UnconstrainedBox` permite que seu filho tenha qualquer
+tamanho que desejar; no entanto, seu filho é um `Container` com tamanho infinito.
 
-Flutter can't render infinite sizes, so it throws an error with
-the following message: `BoxConstraints forces an infinite width.`
+O Flutter não pode renderizar tamanhos infinitos, então ele
+lança um erro com a seguinte mensagem: `BoxConstraints forces an infinite width.`
 
-### Example 17
+### Exemplo 17 {:#example-17}
 
-<img src='/assets/images/docs/ui/layout/layout-17.png' alt="Example 17 layout">
+<img src='/assets/images/docs/ui/layout/layout-17.png' alt="Layout do exemplo 17">
 
 <?code-excerpt "lib/main.dart (Example17)" replace="/(return |;)//g"?>
 ```dart
@@ -1686,60 +1685,60 @@ UnconstrainedBox(
 )
 ```
 
-Here you won't get an error anymore,
-because when the `LimitedBox` is given an
-infinite size by the `UnconstrainedBox`;
-it passes a maximum width of 100 down to its child.
+Aqui você não terá mais erros,
+porque quando o `LimitedBox` recebe um tamanho
+infinito do `UnconstrainedBox`,
+ele passa uma largura máxima de 100 para o seu filho.
 
-If you swap the `UnconstrainedBox` for a `Center` widget,
-the `LimitedBox` won't apply its limit anymore
-(since its limit is only applied when it gets infinite
-constraints), and the width of the `Container`
-is allowed to grow past 100.
+Se você trocar o `UnconstrainedBox` por um widget `Center`,
+o `LimitedBox` não aplicará mais seu limite
+(já que seu limite é aplicado apenas quando recebe restrições
+infinitas), e a largura do `Container`
+pode crescer além de 100.
 
-This explains the difference between a `LimitedBox`
-and a `ConstrainedBox`.
+Isso explica a diferença entre um `LimitedBox`
+e um `ConstrainedBox`.
 
-### Example 18
+### Exemplo 18 {:#example-18}
 
-<img src='/assets/images/docs/ui/layout/layout-18.png' alt="Example 18 layout">
+<img src='/assets/images/docs/ui/layout/layout-18.png' alt="Layout do exemplo 18">
 
 <?code-excerpt "lib/main.dart (Example18)" replace="/(return |;)//g"?>
 ```dart
 const FittedBox(child: Text('Some Example Text.'))
 ```
 
-The screen forces the `FittedBox` to be exactly the same
-size as the screen. The `Text` has some natural width
-(also called its intrinsic width) that depends on the
-amount of text, its font size, and so on.
+A tela força o `FittedBox` a ter exatamente o mesmo tamanho
+que a tela. O `Text` tem uma largura natural (também
+chamada de largura intrínseca) que depende da quantidade
+de texto, do tamanho da fonte e assim por diante.
 
-The `FittedBox` lets the `Text` be any size it wants,
-but after the `Text` tells its size to the `FittedBox`,
-the `FittedBox` scales the Text until it fills all of
-the available width.
+O `FittedBox` permite que o `Text` tenha qualquer
+tamanho que desejar, mas depois que o `Text` informa
+seu tamanho ao `FittedBox`, o `FittedBox` dimensiona
+o texto até preencher toda a largura disponível.
 
-### Example 19
+### Exemplo 19 {:#example-19}
 
-<img src='/assets/images/docs/ui/layout/layout-19.png' alt="Example 19 layout">
+<img src='/assets/images/docs/ui/layout/layout-19.png' alt="Layout do exemplo 19">
 
 <?code-excerpt "lib/main.dart (Example19)" replace="/(return |;)//g"?>
 ```dart
 const Center(child: FittedBox(child: Text('Some Example Text.')))
 ```
 
-But what happens if you put the `FittedBox` inside of a
-`Center` widget? The `Center` lets the `FittedBox`
-be any size it wants, up to the screen size.
+Mas o que acontece se você colocar o `FittedBox` dentro
+de um widget `Center`? O `Center` permite que o `FittedBox`
+tenha qualquer tamanho que desejar, até o tamanho da tela.
 
-The `FittedBox` then sizes itself to the `Text`,
-and lets the `Text` be any size it wants.
-Since both `FittedBox` and the `Text` have the same size,
-no scaling happens.
+O `FittedBox` então se dimensiona de acordo com o `Text`
+e permite que o `Text` tenha qualquer tamanho que desejar.
+Como o `FittedBox` e o `Text` têm o mesmo tamanho,
+não ocorre nenhum redimensionamento.
 
-### Example 20
+### Exemplo 20 {:#example-20}
 
-<img src='/assets/images/docs/ui/layout/layout-20.png' alt="Example 20 layout">
+<img src='/assets/images/docs/ui/layout/layout-20.png' alt="Layout do exemplo 20">
 
 <?code-excerpt "lib/main.dart (Example20)" replace="/(return |;)//g"?>
 ```dart
@@ -1752,17 +1751,17 @@ const Center(
 )
 ```
 
-However, what happens if `FittedBox` is inside of a `Center`
-widget, but the `Text` is too large to fit the screen?
+No entanto, o que acontece se o `FittedBox` estiver dentro de um widget
+`Center`, mas o `Text` for grande demais para caber na tela?
 
-`FittedBox` tries to size itself to the `Text`,
-but it can't be bigger than the screen.
-It then assumes the screen size,
-and resizes `Text` so that it fits the screen, too.
+O `FittedBox` tenta se ajustar ao tamanho do `Text`,
+mas não pode ser maior do que a tela.
+Então ele assume o tamanho da tela
+e redimensiona o `Text` para que ele também caiba na tela.
 
-### Example 21
+### Exemplo 21 {:#example-21}
 
-<img src='/assets/images/docs/ui/layout/layout-21.png' alt="Example 21 layout">
+<img src='/assets/images/docs/ui/layout/layout-21.png' alt="Layout do exemplo 21">
 
 <?code-excerpt "lib/main.dart (Example21)" replace="/(return |;)//g"?>
 ```dart
@@ -1773,13 +1772,13 @@ const Center(
 )
 ```
 
-If, however, you remove the `FittedBox`, the `Text`
-gets its maximum width from the screen,
-and breaks the line so that it fits the screen.
+Se, no entanto, você remover o `FittedBox`, o `Text`
+obtém sua largura máxima da tela
+e quebra a linha para que caiba na tela.
 
-### Example 22
+### Exemplo 22 {:#example-22}
 
-<img src='/assets/images/docs/ui/layout/layout-22.png' alt="Example 22 layout">
+<img src='/assets/images/docs/ui/layout/layout-22.png' alt="Layout do exemplo 22">
 
 <?code-excerpt "lib/main.dart (Example22)" replace="/(return |;)//g"?>
 ```dart
@@ -1788,14 +1787,14 @@ FittedBox(
 )
 ```
 
-`FittedBox` can only scale a widget that is bounded
-(has non-infinite width and height). Otherwise,
-it won't render anything,
-and you'll see an error in the console.
+O `FittedBox` só pode dimensionar um widget que seja limitado
+(com largura e altura não infinitas). Caso contrário,
+ele não renderizará nada,
+e você verá um erro no console.
 
-### Example 23
+### Exemplo 23 {:#example-23}
 
-<img src='/assets/images/docs/ui/layout/layout-23.png' alt="Example 23 layout">
+<img src='/assets/images/docs/ui/layout/layout-23.png' alt="Layout do exemplo 23">
 
 <?code-excerpt "lib/main.dart (Example23)" replace="/(return |;)//g"?>
 ```dart
@@ -1813,18 +1812,18 @@ Row(
 )
 ```
 
-The screen forces the `Row` to be exactly the same size
-as the screen.
+A tela força a `Row` a ter exatamente o mesmo tamanho
+que a tela.
 
-Just like an `UnconstrainedBox`, the `Row` won't
-impose any constraints onto its children,
-and instead lets them be any size they want.
-The `Row` then puts them side-by-side,
-and any extra space remains empty.
+Assim como um `UnconstrainedBox`, a `Row` não
+impõe restrições aos seus filhos e, em vez disso,
+permite que eles tenham qualquer tamanho que desejarem.
+A `Row` então os coloca lado a lado,
+e qualquer espaço extra permanece vazio.
 
-### Example 24
+### Exemplo 24 {:#example-24}
 
-<img src='/assets/images/docs/ui/layout/layout-24.png' alt="Example 24 layout">
+<img src='/assets/images/docs/ui/layout/layout-24.png' alt="Layout do exemplo 24">
 
 <?code-excerpt "lib/main.dart (Example24)" replace="/(return |;)//g"?>
 ```dart
@@ -1846,14 +1845,14 @@ Row(
 )
 ```
 
-Since `Row` won't impose any constraints onto its children,
-it's quite possible that the children might be too big to fit
-the available width of the `Row`. In this case, just like an
-`UnconstrainedBox`, the `Row` displays the "overflow warning".
+Como a `Row` não impõe restrições aos seus filhos,
+é bem possível que os filhos sejam grandes demais para caber
+na largura disponível da `Row`. Nesse caso, assim como um
+`UnconstrainedBox`, a `Row` exibe o "aviso de overflow" ("overflow warning").
 
-### Example 25
+### Exemplo 25 {:#example-25}
 
-<img src='/assets/images/docs/ui/layout/layout-25.png' alt="Example 25 layout">
+<img src='/assets/images/docs/ui/layout/layout-25.png' alt="Layout do exemplo 25">
 
 <?code-excerpt "lib/main.dart (Example25)" replace="/(return |;)//g"?>
 ```dart
@@ -1878,19 +1877,19 @@ Row(
 )
 ```
 
-When a `Row`'s child is wrapped in an `Expanded` widget,
-the `Row` won't let this child define its own width anymore.
+Quando um filho de uma `Row` é envolvido por um widget `Expanded`,
+a `Row` não permite mais que esse filho defina sua própria largura.
 
-Instead, it defines the `Expanded` width according to the
-other children, and only then the `Expanded` widget forces
-the original child to have the `Expanded`'s width.
+Em vez disso, ela define a largura do `Expanded` de acordo com os
+outros filhos e, só então, o widget `Expanded` força
+o filho original a ter a largura do `Expanded`.
 
-In other words, once you use `Expanded`,
-the original child's width becomes irrelevant, and is ignored.
+Em outras palavras, ao usar o `Expanded`,
+a largura original do filho se torna irrelevante e é ignorada.
 
-### Example 26
+### Exemplo 26 {:#example-26}
 
-<img src='/assets/images/docs/ui/layout/layout-26.png' alt="Example 26 layout">
+<img src='/assets/images/docs/ui/layout/layout-26.png' alt="Layout do exemplo 26">
 
 <?code-excerpt "lib/main.dart (Example26)" replace="/(return |;)//g"?>
 ```dart
@@ -1915,17 +1914,17 @@ Row(
 )
 ```
 
-If all of `Row`'s children are wrapped in `Expanded` widgets,
-each `Expanded` has a size proportional to its flex parameter,
-and only then each `Expanded` widget forces its child to have
-the `Expanded`'s width.
+Se todos os filhos da `Row` estiverem envolvidos por widgets `Expanded`,
+cada `Expanded` terá um tamanho proporcional ao seu parâmetro flex
+e, só então, cada widget `Expanded` forçará seu filho a ter
+a largura do `Expanded`.
 
-In other words, `Expanded` ignores the preferred width of
-its children.
+Em outras palavras, o `Expanded` ignora a largura preferida
+de seus filhos.
 
-### Example 27
+### Exemplo 27 {:#example-27}
 
-<img src='/assets/images/docs/ui/layout/layout-27.png' alt="Example 27 layout">
+<img src='/assets/images/docs/ui/layout/layout-27.png' alt="Layout do exemplo 27">
 
 <?code-excerpt "lib/main.dart (Example27)" replace="/(return |;)//g"?>
 ```dart
@@ -1950,23 +1949,23 @@ Row(
 )
 ```
 
-The only difference if you use `Flexible` instead of `Expanded`,
-is that `Flexible` lets its child have the same or smaller
-width than the `Flexible` itself, while `Expanded` forces
-its child to have the exact same width of the `Expanded`.
-But both `Expanded` and `Flexible` ignore their children's width
-when sizing themselves.
+A única diferença ao usar `Flexible` em vez de `Expanded`
+é que `Flexible` permite que seu filho tenha a mesma largura ou uma
+largura menor que o próprio `Flexible`, enquanto `Expanded` força
+seu filho a ter exatamente a mesma largura do `Expanded`.
+Mas tanto `Expanded` quanto `Flexible` ignoram a largura de seus filhos
+ao dimensionar a si mesmos.
 
 :::note
-This means that it's impossible to expand `Row` children
-proportionally to their sizes. The `Row` either uses
-the exact child's width, or ignores it completely
-when you use `Expanded` or `Flexible`.
+Isso significa que é impossível expandir os filhos da `Row`
+proporcionalmente a seus tamanhos. A `Row` usa
+a largura exata do filho ou a ignora completamente
+quando você usa `Expanded` ou `Flexible`.
 :::
 
-### Example 28
+### Exemplo 28 {:#example-28}
 
-<img src='/assets/images/docs/ui/layout/layout-28.png' alt="Example 28 layout">
+<img src='/assets/images/docs/ui/layout/layout-28.png' alt="Layout do exemplo 28">
 
 <?code-excerpt "lib/main.dart (Example28)" replace="/(return |;)//g"?>
 ```dart
@@ -1978,20 +1977,20 @@ Scaffold(
 )
 ```
 
-The screen forces the `Scaffold` to be exactly the same size
-as the screen, so the `Scaffold` fills the screen.
-The `Scaffold` tells the `Container` that it can be any size it wants,
-but not bigger than the screen.
+A tela força o `Scaffold` a ter exatamente o mesmo tamanho
+que a tela, então o `Scaffold` preenche a tela.
+O `Scaffold` diz ao `Container` que ele pode ter qualquer tamanho que quiser,
+mas não maior que a tela.
 
 :::note
-When a widget tells its child that it can be smaller than a
-certain size, we say the widget supplies _loose_ constraints
-to its child. More on that later.
+Quando um widget diz ao seu filho que ele pode ser menor que um
+certo tamanho, dizemos que o widget fornece restrições _loose_
+(flexíveis) para seu filho. Mais sobre isso adiante.
 :::
 
-### Example 29
+### Exemplo 29 {:#example-29}
 
-<img src='/assets/images/docs/ui/layout/layout-29.png' alt="Example 29 layout">
+<img src='/assets/images/docs/ui/layout/layout-29.png' alt="Layout do exemplo 29">
 
 <?code-excerpt "lib/main.dart (Example29)" replace="/(return |;)//g"?>
 ```dart
@@ -2005,37 +2004,37 @@ Scaffold(
 )
 ```
 
-If you want the `Scaffold`'s child to be exactly the same size
-as the `Scaffold` itself, you can wrap its child with
+Se você quiser que o filho do `Scaffold` tenha exatamente o mesmo tamanho
+que o próprio `Scaffold`, você pode envolver seu filho com
 `SizedBox.expand`.
 
-## Tight vs loose constraints
+## Restrições tight vs. loose (rígidas vs. flexíveis)
 
-It's very common to hear that some constraint is
-"tight" or "loose", so what does that mean?
+É muito comum ouvir que alguma restrição é
+"tight" ou "loose", então o que isso significa?
 
-### Tight constraints
+### Restrições tight (rígidas)
 
-A _tight_ constraint offers a single possibility,
-an exact size. In other words, a tight constraint
-has its maximum width equal to its minimum width;
-and has its maximum height equal to its minimum height.
+Uma restrição _tight_ oferece uma única possibilidade,
+um tamanho exato. Em outras palavras, uma restrição tight
+tem sua largura máxima igual à sua largura mínima
+e sua altura máxima igual à sua altura mínima.
 
-An example of this is the `App` widget,
-which is contained by the [`RenderView`][] class:
-the box used by the child returned by the
-application's [`build`][] function is given a constraint
-that forces it to exactly fill the application's content area
-(typically, the entire screen).
+Um exemplo disso é o widget `App`,
+que é contido pela classe [`RenderView`][]:
+o box usado pelo filho retornado pela
+função [`build`][] da aplicação recebe uma restrição
+que o força a preencher exatamente a área de conteúdo da aplicação
+(tipicamente, a tela inteira).
 
-Another example: if you nest a bunch of boxes inside
-each other at the root of your application's render tree,
-they'll all exactly fit in each other,
-forced by the box's tight constraints.
+Outro exemplo: se você aninhar vários boxes uns dentro
+dos outros na raiz da árvore de renderização da sua aplicação,
+eles vão se encaixar exatamente uns nos outros,
+forçados pelas restrições tight do box.
 
-If you go to Flutter's `box.dart` file and search for
-the `BoxConstraints` constructors,
-you'll find the following:
+Se você acessar o arquivo `box.dart` do Flutter e buscar pelos
+construtores de `BoxConstraints`,
+encontrará o seguinte:
 
 ```dart
 BoxConstraints.tight(Size size)
@@ -2045,153 +2044,153 @@ BoxConstraints.tight(Size size)
      maxHeight = size.height;
 ```
 
-If you revisit [Example 2](#example-2),
-the screen forces the red `Container` to be
-exactly the same size as the screen.
-The screen achieves that, of course, by passing tight
-constraints to the `Container`.
+Se você revisitar o [Exemplo 2](#example-2),
+a tela força o `Container` vermelho a ter
+exatamente o mesmo tamanho da tela.
+A tela faz isso, é claro, passando restrições tight
+para o `Container`.
 
-### Loose constraints
+### Restrições loose (flexíveis)
 
-A _loose_ constraint is one that has a minimum
-of zero and a maximum non-zero.
+Uma restrição _loose_ é aquela que tem um valor mínimo
+de zero e um valor máximo diferente de zero.
 
-Some boxes _loosen_ the incoming constraints,
-meaning the maximum is maintained but the
-minimum is removed, so the widget can have
-a **minimum** width and height both equal to **zero**.
+Alguns boxes _afrouxam_ (loosen) as restrições recebidas,
+o que significa que o máximo é mantido, mas o
+mínimo é removido, de modo que o widget pode ter
+uma largura e uma altura **mínimas** iguais a **zero**.
 
-Ultimately, `Center`'s purpose is to transform
-the tight constraints it received from its parent
-(the screen) to loose constraints for its child
-(the `Container`).
+Em última análise, o propósito do `Center` é transformar
+as restrições tight que recebeu de seu pai
+(a tela) em restrições loose para seu filho
+(o `Container`).
 
-If you revisit [Example 3](#example-3),
-the `Center` allows the red `Container` to be smaller,
-but not bigger than the screen.
+Se você revisitar o [Exemplo 3](#example-3),
+o `Center` permite que o `Container` vermelho seja menor,
+mas não maior que a tela.
 
 [`build`]: {{site.api}}/flutter/widgets/State/build.html
 [`RenderView`]: {{site.api}}/flutter/rendering/RenderView-class.html
 
 <a id="unbounded"></a>
 
-## Unbounded constraints
+## Restrições unbounded (sem limite)
 
 :::note
-You might be directed here if the framework
-detects a problem involving box constraints.
-The `Flex` section below might also apply.
+Você pode ser direcionado para cá se o framework
+detectar um problema envolvendo restrições de box.
+A seção `Flex` abaixo também pode se aplicar.
 :::
 
-In certain situations,
-a box's constraint is _unbounded_, or infinite.
-This means that either the maximum width or
-the maximum height is set to [`double.infinity`][].
+Em certas situações,
+a restrição de um box é _unbounded_ (sem limite), ou infinita.
+Isso significa que a largura máxima ou
+a altura máxima é definida como [`double.infinity`][].
 
-A box that tries to be as big as possible won't
-function usefully when given an unbounded constraint and,
-in debug mode, throws an exception.
+Um box que tenta ser o maior possível não funcionará
+de forma útil quando receber uma restrição sem limite e,
+no modo debug, lança uma exceção.
 
-The most common case where a render box ends up
-with an unbounded constraint is within a flex box
-([`Row`][] or [`Column`][]),
-and **within a scrollable region**
-(such as [`ListView`][] and other [`ScrollView`][] subclasses).
+O caso mais comum em que um render box acaba
+com uma restrição sem limite é dentro de um box flex
+([`Row`][] ou [`Column`][])
+e **dentro de uma região rolável**
+(como [`ListView`][] e outras subclasses de [`ScrollView`][]).
 
-[`ListView`][], for example,
-tries to expand to fit the space available
-in its cross-direction
-(perhaps it's a vertically-scrolling block and
-tries to be as wide as its parent).
-If you nest a vertically scrolling [`ListView`][]
-inside a horizontally scrolling `ListView`,
-the inner list tries to be as wide as possible,
-which is infinitely wide,
-since the outer one is scrollable in that direction.
+O [`ListView`][], por exemplo,
+tenta se expandir para preencher o espaço disponível
+na sua direção cruzada
+(talvez seja um bloco rolável verticalmente e
+tente ser tão largo quanto seu pai).
+Se você aninhar um [`ListView`][] rolável verticalmente
+dentro de um `ListView` rolável horizontalmente,
+a lista interna tenta ser o mais larga possível,
+o que é infinitamente larga,
+já que a externa é rolável nessa direção.
 
-The next section describes the error you might
-encounter with unbounded constraints in a `Flex` widget.
+A próxima seção descreve o erro que você pode
+encontrar com restrições sem limite em um widget `Flex`.
 
 ## Flex
 
-A flex box ([`Row`][] and [`Column`][]) behaves
-differently depending on whether its
-constraint is bounded or unbounded in
-its primary direction.
+Um box flex ([`Row`][] e [`Column`][]) se comporta
+de maneira diferente dependendo se sua
+restrição é limitada ou sem limite na sua
+direção principal.
 
-A flex box with a bounded constraint in its
-primary direction tries to be as big as possible.
+Um box flex com uma restrição limitada na sua
+direção principal tenta ser o maior possível.
 
-A flex box with an unbounded constraint
-in its primary direction tries to fit its children
-in that space. Each child's `flex` value must be
-set to zero, meaning that you can't use
-[`Expanded`][] when the flex box is inside
-another flex box or a scrollable;
-otherwise it throws an exception.
+Um box flex com uma restrição sem limite
+na sua direção principal tenta encaixar seus filhos
+nesse espaço. O valor `flex` de cada filho deve ser
+definido como zero, o que significa que não é possível usar
+[`Expanded`][] quando o box flex está dentro
+de outro box flex ou de um scrollable;
+caso contrário, ele lança uma exceção.
 
-The _cross_ direction
-(width for [`Column`][] or height for [`Row`][]),
-must _never_ be unbounded,
-or it can't reasonably align its children.
+A direção _cruzada_
+(largura para [`Column`][] ou altura para [`Row`][])
+_nunca_ deve ser sem limite,
+ou ele não conseguirá alinhar seus filhos de forma razoável.
 
 [`double.infinity`]: {{site.api}}/flutter/dart-core/double/infinity-constant.html
 [`Expanded`]: {{site.api}}/flutter/widgets/Expanded-class.html
 [`RenderBox`]: {{site.api}}/flutter/rendering/RenderBox-class.html
 [`ScrollView`]: {{site.api}}/flutter/widgets/ScrollView-class.html
 
-## Learning the layout rules for specific widgets
+## Aprendendo as regras de layout para widgets específicos
 
-Knowing the general layout rule is necessary, but it's not enough.
+Conhecer a regra geral de layout é necessário, mas não é suficiente.
 
-Each widget has a lot of freedom when applying the general rule,
-so there is no way of knowing how it behaves by just reading
-the widget's name.
+Cada widget tem muita liberdade ao aplicar a regra geral,
+então não há como saber como ele se comporta apenas lendo
+o nome do widget.
 
-If you try to guess, you'll probably guess wrong.
-You can't know exactly how a widget behaves unless
-you've read its documentation, or studied its source-code.
+Se você tentar adivinhar, provavelmente vai errar.
+Você não pode saber exatamente como um widget se comporta a menos que
+tenha lido sua documentação ou estudado seu código-fonte.
 
-The layout source-code is usually complex,
-so it's probably better to just read the documentation.
-However, if you decide to study the layout source-code,
-you can easily find it by using the navigating capabilities
-of your IDE.
+O código-fonte de layout geralmente é complexo,
+então provavelmente é melhor apenas ler a documentação.
+No entanto, se você decidir estudar o código-fonte de layout,
+pode encontrá-lo facilmente usando os recursos de navegação
+da sua IDE.
 
-Here's an example:
+Aqui está um exemplo:
 
-* Find a `Column` in your code and navigate to its
-  source code. To do this, use `command+B` (macOS)
-  or `control+B` (Windows/Linux) in Android Studio or IntelliJ.
-  You'll be taken to the `basic.dart` file.
-  Since `Column` extends `Flex`, navigate to the `Flex`
-  source code (also in `basic.dart`).
+* Encontre uma `Column` em seu código e navegue até o
+  código-fonte dela. Para fazer isso, use `command+B` (macOS)
+  ou `control+B` (Windows/Linux) no Android Studio ou IntelliJ.
+  Você será levado ao arquivo `basic.dart`.
+  Como `Column` estende `Flex`, navegue até o código-fonte de `Flex`
+  (também em `basic.dart`).
 
-* Scroll down until you find a method called
-  `createRenderObject()`. As you can see,
-  this method returns a `RenderFlex`.
-  This is the render-object for the `Column`.
-  Now navigate to the source-code of `RenderFlex`,
-  which takes you to the `flex.dart` file.
+* Role para baixo até encontrar um método chamado
+  `createRenderObject()`. Como você pode ver,
+  este método retorna um `RenderFlex`.
+  Este é o render object da `Column`.
+  Agora navegue até o código-fonte de `RenderFlex`,
+  o que leva você ao arquivo `flex.dart`.
 
-* Scroll down until you find a method called
-  `performLayout()`. This is the method that does
-  the layout for the `Column`.
+* Role para baixo até encontrar um método chamado
+  `performLayout()`. Este é o método que faz
+  o layout da `Column`.
 
-<img src='/assets/images/docs/ui/layout/layout-final.png' alt="A goodbye layout">
+<img src='/assets/images/docs/ui/layout/layout-final.png' alt="Um layout de despedida">
 
 ---
 
-Original article by Marcelo Glasberg
+Artigo original de Marcelo Glasberg
 
-Marcelo originally published this content as
+Marcelo publicou originalmente este conteúdo como
 [Flutter: The Advanced Layout Rule Even Beginners Must Know][article]
-on Medium. We loved it and asked that he allow us to publish
-in on docs.flutter.dev, to which he graciously agreed. Thanks, Marcelo!
-You can find Marcelo on [GitHub][] and [pub.dev][].
+no Medium. Nós adoramos e pedimos que ele nos permitisse publicá-lo
+em docs.flutter.dev, ao que ele gentilmente concordou. Obrigado, Marcelo!
+Você pode encontrar Marcelo no [GitHub][] e no [pub.dev][].
 
-Also, thanks to [Simon Lightfoot][] for creating the
-header image at the top of the article.
+Também agradecemos a [Simon Lightfoot][] por criar a
+imagem do cabeçalho no topo do artigo.
 
 [article]: https://medium.com/flutter-community/flutter-the-advanced-layout-rule-even-beginners-must-know-edc9516d1a2
 [GitHub]: https://github.com/marcglasberg
@@ -2199,8 +2198,8 @@ header image at the top of the article.
 [Simon Lightfoot]: https://github.com/slightfoot
 
 :::note
-To better understand how Flutter implements layout
-constraints, check out the following 5-minute video:
+Para entender melhor como o Flutter implementa as
+restrições de layout, confira o seguinte vídeo de 5 minutos:
 
 <YouTubeEmbed id="jckqXR5CrPI" title="Decoding Flutter: Unbounded height and width"></YouTubeEmbed>
 :::

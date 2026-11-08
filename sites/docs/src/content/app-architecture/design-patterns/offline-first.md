@@ -1,57 +1,58 @@
 ---
-title: "Offline-first support"
-description: Implement offline-first support for one feature in an application.
+title: "Suporte offline-first"
+description: Implemente o suporte offline-first para um recurso em um aplicativo.
 contentTags:
   - data
   - user experience
   - repository pattern
 iconPath: /assets/images/docs/app-architecture/design-patterns/offline-first-icon.svg
 order: 3
+ia-translate: true
 ---
 
 <?code-excerpt path-base="app-architecture/offline_first"?>
 
-An offline-first application is an app capable of offering most
-or all of its functionality while being disconnected from the internet.
-Offline-first applications usually rely on stored data
-to offer users temporary access to data
-that would otherwise only be available online.
+Um aplicativo offline-first é um aplicativo capaz de oferecer a maior parte
+ou toda a sua funcionalidade enquanto está desconectado da internet.
+Aplicativos offline-first geralmente dependem de dados armazenados
+para oferecer aos usuários acesso temporário a dados
+que, de outra forma, estariam disponíveis apenas online.
 
-Some offline-first applications combine local and remote data seamlessly,
-while other applications inform the user
-when the application is using cached data.
-In the same way,
-some applications synchronize data in the background
-while others require the user to explicitly synchronize it.
-It all depends on the application requirements and the functionality it offers,
-and it’s up to the developer to decide which implementation fits their needs.
+Alguns aplicativos offline-first combinam dados locais e remotos perfeitamente,
+enquanto outros aplicativos informam ao usuário
+quando o aplicativo está usando dados em cache.
+Da mesma forma,
+alguns aplicativos sincronizam dados em segundo plano
+enquanto outros exigem que o usuário os sincronize explicitamente.
+Tudo depende dos requisitos do aplicativo e da funcionalidade que ele oferece,
+e cabe ao desenvolvedor decidir qual implementação se adapta às suas necessidades.
 
-In this guide,
-you will learn how to implement different approaches
-to offline-first applications in Flutter,
-following the [Flutter Architecture guidelines][].
+Neste guia,
+você aprenderá como implementar diferentes abordagens
+para aplicativos offline-first no Flutter,
+seguindo as [diretrizes de arquitetura do Flutter][Flutter Architecture guidelines].
 
-## Offline-first architecture
+## Arquitetura offline-first
 
-As explained in the common architecture concepts guide,
-repositories act as the single source of truth.
-They are responsible for presenting local or remote data,
-and should be the only place where data can be modified.
-In offline-first applications,
-repositories combine different local and remote data sources
-to present data in a single access point,
-independently of the connectivity state of the device.
+Conforme explicado no guia de conceitos comuns de arquitetura,
+os repositórios atuam como a única fonte da verdade.
+Eles são responsáveis ​​por apresentar dados locais ou remotos,
+e devem ser o único lugar onde os dados podem ser modificados.
+Em aplicativos offline-first,
+os repositórios combinam diferentes fontes de dados locais e remotos
+para apresentar dados em um único ponto de acesso,
+independentemente do estado de conectividade do dispositivo.
 
-This example uses the `UserProfileRepository`,
-a repository that allows you to obtain and store `UserProfile` objects
-with offline-first support.
+Este exemplo usa o `UserProfileRepository`,
+um repositório que permite obter e armazenar objetos `UserProfile`
+com suporte offline-first.
 
-The `UserProfileRepository` uses two different data services:
-one works with remote data,
-and the other works with a local database.
+O `UserProfileRepository` usa dois serviços de dados diferentes:
+um funciona com dados remotos,
+e o outro funciona com um banco de dados local.
 
-The API client,`ApiClientService`,
-connects to a remote service using HTTP REST calls.
+O cliente API, `ApiClientService`,
+se conecta a um serviço remoto usando chamadas HTTP REST.
 
 <?code-excerpt "lib/data/services/api_client_service.dart (ApiClientService)"?>
 ```dart
@@ -68,8 +69,8 @@ class ApiClientService {
 }
 ```
 
-The database service, `DatabaseService`, stores data using SQL,
-similar to the one found in the [Persistent Storage Architecture: SQL][] recipe.
+O serviço de banco de dados, `DatabaseService`, armazena dados usando SQL,
+semelhante ao encontrado na receita [Arquitetura de armazenamento persistente: SQL][Persistent Storage Architecture: SQL].
 
 <?code-excerpt "lib/data/services/database_service.dart (DatabaseService)"?>
 ```dart
@@ -87,8 +88,8 @@ class DatabaseService {
 }
 ```
 
-This example also uses the `UserProfile` data class
-that has been created using the [`freezed`][] package.
+Este exemplo também usa a classe de dados `UserProfile`
+que foi criada usando o pacote [`freezed`][].
 
 <?code-excerpt "lib/domain/model/user_profile.dart (UserProfile)" remove="@Default(false) bool synchronized,"?>
 ```dart
@@ -101,20 +102,20 @@ abstract class UserProfile with _$UserProfile {
 }
 ```
 
-In apps that have complex data,
-such as when the remote data contains more fields than the needed by the UI,
-you might want to have one data class for the API and database services,
-and another for the UI.
-For example,
-`UserProfileLocal` for the database entity,
-`UserProfileRemote` for the API response object,
-and then `UserProfile` for the UI data model class.
-The `UserProfileRepository` would take care
-of converting from one to the other when necessary.
+Em aplicativos que possuem dados complexos,
+como quando os dados remotos contêm mais campos do que o necessário para a UI,
+você pode querer ter uma classe de dados para os serviços de API e banco de dados,
+e outra para a UI.
+Por exemplo,
+`UserProfileLocal` para a entidade de banco de dados,
+`UserProfileRemote` para o objeto de resposta da API,
+e então `UserProfile` para a classe de modelo de dados da UI.
+O `UserProfileRepository` cuidaria
+de converter de um para o outro quando necessário.
 
-This example also includes the `UserProfileViewModel`,
-a view model that uses the `UserProfileRepository`
-to display the `UserProfile` on a widget.
+Este exemplo também inclui o `UserProfileViewModel`,
+um view model que usa o `UserProfileRepository`
+para exibir o `UserProfile` em um widget.
 
 <?code-excerpt "lib/ui/user_profile/user_profile_viewmodel.dart (UserProfileViewModel)"?>
 ```dart
@@ -137,32 +138,32 @@ class UserProfileViewModel extends ChangeNotifier {
 }
 ```
 
-## Reading data
+## Lendo dados
 
-Reading data is a fundamental part of any application
-that relies on remote API services.
+A leitura de dados é uma parte fundamental de qualquer aplicativo
+que dependa de serviços de API remotos.
 
-In offline-first applications,
-you want to ensure that the access to this data is as fast as possible,
-and that it doesn’t depend on the device being online
-to provide data to the user.
-This is similar to the [Optimistic State design pattern][].
+Em aplicativos offline-first,
+você deseja garantir que o acesso a esses dados seja o mais rápido possível,
+e que não dependa do dispositivo estar online
+para fornecer dados ao usuário.
+Isso é semelhante ao [padrão de design de estado otimista][Optimistic State design pattern].
 
-In this section,
-you will learn two different approaches,
-one that uses the database as a fallback,
-and one that combines local and remote data using a `Stream`.
+Nesta seção,
+você aprenderá duas abordagens diferentes,
+uma que usa o banco de dados como um fallback,
+e outra que combina dados locais e remotos usando um `Stream`.
 
-### Using local data as a fallback
+### Usando dados locais como fallback
 
-As a first approach,
-you can implement offline support by having a fallback mechanism
-for when the user is offline or a network call fails.
+Como uma primeira abordagem,
+você pode implementar o suporte offline tendo um mecanismo de fallback
+para quando o usuário está offline ou uma chamada de rede falha.
 
-In this case, the `UserProfileRepository` attempts to obtain the `UserProfile`
-from the remote API server using the `ApiClientService`.
-If this request fails,
-then returns the locally stored `UserProfile` from the `DatabaseService`.
+Nesse caso, o `UserProfileRepository` tenta obter o `UserProfile`
+do servidor da API remota usando o `ApiClientService`.
+Se esta solicitação falhar,
+retorna o `UserProfile` armazenado localmente do `DatabaseService`.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (getUserProfileFallback)" replace="/Fallback//g"?>
 ```dart
@@ -191,27 +192,27 @@ Future<UserProfile> getUserProfile() async {
 }
 ```
 
-### Using a Stream
+### Usando um Stream
 
-A better alternative presents the data using a `Stream`.
-In the best case scenario,
-the `Stream` emits two values,
-the locally stored data, and the data from the server.
+Uma alternativa melhor apresenta os dados usando um `Stream`.
+No melhor cenário,
+o `Stream` emite dois valores,
+os dados armazenados localmente e os dados do servidor.
 
-First, the stream emits the locally stored data using the `DatabaseService`.
-This call is generally faster and less error prone than a network call,
-and by doing it first the view model can already display data to the user.
+Primeiro, o stream emite os dados armazenados localmente usando o `DatabaseService`.
+Essa chamada geralmente é mais rápida e menos propensa a erros do que uma chamada de rede,
+e ao fazê-lo primeiro, o view model já pode exibir dados para o usuário.
 
-If the database does not contain any cached data,
-then the `Stream` relies completely on the network call,
-emitting only one value.
+Se o banco de dados não contiver nenhum dado em cache,
+o `Stream` depende completamente da chamada de rede,
+emitindo apenas um valor.
 
-Then, the method performs the network call using the `ApiClientService`
-to obtain up-to-date data.
-If the request was successful,
-it updates the database with the newly obtained data,
-and then yields the value to the view model,
-so it can be displayed to the user.
+Então, o método realiza a chamada de rede usando o `ApiClientService`
+para obter dados atualizados.
+Se a solicitação foi bem-sucedida,
+ele atualiza o banco de dados com os dados recém-obtidos,
+e então envia o valor para o view model,
+para que possa ser exibido para o usuário.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (getUserProfile)"?>
 ```dart
@@ -236,13 +237,13 @@ Stream<UserProfile> getUserProfile() async* {
 }
 ```
 
-The view model must subscribe
-to this `Stream` and wait until it has completed.
-For that, call `asFuture()` with the `Subscription` object and await the result.
+O view model deve se inscrever
+neste `Stream` e esperar até que ele seja concluído.
+Para isso, chame `asFuture()` com o objeto `Subscription` e aguarde o resultado.
 
-For each obtained value,
-update the view model data and call `notifyListeners()`
-so the UI shows the latest data.
+Para cada valor obtido,
+atualize os dados do view model e chame `notifyListeners()`
+para que a UI mostre os dados mais recentes.
 
 <?code-excerpt "lib/ui/user_profile/user_profile_viewmodel.dart (load)"?>
 ```dart
@@ -261,13 +262,12 @@ Future<void> load() async {
       .asFuture<void>();
 }
 ```
-### Using only local data
+### Usando apenas dados locais
 
-Another possible approach uses locally stored data for read operations.
-This approach requires that the data has been preloaded
-at some point into the database,
-and requires a synchronization mechanism that can keep the data up to date.
-
+Outra abordagem possível usa dados armazenados localmente para operações de leitura.
+Essa abordagem exige que os dados tenham sido pré-carregados
+em algum momento no banco de dados,
+e requer um mecanismo de sincronização que possa manter os dados atualizados.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (getUserProfileLocal)" replace="/Local//g;/Read//g"?>
 ```dart
@@ -296,42 +296,42 @@ Future<void> sync() async {
 }
 ```
 
-This approach can be useful for applications
-that don’t require data to be in sync with the server at all times.
-For example, a weather application
-where the weather data is only updated once a day.
+Essa abordagem pode ser útil para aplicativos
+que não exigem que os dados estejam sincronizados com o servidor o tempo todo.
+Por exemplo, um aplicativo de clima
+onde os dados meteorológicos são atualizados apenas uma vez por dia.
 
-Synchronization could be done manually by the user,
-for example, a pull-to-refresh action that then calls the `sync()` method,
-or done periodically by a `Timer` or a background process.
-You can learn how to implement a synchronization task
-in the section about synchronizing state.
+A sincronização pode ser feita manualmente pelo usuário,
+por exemplo, uma ação de pull-to-refresh que então chama o método `sync()`,
+ou feita periodicamente por um `Timer` ou um processo em segundo plano.
+Você pode aprender como implementar uma tarefa de sincronização
+na seção sobre sincronização de estado.
 
-## Writing data
+## Escrevendo dados
 
-Writing data in offline-first applications depends fundamentally
-on the application use case.
+A gravação de dados em aplicativos offline-first depende fundamentalmente
+do caso de uso do aplicativo.
 
-Some applications might require the user input data
-to be immediately available on the server side,
-while other applications might be more flexible
-and allow data to be out-of-sync temporarily.
+Alguns aplicativos podem exigir que os dados de entrada do usuário
+estejam imediatamente disponíveis no lado do servidor,
+enquanto outros aplicativos podem ser mais flexíveis
+e permitir que os dados fiquem dessincronizados temporariamente.
 
-This section explains two different approaches
-for implementing writing data in offline-first applications.
+Esta seção explica duas abordagens diferentes
+para implementar a gravação de dados em aplicativos offline-first.
 
-### Online-only writing
+### Gravação apenas online
 
-One approach for writing data in offline-first applications
-is to enforce being online to write data.
-While this might sound counterintuitive,
-this ensures that the data the user has modified
-is fully synchronized with the server,
-and the application doesn’t have a different state than the server.
+Uma abordagem para gravar dados em aplicativos offline-first
+é impor estar online para gravar dados.
+Embora isso possa parecer contra-intuitivo,
+isso garante que os dados que o usuário modificou
+estejam totalmente sincronizados com o servidor,
+e o aplicativo não tenha um estado diferente do servidor.
 
-In this case, you first attempt to send the data to the API service,
-and if the request succeeds,
-then store the data in the database.
+Neste caso, você primeiro tenta enviar os dados para o serviço API,
+e se a solicitação for bem-sucedida,
+armazena os dados no banco de dados.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (updateUserProfileOnline)" replace="/Online//g"?>
 ```dart
@@ -349,16 +349,16 @@ Future<void> updateUserProfile(UserProfile userProfile) async {
 }
 ```
 
-The disadvantage in this case is that the offline-first functionality
-is only available for read operations,
-but not for write operations, as those require the user being online.
+A desvantagem neste caso é que a funcionalidade offline-first
+está disponível apenas para operações de leitura,
+mas não para operações de gravação, pois elas exigem que o usuário esteja online.
 
-### Offline-first writing
+### Gravação offline-first
 
-The second approach works the other way around.
-Instead of performing the network call first,
-the application first stores the new data in the database,
-and then attempts to send it to the API service once it has been stored locally.
+A segunda abordagem funciona ao contrário.
+Em vez de realizar a chamada de rede primeiro,
+o aplicativo primeiro armazena os novos dados no banco de dados,
+e então tenta enviá-los para o serviço API depois que ele foi armazenado localmente.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (updateUserProfileOffline)" replace="/Offline//g"?>
 ```dart
@@ -375,40 +375,39 @@ Future<void> updateUserProfile(UserProfile userProfile) async {
 }
 ```
 
-This approach allows users to store data locally
-even when the application is offline,
-however, if the network call fails,
-the local database and the API service are no longer in sync.
-In the next section,
-you will learn different approaches to handle synchronization
-between local and remote data.
+Essa abordagem permite que os usuários armazenem dados localmente
+mesmo quando o aplicativo está offline,
+no entanto, se a chamada de rede falhar,
+o banco de dados local e o serviço API não estão mais sincronizados.
+Na próxima seção,
+você aprenderá diferentes abordagens para lidar com a sincronização
+entre dados locais e remotos.
 
-## Synchronizing state
+## Sincronizando estado
 
-Keeping the local and remote data in sync
-is an important part of offline-first applications,
-as the changes that have been done locally
-need to be copied to the remote service.
-The app must also ensure that, when the user goes back to the application,
-the locally stored data is the same as in the remote service.
+Manter os dados locais e remotos sincronizados
+é uma parte importante dos aplicativos offline-first,
+já que as alterações que foram feitas localmente
+precisam ser copiadas para o serviço remoto.
+O aplicativo também deve garantir que, quando o usuário retornar ao aplicativo,
+os dados armazenados localmente sejam os mesmos do serviço remoto.
 
+### Escrevendo uma tarefa de sincronização
 
-### Writing a synchronization task
+Existem diferentes abordagens para implementar
+a sincronização em uma tarefa em segundo plano.
 
-There are different approaches for implementing
-synchronization in a background task.
-
-A simple solution is to create a `Timer`
-in the `UserProfileRepository` that runs periodically,
-for example every five minutes.
+Uma solução simples é criar um `Timer`
+no `UserProfileRepository` que é executado periodicamente,
+por exemplo, a cada cinco minutos.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (Timer)"?>
 ```dart
 Timer.periodic(const Duration(minutes: 5), (timer) => sync());
 ```
 
-The `sync()` method then fetches the `UserProfile` from the database,
-and if it requires synchronization, it is then sent to the API service.
+O método `sync()` então busca o `UserProfile` do banco de dados,
+e se ele exigir sincronização, ele é enviado para o serviço API.
 
 <?code-excerpt "lib/data/repositories/user_profile_repository.dart (sync)"?>
 ```dart
@@ -435,38 +434,38 @@ Future<void> sync() async {
 }
 ```
 
-A more complex solution uses background processes
-like the [`workmanager`][] plugin.
-This allows your application to run the synchronization process
-in the background even when the application is not running.
+Uma solução mais complexa usa processos em segundo plano
+como o plugin [`workmanager`][].
+Isso permite que seu aplicativo execute o processo de sincronização
+em segundo plano, mesmo quando o aplicativo não está em execução.
 
 :::note
-Running background operations continuously
-can drain the device battery dramatically,
-and some devices limit the background processing capabilities,
-so this approach needs to be tuned
-to the application requirements and one solution might not fit all cases.
+Executar operações em segundo plano continuamente
+pode descarregar a bateria do dispositivo drasticamente,
+e alguns dispositivos limitam os recursos de processamento em segundo plano,
+portanto, essa abordagem precisa ser ajustada
+para os requisitos do aplicativo e uma solução pode não ser adequada para todos os casos.
 :::
 
-It’s also recommended to only perform the synchronization task
-when the network is available.
-For example, you can use the [`connectivity_plus`][] plugin
-to check if the device is connected to WiFi.
-You can also use [`battery_plus`][] to verify
-that the device is not running low on battery.
+Também é recomendável executar a tarefa de sincronização apenas
+quando a rede está disponível.
+Por exemplo, você pode usar o plugin [`connectivity_plus`][]
+para verificar se o dispositivo está conectado ao WiFi.
+Você também pode usar [`battery_plus`][] para verificar
+que o dispositivo não está com pouca bateria.
 
-In the previous example, the synchronization task runs every 5 minutes.
-In some cases, that might be excessive,
-while in others it might not be frequent enough.
-The actual synchronization period time for your application
-depends on your application needs and it’s something you will have to decide.
+No exemplo anterior, a tarefa de sincronização é executada a cada 5 minutos.
+Em alguns casos, isso pode ser excessivo,
+enquanto em outros pode não ser frequente o suficiente.
+O tempo real do período de sincronização para seu aplicativo
+depende das necessidades do seu aplicativo e é algo que você terá que decidir.
 
-### Storing a synchronization flag
+### Armazenando um flag de sincronização
 
-To know if the data requires synchronization,
-add a flag to the data class indicating if the changes need to be synchronized.
+Para saber se os dados exigem sincronização,
+adicione um flag à classe de dados indicando se as alterações precisam ser sincronizadas.
 
-For example, `bool synchronized`:
+Por exemplo, `bool synchronized`:
 
 <?code-excerpt "lib/domain/model/user_profile.dart (UserProfile)"?>
 ```dart
@@ -480,47 +479,47 @@ abstract class UserProfile with _$UserProfile {
 }
 ```
 
-Your synchronization logic should attempt
-to send it to the API service
-only when the `synchronized` flag is `false`.
-If the request is successful, then change it to `true`.
+Sua lógica de sincronização deve tentar
+enviá-lo para o serviço API
+apenas quando o flag `synchronized` for `false`.
+Se a solicitação for bem-sucedida, altere-o para `true`.
 
-### Pushing data from server
+### Enviando dados do servidor
 
-A different approach for synchronization
-is to use a push service to provide up-to-date data to the application.
-In this case, the server notifies the application when data has changed,
-instead of being the application asking for updates.
+Uma abordagem diferente para a sincronização
+é usar um serviço de push para fornecer dados atualizados para o aplicativo.
+Nesse caso, o servidor notifica o aplicativo quando os dados são alterados,
+em vez de ser o aplicativo solicitando atualizações.
 
-For example, you can use [Firebase messaging][],
-to push small payloads of data to the device,
-as well as trigger synchronization tasks remotely using background messages.
+Por exemplo, você pode usar o [Firebase messaging][],
+para enviar pequenos payloads de dados para o dispositivo,
+bem como acionar tarefas de sincronização remotamente usando mensagens em segundo plano.
 
-Instead of having a synchronization task running in the background,
-the server notifies the application
-when the stored data needs to be updated with a push notification.
+Em vez de ter uma tarefa de sincronização em execução em segundo plano,
+o servidor notifica o aplicativo
+quando os dados armazenados precisam ser atualizados com uma notificação push.
 
-You can combine both approaches together,
-having a background synchronization task and using background push messages,
-to keep the application database synchronized with the server.
+Você pode combinar as duas abordagens,
+tendo uma tarefa de sincronização em segundo plano e usando mensagens push em segundo plano,
+para manter o banco de dados do aplicativo sincronizado com o servidor.
 
-## Putting it all together
+## Juntando tudo
 
-Writing an offline-first application
-requires making decisions regarding
-the way read, write and sync operations are implemented,
-which depend on the requirements from the application you are developing.
+Escrever um aplicativo offline-first
+exige tomar decisões sobre
+a forma como as operações de leitura, gravação e sincronização são implementadas,
+que dependem dos requisitos do aplicativo que você está desenvolvendo.
 
-The key takeaways are:
+As principais conclusões são:
 
-- When reading data,
-you can use a `Stream` to combine locally stored data with remote data.
-- When writing data,
-decide if you need to be online or offline,
-and if you need synchronizing data later or not.
-- When implementing a background sync task,
-take into account the device status and your application needs,
-as different applications may have different requirements.
+- Ao ler dados,
+você pode usar um `Stream` para combinar dados armazenados localmente com dados remotos.
+- Ao gravar dados,
+decida se você precisa estar online ou offline,
+e se você precisa sincronizar dados mais tarde ou não.
+- Ao implementar uma tarefa de sincronização em segundo plano,
+leve em consideração o status do dispositivo e as necessidades do seu aplicativo,
+já que diferentes aplicativos podem ter requisitos diferentes.
 
 [Flutter Architecture guidelines]:/app-architecture
 [Persistent Storage Architecture: SQL]:/app-architecture/design-patterns/sql
