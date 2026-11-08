@@ -9,6 +9,24 @@ Parciais em `sites/docs/src/_includes/` (sem frontmatter) usam
 Upstream: [flutter/website](https://github.com/flutter/website). Para
 sincronizar: `git fetch upstream main && git merge upstream/main`.
 
+## Fluxo para traduzir uma página
+
+1. Traduza o arquivo em `sites/docs/src/content/` (ou o parcial em `_includes/`)
+   e adicione `ia-translate: true` ao fim do frontmatter.
+2. Não traduza código, nomes de API, URLs nem rótulos de link de referência
+   (use `[texto traduzido][rótulo original]`).
+3. Rode, a partir da raiz do repositório:
+   ```console
+   python3 tool/traducao/restaurar_excerpts.py <arquivos>  # código de excerpts = upstream
+   python3 tool/traducao/ancorar_titulos.py <arquivos>     # mantém IDs em inglês nos títulos
+   python3 tool/traducao/verificar.py <arquivos>           # confere a estrutura
+   python3 tool/traducao/gerar_todo.py                     # atualiza este arquivo
+   ```
+
+Depois de um merge do upstream, rode `verificar.py` sem argumentos e
+`git diff <merge-anterior> upstream/main -- <arquivo>` nas páginas traduzidas
+que mudaram no inglês.
+
 ## Infraestrutura (portar do Eleventy para Jaspr)
 
 Em 2025 o upstream trocou o Eleventy pelo [Jaspr](https://jaspr.site) e moveu o
