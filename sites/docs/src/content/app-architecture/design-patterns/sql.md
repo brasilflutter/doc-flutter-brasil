@@ -35,7 +35,7 @@ que combinado oferece suporte para dispositivos móveis e desktop.
 O suporte para web é fornecido no plugin experimental
 [`sqflite_common_ffi_web`][], mas não está incluído neste exemplo.
 
-## Aplicativo de exemplo: aplicativo de lista de tarefas
+## Aplicativo de exemplo: aplicativo de lista de tarefas {:#example-application-todo-list-application}
 
 O aplicativo de exemplo consiste em uma única tela com uma barra de aplicativo na parte superior,
 uma lista de itens e uma entrada de campo de texto na parte inferior.
@@ -59,7 +59,7 @@ O código-fonte completo e executável para este exemplo está
 disponível em [`/examples/app-architecture/todo_data_service/`][].
 :::
 
-## Armazenando dados complexos com SQL
+## Armazenando dados complexos com SQL {:#storing-complex-data-with-sql}
 
 Essa funcionalidade segue o [design de arquitetura do Flutter][Flutter Architecture design] recomendado,
 contendo uma camada de UI e uma camada de dados.
@@ -69,7 +69,7 @@ Além disso, na camada de domínio você encontrará o modelo de dados usado.
 - Camada de domínio com classe de dados `Todo`
 - Camada de dados com `TodoRepository` e `DatabaseService`
 
-### Camada de apresentação da lista de tarefas
+### Camada de apresentação da lista de tarefas {:#todo-list-presentation-layer}
 
 O `TodoListScreen` é um Widget que contém a UI responsável por exibir
 e criar os itens ToDo.
@@ -231,7 +231,7 @@ Future<Result<void>> _delete(int id) async {
 }
 ```
 
-### Camada de domínio da lista de tarefas
+### Camada de domínio da lista de tarefas {:#todo-list-domain-layer}
 
 A camada de domínio deste aplicativo de exemplo contém
 o modelo de dados do item `Todo`.
@@ -256,7 +256,7 @@ abstract class Todo with _$Todo {
 }
 ```
 
-### Camada de dados da lista de tarefas
+### Camada de dados da lista de tarefas {:#todo-list-data-layer}
 
 A camada de dados desta funcionalidade é composta por duas classes,
 o `TodoRepository` e o `DatabaseService`.
@@ -427,7 +427,7 @@ assim como os requisitos do seu aplicativo.
 para obter recomendações.
 :::
 
-## Juntando tudo
+## Juntando tudo {:#putting-it-all-together}
 
 No método `main()` do seu aplicativo,
 primeiro inicialize o `DatabaseService`,

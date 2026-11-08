@@ -30,7 +30,7 @@ Neste guia,
 você aprenderá sobre essa limitação
 e como atenuá-la usando o padrão _result_.
 
-## Fluxo de erro em aplicativos Flutter
+## Fluxo de erro em aplicativos Flutter {:#error-flow-in-flutter-applications}
 
 Os aplicativos que seguem as [diretrizes de arquitetura do Flutter][Flutter architecture guidelines]
 geralmente são compostos por view models,
@@ -145,7 +145,7 @@ avisando sobre as possíveis exceções que ele pode lançar.
 No entanto, como o view model não usa o serviço diretamente,
 outros desenvolvedores que trabalham no código podem perder essa informação.
 
-## Usando o padrão result
+## Usando o padrão result {:#using-the-result-pattern}
 
 Uma alternativa para lançar exceções
 é envolver a saída da função em um objeto `Result`.
@@ -206,7 +206,7 @@ Neste exemplo,
 a classe `Result` usa um tipo genérico `T` para representar qualquer valor de retorno,
 que pode ser um tipo Dart primitivo como `String` ou um `int` ou uma classe personalizada como `UserProfile`.
 
-### Criando um objeto `Result`
+### Criando um objeto `Result` {:#creating-a-result-object}
 
 Para funções que usam a classe `Result` para retornar valores,
 em vez de um valor,
@@ -282,7 +282,7 @@ Future<Result<UserProfile>> getUserProfile() async {
 }
 ```
 
-### Desembrulhando o objeto Result
+### Desembrulhando o objeto Result {:#unwrapping-the-result-object}
 
 Agora, o view model não recebe o `UserProfile` diretamente,
 mas recebe um `Result` contendo um `UserProfile`.
@@ -324,7 +324,7 @@ obtenha o valor usando a propriedade `value`.
 No caso `Error<UserProfile>`,
 obtenha o objeto de erro usando a propriedade `error`.
 
-## Melhorando o fluxo de controle
+## Melhorando o fluxo de controle {:#improving-control-flow}
 
 Envolver o código em um bloco `try-catch` garante que
 exceções lançadas sejam capturadas e não propagadas para outras partes do código.
@@ -381,7 +381,7 @@ Neste código, se o objeto `Result` for uma instância `Ok`,
 então a função retorna esse objeto;
 caso contrário, retorna `Result.Error`.
 
-## Juntando tudo
+## Juntando tudo {:#putting-it-all-together}
 
 Neste guia, você aprendeu
 como usar uma classe `Result` para retornar valores de resultado.

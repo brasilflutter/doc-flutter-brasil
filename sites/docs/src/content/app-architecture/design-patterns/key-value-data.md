@@ -30,7 +30,7 @@ você provavelmente vai querer usar SQL.
 Nesse caso, dê uma olhada na receita do cookbook
 que segue esta chamada [Arquitetura de armazenamento persistente: SQL][Persistent Storage Architecture: SQL].
 
-## Aplicativo de exemplo: Aplicativo com seleção de tema
+## Aplicativo de exemplo: Aplicativo com seleção de tema {:#example-application-app-with-theme-selection}
 
 O aplicativo de exemplo consiste em uma única tela com uma barra de aplicativo na parte superior,
 uma lista de itens e uma entrada de campo de texto na parte inferior.
@@ -52,7 +52,7 @@ O código-fonte completo e executável para este exemplo está
 disponível em [`/examples/app-architecture/todo_data_service/`][].
 :::
 
-## Armazenando dados de chave-valor de seleção de tema
+## Armazenando dados de chave-valor de seleção de tema {:#storing-theme-selection-key-value-data}
 
 Essa funcionalidade segue o padrão de design de arquitetura Flutter recomendado,
 com uma apresentação e uma camada de dados.
@@ -62,7 +62,7 @@ e o `ThemeSwitchViewModel`.
 - A camada de dados contém o `ThemeRepository`
 e o `SharedPreferencesService`.
 
-### Camada de apresentação de seleção de tema
+### Camada de apresentação de seleção de tema {:#theme-selection-presentation-layer}
 
 O `ThemeSwitch` é um `StatelessWidget` que contém um widget `Switch`.
 O estado do switch é representado
@@ -164,7 +164,7 @@ class ThemeSwitchViewModel extends ChangeNotifier {
 }
 ```
 
-### Camada de dados de seleção de tema
+### Camada de dados de seleção de tema {:#theme-selection-data-layer}
 
 Seguindo as diretrizes de arquitetura,
 a camada de dados é dividida em duas partes:
@@ -251,7 +251,7 @@ class SharedPreferencesService {
 }
 ```
 
-## Juntando tudo
+## Juntando tudo {:#putting-it-all-together}
 
 Neste exemplo,
 o `ThemeRepository` e o `SharedPreferencesService` são criados

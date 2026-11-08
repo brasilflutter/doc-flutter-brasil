@@ -9,7 +9,7 @@ ia-translate: true
 
 {% render "docs/install/quick.md" site: site %}
 
-## Comece a aprender!
+## Comece a aprender! {:#start-learning}
 
 Instalar o Flutter SDK também instala o Dart automaticamente. Agora você já pode começar a criar apps Flutter!
 

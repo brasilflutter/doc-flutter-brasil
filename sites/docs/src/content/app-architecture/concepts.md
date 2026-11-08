@@ -20,7 +20,7 @@ bem como informações sobre como eles se encaixam especificamente no Flutter.
 à arquitetura recomendada e às melhores práticas,
 para que possam ser explorados em mais detalhes ao longo deste guia.
 
-## Separação de responsabilidades
+## Separação de responsabilidades {:#separation-of-concerns}
 
 A [separação de responsabilidades][Separation-of-concerns] é um princípio central no desenvolvimento de aplicativos
 que promove a modularidade e a manutenção ao dividir a funcionalidade de um aplicativo
@@ -34,7 +34,7 @@ da lógica de busca.
 No Flutter, isso também se aplica aos [widgets](/resources/glossary#widget) na camada de UI. Você deve escrever widgets
 reutilizáveis e enxutos, que contenham o mínimo de lógica possível.
 
-## Arquitetura em camadas
+## Arquitetura em camadas {:#layered-architecture}
 
 Aplicações Flutter devem ser escritas em *camadas*. A arquitetura em camadas é um padrão
 de design de software que organiza uma aplicação em camadas distintas, cada uma com
@@ -60,7 +60,7 @@ Essas são chamadas de "camadas" porque cada camada pode se comunicar apenas com
 as camadas diretamente abaixo ou acima dela. A camada de UI não deve saber que a
 camada de dados existe, e vice-versa.
 
-## Fonte única da verdade
+## Fonte única da verdade {:#single-source-of-truth}
 
 Cada tipo de dado no seu aplicativo deve ter uma [fonte única da verdade][single source of truth].
 A fonte da verdade é responsável por representar o estado local ou remoto.
@@ -81,7 +81,7 @@ uma classe Dart pode usar [getters][] para derivar valores de um campo SSOT
 ou uma lista de [registros][records] para agrupar valores relacionados
 (em vez de listas paralelas cujos índices podem ficar desalinhados).
 
-## Fluxo unidirecional de dados
+## Fluxo unidirecional de dados {:#unidirectional-data-flow}
 
 O [fluxo unidirecional de dados][Unidirectional data flow] (UDF) refere-se a um padrão de design que ajuda
 a desacoplar o estado da UI que exibe esse estado. Em termos simples,
@@ -113,7 +113,7 @@ na [SSOT][], que é a camada de dados.
 Isso torna seu código mais fácil de entender, menos propenso a erros e
 evita a criação de dados malformados ou inesperados.
 
-## A UI é uma função do estado (imutável)
+## A UI é uma função do estado (imutável) {:#ui-is-a-function-of-immutable-state}
 
 O Flutter é declarativo,
 o que significa que ele constrói a UI para refletir o estado atual
@@ -130,7 +130,7 @@ e as visualizações devem conter o mínimo possível de lógica.
 Isso minimiza a possibilidade de perda de dados quando um aplicativo é fechado
 e torna o aplicativo mais testável e resiliente a bugs.
 
-## Extensibilidade
+## Extensibilidade {:#extensibility}
 
 Cada componente da arquitetura deve ter uma lista bem definida de entradas e saídas.
 Por exemplo, um modelo de visualização na camada de lógica deve apenas
@@ -141,7 +141,7 @@ O uso de interfaces bem definidas dessa maneira permite trocar
 implementações concretas das suas classes sem a necessidade de
 alterar nenhum código que consuma essas interfaces.
 
-## Testabilidade
+## Testabilidade {:#testability}
 
 Os princípios que tornam o software extensível também o tornam mais fácil de testar.
 Por exemplo, é possível testar a lógica autônoma de um modelo de visualização

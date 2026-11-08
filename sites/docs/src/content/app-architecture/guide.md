@@ -24,7 +24,7 @@ juntamente com as classes que existem dentro de cada camada.
 A seção seguinte fornece exemplos de código concretos e
 percorre um aplicativo Flutter que implementou essas recomendações.
 
-## Visão geral da estrutura do projeto
+## Visão geral da estrutura do projeto {:#overview-of-project-structure}
 
 [Separação de preocupações][Separation-of-concerns] (Separation of concerns) é o princípio mais importante a ser seguido ao
 projetar seu aplicativo Flutter.
@@ -80,7 +80,7 @@ A camada de domínio contém componentes adicionais frequentemente chamados de *
 
 [Model-View-ViewModel architectural pattern]: https://en.wikipedia.org/wiki/Model–view–viewmodel
 
-## Camada de UI
+## Camada de UI {:#ui-layer}
 
 A camada de UI de um aplicativo é responsável por interagir com o usuário.
 Ela exibe os dados de um aplicativo para o usuário e recebe entrada do usuário,
@@ -199,7 +199,7 @@ confira os [fundamentos de gerenciamento de estado][state management fundamental
 [App architecture case study]: /app-architecture/case-study
 [state management fundamentals]: /data-and-backend/state-mgmt/intro
 
-## Camada de dados
+## Camada de dados {:#data-layer}
 
 A camada de dados de um aplicativo lida com os dados e a lógica de negócios.
 Duas partes da arquitetura compõem a camada de dados: serviços e repositórios.
@@ -210,7 +210,7 @@ para simplificar sua reutilização e testabilidade.
 
 Usando a linguagem MVVM, serviços e repositórios compõem sua *camada de modelo*.
 
-### Repositórios
+### Repositórios {:#repositories}
 
 As classes de [Repositório][Repository] são a fonte da verdade para os dados do seu modelo.
 Elas são responsáveis por pesquisar dados de serviços,
@@ -246,7 +246,7 @@ Se seu aplicativo tiver lógica de negócios que precisa de dados de dois reposi
 você deve combinar os dados no view model ou na camada de domínio,
 especialmente se sua relação repositório-para-view-model for complexa.
 
-#### Gerenciando o estado de sessão de todo o aplicativo
+#### Gerenciando o estado de sessão de todo o aplicativo {:#managing-app-wide-session-state}
 
 Como os repositórios são a fonte única da verdade para os dados do aplicativo,
 eles também são o lugar ideal para gerenciar o **estado de ciclo de vida de todo o aplicativo**: o estado que
@@ -285,7 +285,7 @@ e um serviço pode ser usado por vários repositórios.
 
 <img src='/assets/images/docs/app-architecture/guide/feature-architecture-simplified-Service-highlighted.png' alt="Um diagrama simplificado da arquitetura descrita nesta página com o objeto Serviço destacado.">
 
-## Opcional: Camada de domínio
+## Opcional: Camada de domínio {:#optional-domain-layer}
 
 À medida que seu aplicativo cresce e adiciona recursos, você pode precisar abstrair a lógica
 que adiciona muita complexidade aos seus view models.
@@ -317,7 +317,7 @@ beneficiaria dessa camada adicional, considere os prós e contras:
 
 {:.table .table-striped}
 
-### Acesso a dados com use-cases
+### Acesso a dados com use-cases {:#data-access-with-use-cases}
 
 Outra consideração ao adicionar uma camada de domínio é se os view models
 continuarão a ter acesso direto aos dados do repositório, ou se você aplicará

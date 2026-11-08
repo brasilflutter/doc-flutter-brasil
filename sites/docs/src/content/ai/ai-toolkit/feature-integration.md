@@ -42,7 +42,7 @@ funcionalidades adicionais:
 [`LlmChatView`]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmChatView-class.html
 
-## Mensagens de boas-vindas
+## Mensagens de boas-vindas {:#welcome-messages}
 
 A visualização de chat permite que você forneça uma mensagem de boas-vindas
 personalizada para definir o contexto para o usuário:
@@ -78,7 +78,7 @@ consulte o [exemplo de boas-vindas][welcome example].
 [welcome example]:
     https://github.com/flutter/ai/blob/main/example/lib/welcome/welcome.dart
 
-## Sugestões de prompts
+## Sugestões de prompts {:#suggested-prompts}
 
 Você pode fornecer um conjunto de sugestões de prompts para dar ao usuário uma
 ideia do objetivo para o qual a sessão de chat foi otimizada:
@@ -120,7 +120,7 @@ olhada no [exemplo de sugestões][suggestions example].
 [suggestions example]:
     https://github.com/flutter/ai/blob/main/example/lib/suggestions/suggestions.dart
 
-## Instruções de LLM
+## Instruções de LLM {:#llm-instructions}
 
 Para otimizar as respostas de um LLM com base nas necessidades do seu
 aplicativo, você vai querer fornecer instruções a ele. Por exemplo, o
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-## Chamada de funções
+## Chamada de funções {:#function-calling}
 
 Para permitir que o LLM execute ações em nome do usuário, você pode fornecer um
 conjunto de ferramentas (funções) que o LLM pode chamar. O `FirebaseProvider`
@@ -195,7 +195,7 @@ passá-las para o `FirebaseProvider`. Confira o
 [function calling example]:
     https://github.com/flutter/ai/blob/main/example/lib/function_calls/function_calls.dart
 
-## Desativar anexos e entrada de áudio
+## Desativar anexos e entrada de áudio {:#disable-attachments-and-audio-input}
 
 Se você quiser desativar os anexos (o botão **+**) ou a entrada de áudio (o
 botão de microfone), você pode fazer isso com os parâmetros `enableAttachments`
@@ -223,7 +223,7 @@ class ChatPage extends StatelessWidget {
 
 Ambas as flags têm `true` como padrão.
 
-## Speech-to-text personalizado
+## Speech-to-text personalizado {:#custom-speech-to-text}
 
 Por padrão, o AI Toolkit usa o `LlmProvider` passado para o `LlmChatView` para
 fornecer a implementação de speech-to-text (conversão de fala em texto). Se
@@ -243,7 +243,7 @@ Confira o [exemplo de STT personalizado][custom STT example] para mais detalhes.
 [custom STT example]:
     https://github.com/flutter/ai/tree/main/example/lib/custom_stt
 
-## Gerenciar o comportamento de cancelamento ou erro
+## Gerenciar o comportamento de cancelamento ou erro {:#manage-cancel-or-error-behavior}
 
 Por padrão, quando o usuário cancela uma solicitação ao LLM, a string "CANCEL"
 será anexada à resposta do LLM e uma mensagem aparecerá informando que o
@@ -281,7 +281,7 @@ class ChatPage extends StatelessWidget {
 Você pode substituir qualquer um desses parâmetros, ou todos eles, e o
 `LlmChatView` usará seus padrões para tudo o que você não substituir.
 
-## Gerenciando o histórico
+## Gerenciando o histórico {:#manage-history}
 
 A [interface padrão que define todos os provedores de LLM][providerIF] que podem
 ser conectados à visualização de chat inclui a capacidade de obter e definir o
@@ -366,7 +366,7 @@ Para ver o histórico em ação, confira o
     https://github.com/flutter/ai/blob/main/example/lib/history/history.dart
 [recipes example app]: https://github.com/flutter/ai/tree/main/example/lib/recipes
 
-## Serialização/desserialização de chat
+## Serialização/desserialização de chat {:#chat-serializationdeserialization}
 
 Para salvar e restaurar o histórico de chat entre sessões de um aplicativo, é
 necessária a capacidade de serializar e desserializar cada prompt do usuário,
@@ -425,7 +425,7 @@ Para ver isso em ação, consulte o
 [history example app]:
     https://github.com/flutter/ai/blob/main/example/lib/history/history.dart
 
-## Widgets de resposta personalizados
+## Widgets de resposta personalizados {:#custom-response-widgets}
 
 Por padrão, a resposta do LLM exibida pela visualização de chat é formatada em
 Markdown. No entanto, em alguns casos, você deseja criar um widget
@@ -576,7 +576,7 @@ que fizemos aqui.
 Para ver isso em ação, confira o
 [aplicativo de exemplo de receitas][recipes example app].
 
-## Estilo personalizado
+## Estilo personalizado {:#custom-styling}
 
 A visualização de chat vem pronta com um conjunto de estilos padrão para o
 fundo, o campo de texto, os botões, os ícones, as sugestões e assim por diante.
@@ -617,7 +617,7 @@ Para ver estilos personalizados em ação, além do
 [reference documentation]:
     {{site.pub-api}}/flutter_ai_toolkit/latest/flutter_ai_toolkit/LlmChatViewStyle-class.html
 
-## Chat sem UI
+## Chat sem UI {:#chat-without-ui}
 
 Você não precisa usar a visualização de chat para acessar a funcionalidade do
 provedor subjacente. Além de poder simplesmente chamá-lo com qualquer interface
@@ -704,7 +704,7 @@ exemplo de receitas.
 [Edit Recipe page]:
     https://github.com/flutter/ai/blob/main/example/lib/recipes/pages/edit_recipe_page.dart
 
-## Redirecionamento de prompts
+## Redirecionamento de prompts {:#rerouting-prompts}
 
 Se você quiser depurar, registrar ou manipular a conexão entre a visualização
 de chat e o provedor subjacente, você pode fazer isso com uma implementação de

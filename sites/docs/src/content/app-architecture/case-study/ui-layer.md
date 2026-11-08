@@ -27,7 +27,7 @@ Cada par de view e view model compõe a UI de um único recurso.
 Por exemplo, um aplicativo pode ter classes chamadas
 `LogOutView` e `LogOutViewModel`.
 
-## Definir um view model
+## Definir um view model {:#define-a-view-model}
 
 Um view model é uma classe Dart responsável por lidar com a lógica da UI.
 Os view models recebem modelos de dados de domínio como entrada e expõem esses dados como
@@ -70,7 +70,7 @@ os repositórios devem ser membros privados no view model,
 caso contrário, as views teriam acesso direto a
 a camada de dados do aplicativo.
 
-### Estado da UI
+### Estado da UI {:#ui-state}
 
 A saída de um view model são dados que uma view precisa para renderizar, geralmente
 referido como **Estado da UI**, ou apenas estado. O estado da UI é um snapshot imutável de
@@ -146,7 +146,7 @@ você pode querer criar objetos que representem especificamente o estado da UI.
 Por exemplo, você pode criar uma classe chamada `HomeUiState`.
 :::
 
-### Atualizando o estado da UI
+### Atualizando o estado da UI {:#updating-ui-state}
 
 Além de armazenar o estado,
 os view models precisam informar ao Flutter para renderizar novamente as views quando
@@ -241,7 +241,7 @@ nossa [documentação de gerenciamento de estado][state-management documentation
 [`package:signals`]: {{site.pub-pkg}}/signals
 [state-management documentation]: /data-and-backend/state-mgmt/intro
 
-## Definir uma view
+## Definir uma view {:#define-a-view}
 
 Uma view é um widget dentro do seu aplicativo.
 Frequentemente, uma view representa uma tela em seu aplicativo que
@@ -294,7 +294,7 @@ Na maioria das vezes, as únicas entradas de uma view devem ser uma `key`,
 que todos os widgets Flutter recebem como um argumento opcional,
 e o view model correspondente da view.
 
-### Exibir dados da UI em uma view
+### Exibir dados da UI em uma view {:#display-ui-data-in-a-view}
 
 Uma view depende de um view model para seu estado. No aplicativo Compass,
 o view model é passado como um argumento no construtor da view.
@@ -348,7 +348,7 @@ a propriedade `booking` está sendo fornecida a um sub-widget.
       ),
 ```
 
-### Atualizar a UI
+### Atualizar a UI {:#update-the-ui}
 
 O widget `HomeScreen` escuta as atualizações do view model com
 o widget [`ListenableBuilder`][].
@@ -395,7 +395,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### Tratamento de eventos do usuário
+### Tratamento de eventos do usuário {:#handling-user-events}
 
 Finalmente, uma view precisa ouvir *eventos* dos usuários,
 para que o view model possa lidar com esses eventos.
@@ -468,7 +468,7 @@ Future<Result<void>> _deleteBooking(int id) async {
 No aplicativo Compass,
 esses métodos que tratam de eventos do usuário são chamados **comandos**.
 
-### Objetos de comando
+### Objetos de comando {:#command-objects}
 
 Os comandos são responsáveis ​​pela interação que começa na camada de UI e
 flui de volta para a camada de dados. Neste aplicativo especificamente,
@@ -537,7 +537,7 @@ acompanhar seus estados de execução, conclusão e erro.
 
 [`command_it`]: {{site.pub-pkg}}/command_it
 
-### Garantindo que as views possam ser renderizadas antes que os dados existam
+### Garantindo que as views possam ser renderizadas antes que os dados existam {:#ensuring-views-can-render-before-data-exists}
 
 Nas classes view model, os comandos são criados no construtor.
 

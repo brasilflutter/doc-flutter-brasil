@@ -9,7 +9,7 @@ ia-translate: true
 <img src='/assets/images/docs/learn/learn-flutter-anyway.png' 
     alt="Uma imagem do Dash na frente de um quadro-negro." class="image-wrapper learn-image-wrapper">
 
-## Para iniciantes
+## Para iniciantes {:#for-beginners}
 
 Comece aqui para ter uma visão geral de como configurar o ambiente, criar apps Flutter, escrever código Dart e entender como o Flutter funciona.
 
@@ -21,7 +21,7 @@ Comece aqui para ter uma visão geral de como configurar o ambiente, criar apps 
   <a href="/learn/pathway" class="outlined-button">Começar a aprender</a>
 </Card>
 
-## Para desenvolvedores experientes
+## Para desenvolvedores experientes {:#for-experienced-developers}
 
 Aprofunde-se em tópicos mais específicos do desenvolvimento Flutter com código de exemplo, vídeos no YouTube, codelabs e muito mais.
 

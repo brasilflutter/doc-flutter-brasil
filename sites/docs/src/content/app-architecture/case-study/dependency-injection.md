@@ -36,7 +36,7 @@ Usando este diagrama como um guia, as regras de engajamento são as seguintes:
 
 {:.table .table-striped}
 
-## Injeção de dependência
+## Injeção de dependência {:#dependency-injection}
 
 Este guia mostrou como esses diferentes componentes se comunicam
 uns com os outros usando entradas e saídas.

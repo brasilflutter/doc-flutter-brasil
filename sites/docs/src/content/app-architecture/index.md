@@ -31,7 +31,7 @@ seu app Flutter para escalar conforme os requisitos do projeto e o time crescem.
 </div>
 
 
-## O que você vai aprender
+## O que você vai aprender {:#what-youll-learn}
 
 * Benefícios de uma arquitetura intencional
 * Princípios arquiteturais comuns
@@ -44,7 +44,7 @@ seu app Flutter para escalar conforme os requisitos do projeto e o time crescem.
 TODO @ewindmill complete this list as pages land, add links.
 {% endcomment %}
 
-## Benefícios de uma arquitetura intencional
+## Benefícios de uma arquitetura intencional {:#benefits-of-intentional-architecture}
 
 Uma boa arquitetura de app oferece vários benefícios
 para as equipes de engenharia e seus usuários finais.
@@ -61,7 +61,7 @@ para as equipes de engenharia e seus usuários finais.
   o código é mais fácil de entender.
 * Melhor experiência do usuário - Recursos podem ser lançados mais rápido e com menos bugs.
 
-## Como usar este guia
+## Como usar este guia {:#how-to-use-this-guide}
 
 Este é um guia para criar aplicativos Flutter escaláveis e foi escrito
 para equipes com vários desenvolvedores contribuindo para o mesmo código,

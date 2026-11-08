@@ -11,7 +11,7 @@ Flutter SDK ou os packages dos quais seu app depende.
 
 <a id="upgrading-the-flutter-sdk" aria-hidden="true"></a>
 
-## Atualize o Flutter SDK
+## Atualize o Flutter SDK {:#upgrade-the-flutter-sdk}
 
 Para atualizar o Flutter SDK, use o comando `flutter upgrade`:
 
@@ -29,7 +29,7 @@ e depois execute `flutter upgrade`.
 
 <a id="keep-informed" aria-hidden="true"></a>
 
-### Mantenha-se informado
+### Mantenha-se informado {:#keep-informed}
 
 A equipe do Flutter publica [guias de migração][migration guides] para breaking changes conhecidas.
 
@@ -40,12 +40,12 @@ Para evitar que versões futuras do Flutter quebrem seu código,
 considere enviar seus testes para o [registro de testes][test registry].
 
 
-## Trocando de canal do Flutter
+## Trocando de canal do Flutter {:#switching-flutter-channels}
 
 O Flutter tem dois canais de release:
 **stable** e **beta**.
 
-### O canal **stable**
+### O canal **stable** {:#the-stable-channel}
 
 O canal **stable** é o recomendado para novos usuários
 e para releases de apps em produção.
@@ -59,7 +59,7 @@ inclui testes com a release **stable** mais recente.
 A documentação mais recente da branch **stable**
 fica em: <https://api.flutter.dev>
 
-### O canal **beta**
+### O canal **beta** {:#the-beta-channel}
 
 O canal **beta** tem a release estável mais recente.
 É a versão mais recente do Flutter que passou por testes intensivos.
@@ -74,7 +74,7 @@ mas é atualizado mensalmente em vez de trimestralmente.
 Na verdade, quando o canal **stable** é atualizado,
 ele passa a apontar para a release **beta** mais recente.
 
-### Outros canais
+### Outros canais {:#other-channels}
 
 Atualmente existe mais um canal, o **main** (antes chamado de **master**).
 Quem [contribui com o Flutter][contribute to Flutter] usa esse canal.
@@ -90,7 +90,7 @@ fica em: <https://main-api.flutter.dev>
 
 <a id="changing-channels" aria-hidden="true"></a>
 
-### Troque de canal
+### Troque de canal {:#change-channels}
 
 Para ver seu canal atual, use o seguinte comando:
 
@@ -110,7 +110,7 @@ $ flutter upgrade
 
 <a id="switching-to-a-specific-flutter-version" aria-hidden="true"></a>
 
-## Mude para uma versão específica do Flutter
+## Mude para uma versão específica do Flutter {:#switch-to-a-specific-flutter-version}
 
 Para mudar para uma versão específica do Flutter:
 
@@ -134,7 +134,7 @@ Para mudar para uma versão específica do Flutter:
 
 <a id="upgrading-packages" aria-hidden="true"></a>
 
-## Atualize os packages
+## Atualize os packages {:#upgrade-packages}
 
 Se você modificou seu arquivo `pubspec.yaml` ou quer atualizar
 apenas os packages dos quais seu app depende
@@ -168,9 +168,9 @@ a [documentação do `pub outdated`]({{site.dart-site}}/tools/pub/cmd/pub-outdat
 $ flutter pub outdated
 ```
 
-## Solução de problemas
+## Solução de problemas {:#troubleshooting}
 
-### Windows: erro "Filename too long"
+### Windows: erro "Filename too long" {:#windows-filename-too-long-error}
 
 Ao executar `flutter upgrade` no Windows,
 você pode encontrar um erro como o seguinte:

@@ -93,7 +93,7 @@ A negociação acontece mais ou menos assim:
 **Widget**: "Ei, pai, decidi que meu tamanho será de `300`
    pixels de largura e `60` pixels de altura."
 
-## Limitações
+## Limitações {:#limitations}
 
 O mecanismo de layout do Flutter foi projetado para ser um processo de
 passagem única. Isso significa que o Flutter faz o layout de seus widgets
@@ -156,7 +156,7 @@ como descrito na seção [Flex](#flex).
 [`Text`]: {{site.api}}/flutter/widgets/Text-class.html
 [`Transform`]: {{site.api}}/flutter/widgets/Transform-class.html
 
-## Exemplos
+## Exemplos {:#examples}
 
 Para uma experiência interativa, use o seguinte DartPad.
 Use a barra de rolagem horizontal numerada para alternar entre
@@ -2008,12 +2008,12 @@ Se você quiser que o filho do `Scaffold` tenha exatamente o mesmo tamanho
 que o próprio `Scaffold`, você pode envolver seu filho com
 `SizedBox.expand`.
 
-## Restrições tight vs. loose (rígidas vs. flexíveis)
+## Restrições tight vs. loose (rígidas vs. flexíveis) {:#tight-vs-loose-constraints}
 
 É muito comum ouvir que alguma restrição é
 "tight" ou "loose", então o que isso significa?
 
-### Restrições tight (rígidas)
+### Restrições tight (rígidas) {:#tight-constraints}
 
 Uma restrição _tight_ oferece uma única possibilidade,
 um tamanho exato. Em outras palavras, uma restrição tight
@@ -2050,7 +2050,7 @@ exatamente o mesmo tamanho da tela.
 A tela faz isso, é claro, passando restrições tight
 para o `Container`.
 
-### Restrições loose (flexíveis)
+### Restrições loose (flexíveis) {:#loose-constraints}
 
 Uma restrição _loose_ é aquela que tem um valor mínimo
 de zero e um valor máximo diferente de zero.
@@ -2074,7 +2074,7 @@ mas não maior que a tela.
 
 <a id="unbounded"></a>
 
-## Restrições unbounded (sem limite)
+## Restrições unbounded (sem limite) {:#unbounded-constraints}
 
 :::note
 Você pode ser direcionado para cá se o framework
@@ -2139,7 +2139,7 @@ ou ele não conseguirá alinhar seus filhos de forma razoável.
 [`RenderBox`]: {{site.api}}/flutter/rendering/RenderBox-class.html
 [`ScrollView`]: {{site.api}}/flutter/widgets/ScrollView-class.html
 
-## Aprendendo as regras de layout para widgets específicos
+## Aprendendo as regras de layout para widgets específicos {:#learning-the-layout-rules-for-specific-widgets}
 
 Conhecer a regra geral de layout é necessário, mas não é suficiente.
 

@@ -33,7 +33,7 @@ veja [O que há de novo][What's new].**
 
 [What's new]: /release/whats-new
 
-## Novo no Flutter?
+## Novo no Flutter? {:#new-to-flutter}
 
 Pronto para construir apps bonitos e multiplataforma a partir de uma única base de código?
 Primeiro, [configure seu ambiente Flutter][set up your Flutter environment],
@@ -42,7 +42,7 @@ depois siga a [trilha de aprendizado do Flutter][Flutter learning pathway].
 [set up your Flutter environment]: /install/with-vs-code
 [Flutter learning pathway]: /learn/pathway
 
-### Documentação
+### Documentação {:#docs}
 
 Vindo de outra plataforma? Veja Flutter para desenvolvedores
 [Android][], [SwiftUI][], [UIKit][], [React Native][] e
@@ -74,7 +74,7 @@ Vindo de outra plataforma? Veja Flutter para desenvolvedores
 [Understanding constraints]: /ui/layout/constraints
 [Xamarin.Forms]: /flutter-for/xamarin-forms-devs
 
-### Vídeos
+### Vídeos {:#videos}
 
 <div class="video-wrapper">
   <span class="video-intro">Confira as novidades de Dart e Flutter</span>

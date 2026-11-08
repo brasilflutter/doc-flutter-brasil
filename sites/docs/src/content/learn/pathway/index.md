@@ -21,7 +21,7 @@ No final, você terá uma base sólida tanto em Dart quanto em Flutter.
 
 <Stepper level="3" collapsible="false" actions="none">
 
-### Configure seu ambiente de desenvolvimento
+### Configure seu ambiente de desenvolvimento {:#set-up-your-development-environment}
 
 Antes de começar a criar apps Flutter,
 você precisa configurar seu ambiente de desenvolvimento.
@@ -30,7 +30,7 @@ todas as dependências necessárias na sua máquina.
 
 [Começar →](/learn/pathway/quick-install)
 
-### Conclua o tutorial Primeiros passos com Dart
+### Conclua o tutorial Primeiros passos com Dart {:#complete-the-dart-getting-started-tutorial}
 
 O Flutter usa a linguagem de programação Dart.
 Se você é novo em Dart, conclua este tutorial interativo para
@@ -44,7 +44,7 @@ pode pular esta etapa sem problemas.
 Tutorial Primeiros passos com Dart →
 </a>
 
-### Conclua o tutorial Primeiros passos com Flutter
+### Conclua o tutorial Primeiros passos com Flutter {:#complete-the-flutter-getting-started-tutorial}
 
 Agora que você já domina o Dart, mergulhe no Flutter!
 Este tutorial prático mostra, passo a passo,
@@ -52,7 +52,7 @@ como criar três pequenos apps Flutter.
 
 [Tutorial Primeiros passos com Flutter →](/learn/pathway/tutorial)
 
-### Entenda como o Flutter funciona
+### Entenda como o Flutter funciona {:#understand-how-flutter-works}
 
 Aprofunde seu entendimento sobre como o Flutter funciona
 por baixo dos panos assistindo a esta série de vídeos.
@@ -65,7 +65,7 @@ aproveitar o framework ao máximo.
 
 </Stepper>
 
-## Pronto para começar?
+## Pronto para começar? {:#ready-to-start}
 
 Comece instalando o Flutter e configurando seu ambiente de desenvolvimento:
 
