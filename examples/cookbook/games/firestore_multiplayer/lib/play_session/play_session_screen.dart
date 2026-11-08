@@ -1,6 +1,6 @@
 // ignore_for_file: directives_ordering
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
 
@@ -8,6 +8,7 @@ import '../game_internals/board_state.dart';
 
 // #docregion imports
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../multiplayer/firestore_controller.dart';
 // #enddocregion imports
 
@@ -49,8 +50,10 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     // #docregion init-state
     final firestore = context.read<FirebaseFirestore?>();
     if (firestore == null) {
-      _log.warning("Firestore instance wasn't provided. "
-          'Running without _firestoreController.');
+      _log.warning(
+        "Firestore instance wasn't provided. "
+        'Running without _firestoreController.',
+      );
     } else {
       _firestoreController = FirestoreController(
         instance: firestore,

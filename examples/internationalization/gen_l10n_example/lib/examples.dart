@@ -1,23 +1,24 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:material_ui/material_ui.dart';
+
+import 'l10n/app_localizations.dart';
 
 void examples(BuildContext context) {
   // #docregion material-app
   const MaterialApp(
     title: 'Localizations Sample App',
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: [
+      AppLocalizations.delegate,
+      ...GlobalMaterialLocalizations.delegates,
+    ],
     supportedLocales: AppLocalizations.supportedLocales,
   );
   // #enddocregion material-app
 
   // #docregion locale-resolution
   MaterialApp(
-    localeResolutionCallback: (
-      locale,
-      supportedLocales,
-    ) {
+    localeResolutionCallback: (locale, supportedLocales) {
       return locale;
     },
   );
@@ -32,23 +33,28 @@ void examples(BuildContext context) {
     supportedLocales: [
       Locale.fromSubtags(languageCode: 'zh'), // generic Chinese 'zh'
       Locale.fromSubtags(
-          languageCode: 'zh',
-          scriptCode: 'Hans'), // generic simplified Chinese 'zh_Hans'
+        languageCode: 'zh',
+        scriptCode: 'Hans',
+      ), // generic simplified Chinese 'zh_Hans'
       Locale.fromSubtags(
-          languageCode: 'zh',
-          scriptCode: 'Hant'), // generic traditional Chinese 'zh_Hant'
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+      ), // generic traditional Chinese 'zh_Hant'
       Locale.fromSubtags(
-          languageCode: 'zh',
-          scriptCode: 'Hans',
-          countryCode: 'CN'), // 'zh_Hans_CN'
+        languageCode: 'zh',
+        scriptCode: 'Hans',
+        countryCode: 'CN',
+      ), // 'zh_Hans_CN'
       Locale.fromSubtags(
-          languageCode: 'zh',
-          scriptCode: 'Hant',
-          countryCode: 'TW'), // 'zh_Hant_TW'
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+        countryCode: 'TW',
+      ), // 'zh_Hant_TW'
       Locale.fromSubtags(
-          languageCode: 'zh',
-          scriptCode: 'Hant',
-          countryCode: 'HK'), // 'zh_Hant_HK'
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+        countryCode: 'HK',
+      ), // 'zh_Hant_HK'
     ],
     // #enddocregion supported-locales
   );
@@ -68,9 +74,7 @@ class _PageWithDatePickerState extends State<PageWithDatePicker> {
   // #docregion date-picker
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

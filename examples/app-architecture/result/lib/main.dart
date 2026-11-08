@@ -1,9 +1,7 @@
-// ignore_for_file: unused_field
-
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'result.dart';
 
@@ -48,10 +46,7 @@ class UserProfileRepository {
   final ApiClientService _apiClientService;
   final DatabaseService _databaseService;
 
-  UserProfileRepository(
-    this._apiClientService,
-    this._databaseService,
-  );
+  UserProfileRepository(this._apiClientService, this._databaseService);
 
   // #docregion getUserProfile1
   Future<Result<UserProfile>> getUserProfile1() async {
@@ -111,7 +106,7 @@ class ApiClientService {
 
 class DatabaseService {
   Future<Result<UserProfile>> createTemporaryUser() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
     return Result.ok(UserProfile('John Doe', 'john@example.com'));
   }
 }

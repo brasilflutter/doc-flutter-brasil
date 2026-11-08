@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProblemWidget extends StatelessWidget {
   const ProblemWidget({super.key});
@@ -40,8 +40,8 @@ class SolutionWidget extends StatelessWidget {
         Icon(Icons.message),
         Expanded(
           child: Column(
-              // code omitted
-              ),
+            // code omitted
+          ),
         ),
       ],
     );

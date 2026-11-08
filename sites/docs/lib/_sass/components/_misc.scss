@@ -1,0 +1,31 @@
+#page-content p.install-help {
+  text-align: right;
+  margin-block-start: -2.5rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .material-symbols {
+    font-size: 20px;
+    margin-right: 0.125rem;
+    user-select: none;
+  }
+}
+
+#skip-to-main {
+  position: absolute;
+  top: 0.75rem;
+  left: -24rem;
+  z-index: var(--site-z-top);
+  transform: translateX(0);
+
+  &:focus {
+    transform: translateX(25rem);
+  }
+}

@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
-      home: HomePage(),
-    );
+    return const CupertinoApp(home: HomePage());
   }
 }
 
@@ -26,10 +24,7 @@ class HomePage extends StatelessWidget {
         // #docregion row
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(CupertinoIcons.globe),
-            Text('Hello, world!'),
-          ],
+          children: [Icon(CupertinoIcons.globe), Text('Hello, world!')],
         ),
         // #enddocregion row
       ),

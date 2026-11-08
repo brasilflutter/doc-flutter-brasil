@@ -2,13 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-enum CardType {
-  standard,
-  tappable,
-  selectable,
-}
+enum CardType { standard, tappable, selectable }
 
 class TravelDestination {
   const TravelDestination({
@@ -128,9 +124,7 @@ class TappableTravelDestinationItem extends StatelessWidget {
                 shape: shape,
                 child: InkWell(
                   onTap: () {},
-                  splashColor: Theme.of(context)
-                      .colorScheme
-                      .onSurface
+                  splashColor: Theme.of(context).colorScheme.onSurface
                       .withValues(alpha: 0.12),
                   highlightColor: Colors.transparent,
                   child: Semantics(
@@ -186,9 +180,7 @@ class SelectableTravelDestinationItem extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 shape: shape,
                 child: InkWell(
-                  onLongPress: () {
-                    onSelected();
-                  },
+                  onLongPress: onSelected,
                   splashColor: colorScheme.onSurface.withValues(alpha: 0.12),
                   highlightColor: Colors.transparent,
                   child: Stack(
@@ -201,8 +193,9 @@ class SelectableTravelDestinationItem extends StatelessWidget {
                       Semantics(
                         label: '${destination.title}, $selectedStatus',
                         onLongPressHint: isSelected ? 'Deselect' : 'Select',
-                        child:
-                            TravelDestinationContent(destination: destination),
+                        child: TravelDestinationContent(
+                          destination: destination,
+                        ),
                       ),
                       Align(
                         alignment: Alignment.topRight,
@@ -229,10 +222,7 @@ class SelectableTravelDestinationItem extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    super.key,
-    required this.title,
-  });
+  const SectionTitle({super.key, required this.title});
 
   final String title;
 
@@ -274,9 +264,7 @@ class TravelDestinationContent extends StatelessWidget {
                 // part of the Material and display ink effects above it.
                 // Using a standard Image will obscure the ink splash.
                 child: Ink.image(
-                  image: AssetImage(
-                    destination.assetName,
-                  ),
+                  image: AssetImage(destination.assetName),
                   fit: BoxFit.cover,
                   child: Container(),
                 ),
@@ -291,10 +279,7 @@ class TravelDestinationContent extends StatelessWidget {
                   child: Semantics(
                     container: true,
                     header: true,
-                    child: Text(
-                      destination.title,
-                      style: titleStyle,
-                    ),
+                    child: Text(destination.title, style: titleStyle),
                   ),
                 ),
               ),
@@ -400,19 +385,21 @@ class _CardsDemoState extends State<CardsDemo> with RestorationMixin {
                 Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   child: switch (destination.cardType) {
-                    CardType.standard =>
-                      TravelDestinationItem(destination: destination),
-                    CardType.tappable =>
-                      TappableTravelDestinationItem(destination: destination),
+                    CardType.standard => TravelDestinationItem(
+                      destination: destination,
+                    ),
+                    CardType.tappable => TappableTravelDestinationItem(
+                      destination: destination,
+                    ),
                     CardType.selectable => SelectableTravelDestinationItem(
-                        destination: destination,
-                        isSelected: _isSelected.value,
-                        onSelected: () {
-                          setState(() {
-                            _isSelected.value = !_isSelected.value;
-                          });
-                        },
-                      ),
+                      destination: destination,
+                      isSelected: _isSelected.value,
+                      onSelected: () {
+                        setState(() {
+                          _isSelected.value = !_isSelected.value;
+                        });
+                      },
+                    ),
                   },
                 ),
             ],

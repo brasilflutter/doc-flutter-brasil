@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A simple blue 30x30 box.
 class DeferredBox extends StatelessWidget {
@@ -6,10 +6,6 @@ class DeferredBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 30,
-      color: Colors.blue,
-    );
+    return Container(height: 30, width: 30, color: Colors.blue);
   }
 }

@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // #docregion create-state
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({
-    super.key,
-    required this.title,
-  });
+  const MyStatefulWidget({super.key, required this.title});
 
   final String title;
   @override

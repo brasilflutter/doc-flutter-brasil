@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // TapboxA manages its own state.
 
@@ -51,12 +51,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Demo'),
-        ),
-        body: const Center(
-          child: TapboxA(),
-        ),
+        appBar: AppBar(title: const Text('Flutter Demo')),
+        body: const Center(child: TapboxA()),
       ),
     );
   }

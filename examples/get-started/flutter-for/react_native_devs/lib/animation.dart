@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(const Center(child: LogoFade()));
@@ -41,11 +41,7 @@ class _LogoFadeState extends State<LogoFade>
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: animation,
-      child: const SizedBox(
-        height: 300,
-        width: 300,
-        child: FlutterLogo(),
-      ),
+      child: const SizedBox(height: 300, width: 300, child: FlutterLogo()),
     );
   }
 }

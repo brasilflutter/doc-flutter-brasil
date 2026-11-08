@@ -1,13 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  runApp(
-    const MaterialApp(
-      home: AppHome(),
-    ),
-  );
+  runApp(const MaterialApp(home: AppHome()));
 }
 
 class AppHome extends StatelessWidget {
@@ -22,13 +18,14 @@ class AppHome extends StatelessWidget {
           enabled: true,
           label: 'Clickable text here!',
           child: GestureDetector(
-              onTap: () {
-                debugDumpSemanticsTree();
-                if (kDebugMode) {
-                  print('Clicked!');
-                }
-              },
-              child: const Text('Click Me!', style: TextStyle(fontSize: 56))),
+            onTap: () {
+              debugDumpSemanticsTree();
+              if (kDebugMode) {
+                print('Clicked!');
+              }
+            },
+            child: const Text('Click Me!', style: TextStyle(fontSize: 56)),
+          ),
         ),
       ),
     );

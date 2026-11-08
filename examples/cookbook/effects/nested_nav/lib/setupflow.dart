@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 // #docregion SetupFlow
 class SetupFlow extends StatefulWidget {
-  const SetupFlow({
-    super.key,
-    required this.setupPageRoute,
-  });
+  const SetupFlow({super.key, required this.setupPageRoute});
 
   final String setupPageRoute;
 

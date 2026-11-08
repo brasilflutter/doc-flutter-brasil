@@ -6,10 +6,11 @@ import 'dart:io';
 // #enddocregion import-dart-io
 
 // #docregion package-import
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 // #enddocregion package-import
 // #docregion shared-prefs
 import 'package:shared_preferences/shared_preferences.dart';
+
 // #enddocregion shared-prefs
 
 // #docregion main
@@ -47,10 +48,7 @@ class ListViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // #docregion list-view
-    var data = [
-      'Hello',
-      'World',
-    ];
+    var data = ['Hello', 'World'];
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
@@ -86,9 +84,7 @@ class MyCanvasWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomPaint(painter: MyCanvasPainter()),
-    );
+    return const Scaffold(body: CustomPaint(painter: MyCanvasPainter()));
   }
 }
 // #enddocregion custom-paint
@@ -144,9 +140,11 @@ class SampleApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sample App',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          textSelectionTheme:
-              const TextSelectionThemeData(selectionColor: Colors.red)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textSelectionTheme: const TextSelectionThemeData(
+          selectionColor: Colors.red,
+        ),
+      ),
       home: const SampleAppPage(),
     );
   }
@@ -160,10 +158,7 @@ class ThemeExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.cyan,
-        brightness: Brightness.dark,
-      ),
+      theme: ThemeData(primaryColor: Colors.cyan, brightness: Brightness.dark),
       home: const StylingPage(),
     );
   }
@@ -197,10 +192,7 @@ class ThemeDataExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(
-        primaryColor: Colors.cyan,
-        brightness: brightness,
-      ),
+      data: ThemeData(primaryColor: Colors.cyan, brightness: brightness),
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         //...
@@ -293,12 +285,13 @@ class GestureDetectorExample extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: const Text('Gestures')),
         body: const Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Tap, Long Press, Swipe Horizontally or Vertically'),
-          ],
-        )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Tap, Long Press, Swipe Horizontally or Vertically'),
+            ],
+          ),
+        ),
       ),
       onTap: () {
         print('Tapped');
@@ -327,8 +320,8 @@ class HttpExample extends StatefulWidget {
 class _HttpExampleState extends State<HttpExample> {
   String _ipAddress = '';
   // #docregion http
-  final url = Uri.parse('https://httpbin.org/ip');
-  final httpClient = HttpClient();
+  final Uri url = Uri.parse('https://httpbin.org/ip');
+  final HttpClient httpClient = HttpClient();
 
   Future<void> getIPAddress() async {
     final request = await httpClient.getUrl(url);
@@ -360,28 +353,31 @@ class _TextEditingExampleState extends State<TextEditingExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      TextField(
-        controller: _controller,
-        decoration: const InputDecoration(
-          hintText: 'Type something',
-          labelText: 'Text Field',
+    return Column(
+      children: [
+        TextField(
+          controller: _controller,
+          decoration: const InputDecoration(
+            hintText: 'Type something',
+            labelText: 'Text Field',
+          ),
         ),
-      ),
-      ElevatedButton(
-        child: const Text('Submit'),
-        onPressed: () {
-          showDialog(
+        ElevatedButton(
+          child: const Text('Submit'),
+          onPressed: () {
+            showDialog<void>(
               context: context,
               builder: (context) {
                 return AlertDialog(
                   title: const Text('Alert'),
                   content: Text('You typed ${_controller.text}'),
                 );
-              });
-        },
-      ),
-    ]);
+              },
+            );
+          },
+        ),
+      ],
+    );
   }
   // #enddocregion text-editing-controller
 }
@@ -403,12 +399,13 @@ class _FormExampleState extends State<FormExample> {
     final form = formKey.currentState;
     if (form != null && form.validate()) {
       form.save();
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (context) {
           return AlertDialog(
-              title: const Text('Alert'),
-              content: Text('Email: $_email, password: $_password'));
+            title: const Text('Alert'),
+            content: Text('Email: $_email, password: $_password'),
+          );
         },
       );
     }
@@ -437,10 +434,7 @@ class _FormExampleState extends State<FormExample> {
               labelText: 'Email',
             ),
           ),
-          ElevatedButton(
-            onPressed: _submit,
-            child: const Text('Login'),
-          ),
+          ElevatedButton(onPressed: _submit, child: const Text('Login')),
         ],
       ),
     );
@@ -482,12 +476,8 @@ class DismissibleWidgets extends StatefulWidget {
 
 class _DismissibleWidgetsState extends State<DismissibleWidgets> {
   final List<Card> cards = [
-    const Card(
-      child: Text('Hello!'),
-    ),
-    const Card(
-      child: Text('World!'),
-    )
+    const Card(child: Text('Hello!')),
+    const Card(child: Text('World!')),
   ];
 
   @override
@@ -499,8 +489,8 @@ class _DismissibleWidgetsState extends State<DismissibleWidgets> {
         cards.removeLast();
       },
       child: Container(
-          //...
-          ),
+        //...
+      ),
     );
     // #enddocregion dismissible
   }

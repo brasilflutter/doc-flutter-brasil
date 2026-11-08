@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProblemWidget extends StatelessWidget {
   const ProblemWidget({super.key});
@@ -8,14 +8,8 @@ class ProblemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Unbounded Width of the TextField'),
-        ),
-        body: const Row(
-          children: [
-            TextField(),
-          ],
-        ),
+        appBar: AppBar(title: const Text('Unbounded Width of the TextField')),
+        body: const Row(children: [TextField()]),
       ),
     );
   }
@@ -30,14 +24,8 @@ class SolutionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Unbounded Width of the TextField'),
-        ),
-        body: Row(
-          children: [
-            Expanded(child: TextFormField()),
-          ],
-        ),
+        appBar: AppBar(title: const Text('Unbounded Width of the TextField')),
+        body: Row(children: [Expanded(child: TextFormField())]),
       ),
     );
   }

@@ -3,14 +3,15 @@ description: A new Flutter project.
 
 resolution: workspace
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
-  camera: ^0.10.5+6
-  path_provider: ^2.1.2
-  path: ^1.9.0
+  material_ui: ^1.8.0
+  camera: ^0.12.1
+  path_provider: ^2.1.6
+  path: ^1.9.1
 
 flutter:
   uses-material-design: true

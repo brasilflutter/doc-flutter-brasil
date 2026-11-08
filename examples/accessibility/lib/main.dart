@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const AccessibleApp());
 
@@ -9,11 +9,7 @@ class AccessibleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Your accessible app',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Your accessible app'),
-        ),
-      ),
+      home: Scaffold(appBar: AppBar(title: const Text('Your accessible app'))),
     );
   }
 }

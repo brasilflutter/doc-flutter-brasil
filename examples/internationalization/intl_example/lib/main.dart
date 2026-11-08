@@ -25,9 +25,10 @@
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'
+    hide GlobalMaterialLocalizations;
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 // This file was generated in two steps, using the Dart intl tools. With the
 // app's root directory (the one that contains pubspec.yaml) as the current
@@ -49,8 +50,8 @@ class DemoLocalizations {
   static Future<DemoLocalizations> load(Locale locale) {
     final String name =
         locale.countryCode == null || locale.countryCode!.isEmpty
-            ? locale.languageCode
-            : locale.toString();
+        ? locale.languageCode
+        : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((_) {
@@ -96,12 +97,8 @@ class DemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(DemoLocalizations.of(context).title),
-      ),
-      body: Center(
-        child: Text(DemoLocalizations.of(context).title),
-      ),
+      appBar: AppBar(title: Text(DemoLocalizations.of(context).title)),
+      body: Center(child: Text(DemoLocalizations.of(context).title)),
     );
   }
 }
@@ -120,10 +117,7 @@ class Demo extends StatelessWidget {
         ...GlobalMaterialLocalizations.delegates,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('es', ''),
-      ],
+      supportedLocales: const [Locale('en', ''), Locale('es', '')],
       // Watch out: MaterialApp creates a Localizations widget
       // with the specified delegates. DemoLocalizations.of()
       // will only find the app's Localizations widget if its

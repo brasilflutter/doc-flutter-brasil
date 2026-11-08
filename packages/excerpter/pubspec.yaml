@@ -1,0 +1,25 @@
+name: excerpter
+description: Update code excerpts in Markdown documentation from source files.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  args: ^2.7.0
+  collection: ^1.19.1
+  file: ^7.0.1
+  glob: ^2.1.3
+  meta: ^1.18.2
+  path: ^1.9.1
+
+dev_dependencies:
+  analysis_defaults:
+    path: ../analysis_defaults
+  io: ^1.0.5
+  test: ^1.31.1
+
+executables:
+  excerpter: excerpter

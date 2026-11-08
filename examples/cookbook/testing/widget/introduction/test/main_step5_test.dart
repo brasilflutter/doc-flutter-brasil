@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 // ignore_for_file: unused_local_variable
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 // #docregion main
 void main() {
@@ -15,11 +16,7 @@ void main() {
 // #enddocregion main
 
 class MyWidget extends StatelessWidget {
-  const MyWidget({
-    super.key,
-    required this.title,
-    required this.message,
-  });
+  const MyWidget({super.key, required this.title, required this.message});
 
   final String title;
   final String message;
@@ -29,12 +26,8 @@ class MyWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Center(
-          child: Text(message),
-        ),
+        appBar: AppBar(title: Text(title)),
+        body: Center(child: Text(message)),
       ),
     );
   }

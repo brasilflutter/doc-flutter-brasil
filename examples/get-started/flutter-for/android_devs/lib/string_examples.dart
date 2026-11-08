@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // #docregion strings
 class Strings {
@@ -12,8 +12,8 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-        // #docregion access-string
-        Text(Strings.welcomeMessage);
+    // #docregion access-string
+    Text(Strings.welcomeMessage);
     // #enddocregion access-string
   }
 }

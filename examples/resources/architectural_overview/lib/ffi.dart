@@ -1,4 +1,5 @@
 import 'dart:ffi';
+
 import 'package:ffi/ffi.dart'; // contains .toNativeUtf16() extension method
 
 typedef MessageBoxNative = Int32 Function(
@@ -17,8 +18,9 @@ typedef MessageBoxDart = int Function(
 
 void exampleFfi() {
   final user32 = DynamicLibrary.open('user32.dll');
-  final messageBox =
-      user32.lookupFunction<MessageBoxNative, MessageBoxDart>('MessageBoxW');
+  final messageBox = user32.lookupFunction<MessageBoxNative, MessageBoxDart>(
+    'MessageBoxW',
+  );
 
   // ignore: unused_local_variable
   final result = messageBox(

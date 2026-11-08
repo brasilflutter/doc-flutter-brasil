@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 // #docregion toggle
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 void highlightRepaints() {
   debugRepaintRainbowEnabled = true;
@@ -16,9 +15,7 @@ class EverythingRepaintsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Repaint Example')),
-      body: const Center(
-        child: CircularProgressIndicator(),
-      ),
+      body: const Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -33,9 +30,7 @@ class AreaRepaintsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Repaint Example')),
       body: const Center(
-        child: RepaintBoundary(
-          child: CircularProgressIndicator(),
-        ),
+        child: RepaintBoundary(child: CircularProgressIndicator()),
       ),
     );
   }

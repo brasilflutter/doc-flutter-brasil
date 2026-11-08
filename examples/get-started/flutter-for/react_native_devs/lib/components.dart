@@ -1,14 +1,10 @@
 // ignore_for_file: avoid_print
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // #docregion components
 /// Flutter
 class CustomCard extends StatelessWidget {
-  const CustomCard({
-    super.key,
-    required this.index,
-    required this.onPress,
-  });
+  const CustomCard({super.key, required this.index, required this.onPress});
 
   final int index;
   final void Function() onPress;
@@ -19,10 +15,7 @@ class CustomCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text('Card $index'),
-          TextButton(
-            onPressed: onPress,
-            child: const Text('Press'),
-          ),
+          TextButton(onPressed: onPress, child: const Text('Press')),
         ],
       ),
     );

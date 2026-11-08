@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
@@ -6,11 +6,11 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Image(
-        image:
-            // #docregion asset-image
-            AssetImage('images/my_icon.png')
-        // #enddocregion asset-image
-        );
+      image:
+          // #docregion asset-image
+          AssetImage('images/my_icon.png'),
+      // #enddocregion asset-image
+    );
   }
 }
 

@@ -1,0 +1,62 @@
+@use '../core/breakpoints';
+
+body.news {
+  section.hero {
+    background-image: var(--grad-blue-green-35);
+    padding-block: var(--gutter) !important;
+
+    @include breakpoints.screen(lg) {
+      .mantle {
+        gap: 0;
+        grid-template-columns: 1fr 55%;
+
+        .text {
+          padding-left: 0;
+
+          h1 {
+            font-size: 64px;
+            line-height: 72px;
+            max-width: 100%;
+          }
+
+          h2 {
+            font-size: 34px;
+            font-weight: var(--font-weight-normal);
+            line-height: 40px;
+          }
+        }
+      }
+    }
+  }
+
+  #flutter-news-toolkit {
+    .container {
+      margin: 0 auto;
+    }
+
+    .media img {
+      width: 312px;
+    }
+
+    @include breakpoints.screen(lg) {
+      .feature.toolkit {
+        gap: 137px;
+        grid-template-columns: 1fr 1fr;
+
+        p {
+          font-size: 24px;
+        }
+
+        .text {
+          order: 2;
+          padding: 0;
+        }
+
+        .media img {
+          height: 575px;
+          width: 544px;
+        }
+      }
+    }
+  }
+}

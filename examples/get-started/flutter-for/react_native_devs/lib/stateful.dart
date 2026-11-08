@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 
 // #docregion stateful-widget
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({
-    super.key,
-    required this.title,
-  });
+  const MyStatefulWidget({super.key, required this.title});
 
   final String title;
 
@@ -47,9 +45,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         child: Column(
           children: <Widget>[
             if (showText)
-              const Text(
-                'This execution will be done before you can blink.',
-              ),
+              const Text('This execution will be done before you can blink.'),
             Padding(
               padding: const EdgeInsets.only(top: 70),
               child: ElevatedButton(

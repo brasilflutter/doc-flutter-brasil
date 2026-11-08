@@ -1,0 +1,20 @@
+name: birdle
+description: >-
+  Code excerpts for the Birdle example app in the Flutter tutorial.
+publish_to: none
+
+resolution: workspace
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

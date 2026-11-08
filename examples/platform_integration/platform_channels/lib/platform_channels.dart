@@ -1,7 +1,8 @@
 // #docregion import
 import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 // #enddocregion import
 
 class MyHomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
   // #docregion get-battery
   // Get battery level.
-// #enddocregion my-home-page-state
+  // #enddocregion my-home-page-state
   String _batteryLevel = 'Unknown battery level.';
 
   Future<void> _getBatteryLevel() async {

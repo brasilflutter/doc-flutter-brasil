@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ImageAssetExample extends StatelessWidget {
   const ImageAssetExample({super.key});
@@ -17,9 +17,7 @@ class AssetImageExample extends StatelessWidget {
   // #docregion asset-image
   @override
   Widget build(BuildContext context) {
-    return const Image(
-      image: AssetImage('images/my_image.png'),
-    );
+    return const Image(image: AssetImage('images/my_image.png'));
   }
   // #enddocregion asset-image
 }

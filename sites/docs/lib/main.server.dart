@@ -1,0 +1,133 @@
+// Copyright 2025 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import 'package:jaspr/server.dart';
+import 'package:jaspr_content/components/file_tree.dart';
+import 'package:jaspr_content/jaspr_content.dart';
+import 'package:jaspr_content/theme.dart';
+import 'package:path/path.dart' as path;
+import 'package:site_shared/components/common/card.dart';
+import 'package:site_shared/components/common/ide_explorer/markdown_component.dart';
+import 'package:site_shared/components/common/material_icon.dart';
+import 'package:site_shared/components/common/tabs.dart';
+import 'package:site_shared/components/common/youtube_embed.dart';
+import 'package:site_shared/components/tutorial/downloadable_snippet.dart';
+import 'package:site_shared/components/tutorial/progress_ring.dart';
+import 'package:site_shared/components/tutorial/quiz.dart';
+import 'package:site_shared/components/tutorial/stepper.dart';
+import 'package:site_shared/components/tutorial/summary_card.dart';
+import 'package:site_shared/components/tutorial/tutorial_outline.dart';
+import 'package:site_shared/components/utils/define_component.dart';
+import 'package:site_shared/markdown.dart';
+
+import 'main.server.options.dart'; // Generated. Do not remove or edit.
+import 'src/components/common/client/download_latest_button.dart';
+import 'src/components/common/client/os_selector.dart';
+import 'src/components/common/code_preview.dart';
+import 'src/components/common/dash_image.dart';
+import 'src/components/pages/architecture_recommendations.dart';
+import 'src/components/pages/archive_table.dart';
+import 'src/components/pages/cuj/cuj_index.dart';
+import 'src/components/pages/devtools_release_notes_index.dart';
+import 'src/components/pages/expansion_list.dart';
+import 'src/components/pages/learning_resource_index.dart';
+import 'src/components/pages/platforms_grid.dart';
+import 'src/components/pages/widget_catalog.dart';
+import 'src/extensions/registry.dart';
+import 'src/layouts/doc_layout.dart';
+import 'src/layouts/toc_layout.dart';
+import 'src/layouts/tutorial_layout.dart';
+import 'src/loaders/data_processor.dart';
+import 'src/pages/custom_pages.dart';
+import 'src/pages/markdown.dart';
+import 'src/pages/robots_txt.dart';
+import 'src/templating/dash_template_engine.dart';
+
+void main() {
+  // Initializes the server environment with the generated default options.
+  Jaspr.initializeApp(options: defaultServerOptions);
+
+  runApp(_docsFlutterDevSite);
+}
+
+Component get _docsFlutterDevSite => ContentApp.custom(
+  eagerlyLoadAllPages: true,
+  loaders: [
+    FilesystemLoader(
+      path.join(_siteSrcDirectoryPath, 'content'),
+      keepSuffixPattern: _passThroughPattern,
+    ),
+    MemoryLoader(pages: allMemoryPages),
+  ],
+  configResolver: PageConfig.all(
+    dataLoaders: [
+      FilesystemDataLoader(path.join(_siteSrcDirectoryPath, 'data')),
+      DataProcessor(),
+    ],
+    templateEngine: DashTemplateEngine(
+      partialDirectoryPath: path.canonicalize(
+        path.join(_siteSrcDirectoryPath, '_includes'),
+      ),
+    ),
+    parsers: const [
+      DashMarkdownParser(),
+      HtmlParser(),
+    ],
+    rawOutputPattern: _passThroughPattern,
+    extensions: allNodeProcessingExtensions,
+    components: _embeddableComponents,
+    layouts: const [
+      DocLayout(),
+      TocLayout(),
+      TutorialLayout(),
+    ],
+    theme: const ContentTheme.none(),
+    secondaryOutputs: [
+      const RobotsTxtOutput(),
+      canonicalMarkdownOutput,
+    ],
+  ),
+);
+
+/// Path to the `/src` directory where site content is located.
+const String _siteSrcDirectoryPath = 'src';
+final RegExp _passThroughPattern = RegExp(r'.*\.(txt|json|pdf)$');
+
+/// Custom "components" that can be used from Markdown files.
+List<CustomComponent> get _embeddableComponents => [
+  const DashTabs(),
+  const DashImage(),
+  const CodePreview(),
+  const YoutubeEmbed(),
+  const FileTree(),
+  const IdeExplorerMarkdownComponent(),
+  const Quiz(),
+  const ProgressRing(),
+  const SummaryCard(),
+  DownloadableSnippet(
+    snippetsDirectoryPath: path.join(_siteSrcDirectoryPath, '_snippets'),
+  ),
+  const Stepper(),
+  const WidgetCatalogCategories(),
+  const TutorialOutline(),
+  const WidgetCatalogGrid(),
+  const ArchitectureRecommendations(),
+  const PlatformsGrid(),
+  const PlatformCard(),
+  defineComponentWithAttrs('Icon', MaterialIcon.fromAttributes),
+  defineComponent('OSSelector', const OsSelector()),
+  defineComponentWithChild('Card', Card.fromAttributes),
+  defineComponent('LearningResourceIndex', const LearningResourceIndex()),
+  defineComponent('CujIndex', const CujIndex()),
+  defineComponentWithAttrs('ArchiveTable', ArchiveTable.fromAttributes),
+  defineComponentWithAttrs(
+    'DownloadLatestButton',
+    DownloadLatestButton.fromAttributes,
+  ),
+  defineComponentWithAttrs('ExpansionList', ExpansionList.fromAttributes),
+  defineComponent(
+    'DevToolsReleaseNotesIndex',
+    const DevToolsReleaseNotesIndex(),
+  ),
+];

@@ -1,12 +1,13 @@
 // ignore_for_file: directives_ordering
 
-import './backend.dart';
+import 'backend.dart';
 
 import 'package:flutter/services.dart';
 
 // #docregion catch-error
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   MyBackend myBackend = MyBackend();

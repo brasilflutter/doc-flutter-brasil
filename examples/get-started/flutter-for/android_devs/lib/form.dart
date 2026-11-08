@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
@@ -7,9 +7,7 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // #docregion input-hint
     return const Center(
-      child: TextField(
-        decoration: InputDecoration(hintText: 'This is a hint'),
-      ),
+      child: TextField(decoration: InputDecoration(hintText: 'This is a hint')),
     );
     // #enddocregion input-hint
   }

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'data/repositories/theme_repository.dart';
@@ -18,35 +18,27 @@ import 'ui/todo_list/widgets/todo_list_screen.dart';
 // #docregion MainTodo
 void main() {
   // #enddocregion MainTheme
-  late DatabaseService databaseService;
+  final DatabaseService databaseService;
   if (kIsWeb) {
     throw UnsupportedError('Platform not supported');
   } else if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
-    // Initialize FFI SQLite
+    // Initialize the FFI-based SQLite.
     sqfliteFfiInit();
-    databaseService = DatabaseService(
-      databaseFactory: databaseFactoryFfi,
-    );
+    databaseService = DatabaseService(databaseFactory: databaseFactoryFfi);
   } else {
-    // Use default native SQLite
-    databaseService = DatabaseService(
-      databaseFactory: databaseFactory,
-    );
+    // Use the default native SQLite.
+    databaseService = DatabaseService(databaseFactory: databaseFactory);
   }
 
-// #docregion MainTheme
+  // #docregion MainTheme
   runApp(
     MainApp(
-// #enddocregion MainTodo
-      themeRepository: ThemeRepository(
-        SharedPreferencesService(),
-      ),
-// #enddocregion MainTheme
-// #docregion MainTodo
-      todoRepository: TodoRepository(
-        database: databaseService,
-      ),
-// #docregion MainTheme
+      // #enddocregion MainTodo
+      themeRepository: ThemeRepository(SharedPreferencesService()),
+      // #enddocregion MainTheme
+      // #docregion MainTodo
+      todoRepository: TodoRepository(database: databaseService),
+      // #docregion MainTheme
     ),
   );
 }
@@ -99,21 +91,17 @@ class _MainAppState extends State<MainApp> {
           actions: [
             // #docregion AddThemeSwitch
             ThemeSwitch(
-              viewmodel: ThemeSwitchViewModel(
-                widget.themeRepository,
-              ),
-            )
+              viewmodel: ThemeSwitchViewModel(widget.themeRepository),
+            ),
             // #enddocregion AddThemeSwitch
           ],
           title: const Text('ToDo List'),
         ),
-// #docregion TodoListScreen
+        // #docregion TodoListScreen
         body: TodoListScreen(
-          viewModel: TodoListViewModel(
-            todoRepository: widget.todoRepository,
-          ),
+          viewModel: TodoListViewModel(todoRepository: widget.todoRepository),
         ),
-// #enddocregion TodoListScreen
+        // #enddocregion TodoListScreen
       ),
     );
   }

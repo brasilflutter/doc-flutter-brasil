@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MainApp extends StatefulWidget {
-  const MainApp({
-    super.key,
-    required this.viewModel,
-  });
+  const MainApp({super.key, required this.viewModel});
 
   final HomeViewModel2 viewModel;
 
@@ -36,22 +33,16 @@ class _MainAppState extends State<MainApp> {
           listenable: widget.viewModel,
           builder: (context, _) {
             if (widget.viewModel.running) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             // #enddocregion ListenableBuilder
 
             if (widget.viewModel.error != null) {
-              return Center(
-                child: Text('Error: ${widget.viewModel.error}'),
-              );
+              return Center(child: Text('Error: ${widget.viewModel.error}'));
             }
 
             if (widget.viewModel.user == null) {
-              return const Center(
-                child: Text('No user'),
-              );
+              return const Center(child: Text('No user'));
             }
 
             return Center(

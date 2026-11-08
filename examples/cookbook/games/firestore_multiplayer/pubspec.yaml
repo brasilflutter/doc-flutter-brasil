@@ -3,17 +3,18 @@ description: Firestore multiplayer
 
 resolution: workspace
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: ^1.8.0
 
-  async: ^2.11.0
-  cloud_firestore: ^4.15.4
-  firebase_core: ^2.25.4
-  logging: ^1.2.0
-  provider: ^6.1.1
+  async: ^2.13.1
+  cloud_firestore: ^6.10.2
+  firebase_core: ^4.15.2
+  logging: ^1.3.0
+  provider: ^6.1.5+1
 
 flutter:
   uses-material-design: true

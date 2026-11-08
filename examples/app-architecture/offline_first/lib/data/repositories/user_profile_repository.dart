@@ -6,15 +6,11 @@ import '../services/database_service.dart';
 
 class UserProfileRepository {
   UserProfileRepository({
-    required ApiClientService apiClientService,
-    required DatabaseService databaseService,
-  })  : _apiClientService = apiClientService,
-        _databaseService = databaseService {
+    required this._apiClientService,
+    required this._databaseService,
+  }) {
     // #docregion Timer
-    Timer.periodic(
-      const Duration(minutes: 5),
-      (timer) => sync(),
-    );
+    Timer.periodic(const Duration(minutes: 5), (timer) => sync());
     // #enddocregion Timer
   }
 
@@ -139,8 +135,9 @@ class UserProfileRepository {
       await _apiClientService.putUserProfile(userProfile);
 
       // Set the user profile as synchronized
-      await _databaseService
-          .updateUserProfile(userProfile.copyWith(synchronized: true));
+      await _databaseService.updateUserProfile(
+        userProfile.copyWith(synchronized: true),
+      );
     } catch (e) {
       // Try again later
     }

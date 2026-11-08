@@ -1,9 +1,8 @@
-// ignore_for_file: avoid_print, prefer_const_declarations, prefer_const_constructors
-
-import 'package:flutter/material.dart';
+// ignore_for_file: specify_nonobvious_property_types, avoid_print, prefer_const_declarations
 
 // #docregion main
 import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(const Center(child: Text('Hello', textDirection: TextDirection.ltr)));
@@ -29,30 +28,24 @@ class A<T, V> {
 final sampleTable = [
   Table(
     children: const [
-      TableRow(
-        children: [Text('T1')],
-      )
+      TableRow(children: [Text('T1')]),
     ],
   ),
   Table(
     children: const [
-      TableRow(
-        children: [Text('T2')],
-      )
+      TableRow(children: [Text('T2')]),
     ],
   ),
   Table(
     children: const [
-      TableRow(
-        children: [Text('T3')],
-      )
+      TableRow(children: [Text('T3')]),
     ],
   ),
   Table(
     children: const [
       TableRow(
         children: [Text('T10')], // modified
-      )
+      ),
     ],
   ),
 ];

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../global/device_type.dart';
 
@@ -43,11 +43,12 @@ class SecondaryMenuButton extends StatelessWidget {
 }
 
 class SelectedPageButton extends StatelessWidget {
-  const SelectedPageButton(
-      {super.key,
-      required this.onPressed,
-      required this.label,
-      required this.isSelected});
+  const SelectedPageButton({
+    super.key,
+    required this.onPressed,
+    required this.label,
+    required this.isSelected,
+  });
   final VoidCallback? onPressed;
   final String label;
   final bool isSelected;

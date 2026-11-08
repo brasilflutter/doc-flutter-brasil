@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SimpleImage extends StatelessWidget {
   const SimpleImage({super.key});
@@ -7,9 +7,7 @@ class SimpleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // #docregion SimpleCachedImage
-    return CachedNetworkImage(
-      imageUrl: 'https://picsum.photos/250?image=9',
-    );
+    return CachedNetworkImage(imageUrl: 'https://picsum.photos/250?image=9');
     // #enddocregion SimpleCachedImage
   }
 }

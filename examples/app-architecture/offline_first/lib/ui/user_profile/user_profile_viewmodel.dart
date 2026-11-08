@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../../data/repositories/user_profile_repository.dart';
 import '../../domain/model/user_profile.dart';
 
 // #docregion UserProfileViewModel
 class UserProfileViewModel extends ChangeNotifier {
   // #enddocregion UserProfileViewModel
-  UserProfileViewModel({
-    required UserProfileRepository userProfileRepository,
-  }) : _userProfileRepository = userProfileRepository {
+  UserProfileViewModel({required this._userProfileRepository}) {
     load();
   }
 
@@ -25,12 +24,18 @@ class UserProfileViewModel extends ChangeNotifier {
   // #docregion load
   Future<void> load() async {
     // #enddocregion UserProfileViewModel
-    await _userProfileRepository.getUserProfile().listen((userProfile) {
-      _userProfile = userProfile;
-      notifyListeners();
-    }, onError: (error) {
-      // handle error
-    }).asFuture();
+    await _userProfileRepository
+        .getUserProfile()
+        .listen(
+          (userProfile) {
+            _userProfile = userProfile;
+            notifyListeners();
+          },
+          onError: (error) {
+            // handle error
+          },
+        )
+        .asFuture<void>();
     // #docregion UserProfileViewModel
   }
   // #enddocregion load

@@ -30,9 +30,7 @@ class MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-        ),
+        appBar: AppBar(title: const Text(title)),
         body: ListView.builder(
           itemCount: items.length,
           // #docregion Dismissible
@@ -56,9 +54,7 @@ class MyAppState extends State<MyApp> {
               },
               // Show a red background as the item is swiped away.
               background: Container(color: Colors.red),
-              child: ListTile(
-                title: Text(item),
-              ),
+              child: ListTile(title: Text(item)),
             );
           },
           // #enddocregion Dismissible

@@ -1,0 +1,60 @@
+// Copyright 2024 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import 'dart:io';
+
+import 'package:args/command_runner.dart';
+
+import '../sites.dart';
+import '../utils.dart';
+
+final class ServeSiteCommand extends Command<int> {
+  @override
+  String get description => 'Serve the site locally.';
+
+  @override
+  String get name => 'serve';
+
+  ServeSiteCommand() {
+    argParser.addFlag(
+      'release',
+      defaultsTo: false,
+      help: 'Build with compilers used for release builds instead of dartdevc.',
+    );
+  }
+
+  @override
+  Future<int> run() async {
+    if (installJasprCliIfNecessary() case final jasprInstallResult
+        when jasprInstallResult != 0) {
+      return jasprInstallResult;
+    }
+
+    final release = argResults!.flag('release');
+    final selectedSite = this.selectedSite;
+    final jasprPorts = selectedSite.jasprPorts;
+
+    final process = await Process.start(
+      Platform.resolvedExecutable,
+      [
+        'pub',
+        'global',
+        'run',
+        'jaspr_cli:jaspr',
+        'serve',
+        '--port=${jasprPorts.serve}',
+        '--web-port=${jasprPorts.webDev}',
+        '--proxy-port=${jasprPorts.proxy}',
+        '--dart-define=PRODUCTION=false',
+        if (release) '--release',
+      ],
+      workingDirectory: selectedSite.directory,
+      runInShell: true,
+      mode: ProcessStartMode.inheritStdio,
+    );
+
+    final processExitCode = await process.exitCode;
+    return processExitCode;
+  }
+}

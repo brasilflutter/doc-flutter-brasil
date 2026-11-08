@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:state_mgmt/main.dart';
 import 'package:state_mgmt/src/provider.dart';
@@ -19,9 +19,13 @@ void main() {
     await _visitPage(tester, '/callbacks');
     await _visitPage(tester, '/perf');
 
-    expect(find.byType(TextButton).evaluate().length, 4,
-        reason: 'Smoke test was expecting a different number of pages to test. '
-            'Please make sure you visit all the pages above.');
+    expect(
+      find.byType(TextButton).evaluate().length,
+      4,
+      reason:
+          'Smoke test was expecting a different number of pages to test. '
+          'Please make sure you visit all the pages above.',
+    );
   });
 }
 

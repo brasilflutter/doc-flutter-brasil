@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(const SampleApp());
@@ -12,10 +12,7 @@ class SampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Sample App',
-      home: SampleAppPage(),
-    );
+    return const MaterialApp(title: 'Sample App', home: SampleAppPage());
   }
 }
 
@@ -37,9 +34,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 
   // #docregion load-data
   Future<void> loadData() async {
-    final Uri dataURL = Uri.parse(
-      'https://jsonplaceholder.typicode.com/posts',
-    );
+    final Uri dataURL = Uri.parse('https://jsonplaceholder.typicode.com/posts');
     final http.Response response = await http.get(dataURL);
     setState(() {
       data = (jsonDecode(response.body) as List).cast<Map<String, Object?>>();

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // #docregion navigator
 class NavigationApp extends StatelessWidget {
@@ -41,9 +41,7 @@ class DrawerNavScreen extends StatelessWidget {
     // #docregion navigator-push
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const UsualNavScreen(),
-      ),
+      MaterialPageRoute<void>(builder: (context) => const UsualNavScreen()),
     );
     // #enddocregion navigator-push
   }
@@ -93,24 +91,21 @@ class _NavigationHomePageState extends State<NavigationHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Material(
-          color: Colors.blue,
-          child: TabBar(
-            tabs: const <Tab>[
-              Tab(
-                icon: Icon(Icons.person),
-              ),
-              Tab(
-                icon: Icon(Icons.email),
-              ),
-            ],
-            controller: controller,
-          ),
-        ),
-        body: TabBarView(
+      bottomNavigationBar: Material(
+        color: Colors.blue,
+        child: TabBar(
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.person)),
+            Tab(icon: Icon(Icons.email)),
+          ],
           controller: controller,
-          children: const <Widget>[HomeScreen(), TabScreen()],
-        ));
+        ),
+      ),
+      body: TabBarView(
+        controller: controller,
+        children: const <Widget>[HomeScreen(), TabScreen()],
+      ),
+    );
   }
 }
 // #enddocregion navigation-home-page-state

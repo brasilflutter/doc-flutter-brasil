@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'data/repositories/user_profile_repository.dart';
 import 'data/services/api_client_service.dart';
@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
       home: UserProfileScreen(
         viewModel: UserProfileViewModel(

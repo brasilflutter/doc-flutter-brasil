@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,18 +9,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
-      home: HomePage(),
-    );
+    return const CupertinoApp(home: HomePage());
   }
 }
 
 // #docregion weather
-enum Weather {
-  rainy,
-  windy,
-  sunny,
-}
+enum Weather { rainy, windy, sunny }
 // #enddocregion weather
 
 // #docregion home-page-view-model
@@ -28,7 +22,7 @@ enum Weather {
 class HomePageViewModel {
   const HomePageViewModel();
   Future<Weather> load() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
     return Weather.sunny;
   }
 }
@@ -53,15 +47,9 @@ class HomePage extends StatelessWidget {
           // an error or if the data is null, you can decide what to
           // show to the user.
           if (snapshot.hasData) {
-            return Center(
-              child: Text(
-                snapshot.data.toString(),
-              ),
-            );
+            return Center(child: Text(snapshot.data.toString()));
           } else {
-            return const Center(
-              child: CupertinoActivityIndicator(),
-            );
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),

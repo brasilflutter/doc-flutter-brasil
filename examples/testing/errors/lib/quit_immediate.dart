@@ -1,12 +1,12 @@
 // ignore_for_file: directives_ordering
 
-import './my_app.dart';
+import 'my_app.dart';
 
 // #docregion on-error-main
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   FlutterError.onError = (details) {

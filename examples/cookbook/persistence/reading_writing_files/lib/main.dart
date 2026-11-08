@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 // #docregion localPath
 import 'package:path_provider/path_provider.dart';
+
 // #enddocregion localPath
 
 void main() {
   runApp(
     MaterialApp(
-      title: 'Reading and Writing Files',
+      title: 'Reading and writing files',
       home: FlutterDemo(storage: CounterStorage()),
     ),
   );
@@ -36,12 +37,12 @@ class CounterStorage {
     try {
       final file = await _localFile;
 
-      // Read the file
+      // Read the contents of the local file.
       final contents = await file.readAsString();
 
       return int.parse(contents);
-    } catch (e) {
-      // If encountering an error, return 0
+    } catch (_) {
+      // If an error was encountered, return 0.
       return 0;
     }
   }
@@ -51,7 +52,7 @@ class CounterStorage {
   Future<File> writeCounter(int counter) async {
     final file = await _localFile;
 
-    // Write the file
+    // Write the counter as a string to the file.
     return file.writeAsString('$counter');
   }
   // #enddocregion writeCounter
@@ -91,13 +92,9 @@ class _FlutterDemoState extends State<FlutterDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reading and Writing Files'),
-      ),
+      appBar: AppBar(title: const Text('Reading and writing files')),
       body: Center(
-        child: Text(
-          'Button tapped $_counter time${_counter == 1 ? '' : 's'}.',
-        ),
+        child: Text('Button tapped $_counter time${_counter == 1 ? '' : 's'}.'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

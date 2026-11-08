@@ -1,0 +1,69 @@
+title: Flutter
+name: Flutter docs
+url: https://docs.flutter.dev
+description: >-
+  Official documentation for learning Flutter and using it to
+  build multiplatform apps, with guides, tutorials, examples, and references.
+main-url: https://flutter.dev
+
+showBanner: true
+
+repo:
+  organization: https://github.com/flutter
+  this: https://github.com/flutter/website
+  flutter: https://github.com/flutter/flutter
+  rfc: https://github.com/flutter/rfc
+  games: https://github.com/flutter/games
+  samples: https://github.com/flutter/samples
+  packages: https://github.com/flutter/packages
+  gallery-archive: https://github.com/flutter/gallery
+  engine: https://github.com/flutter/engine
+  dart-sdk: https://github.com/dart-lang/sdk
+  demos: https://github.com/flutter/demos
+  flutterfire: https://github.com/firebase/flutterfire
+  uxr: https://github.com/flutter/uxr
+  wonderous: https://github.com/gskinnerTeam/flutter-wonderous-app
+dart:
+  api: https://api.dart.dev
+social:
+  twitter: https://twitter.com/FlutterDev
+  youtube: https://www.youtube.com/@flutterdev
+cupertino_ui: https://pub.dev/documentation/cupertino_ui/latest/cupertino_ui
+dart-site: https://dart.dev
+api: https://api.flutter.dev
+main-api: https://main-api.flutter.dev
+pub: https://pub.dev
+pub-api: https://pub.dev/documentation
+pub-pkg: https://pub.dev/packages
+dart-blog: https://dart.dev/blog
+flutter-blog: https://blog.flutter.dev
+dartpad: https://dartpad.dev
+gallery-archive: https://flutter-gallery-archive.web.app
+material: https://m3.material.io
+material2: https://m2.material.io
+material_ui: https://pub.dev/documentation/material_ui/latest/material_ui
+so: https://stackoverflow.com
+android-dev: https://developer.android.com
+apple-dev: https://developer.apple.com
+google-blog: https://developers.googleblog.com
+developers: https://developers.google.com
+codelabs: https://codelabs.developers.google.com
+firebase: https://firebase.google.com
+wonderous: https://wonderous.app/
+
+groups:
+  dart-announce: https://groups.google.com/a/dartlang.org/g/announce
+  flutter-announce: https://groups.google.com/forum/#!forum/flutter-announce
+
+yt:
+  watch: 'https://www.youtube.com/watch'
+  playlist: 'https://www.youtube.com/playlist?list='
+
+# The Flutter version reflected by the docs, as a quoted 'major.minor' string.
+documentedFlutterVersion: '3.47'
+
+# Settings for Jaspr.
+
+# Specify Jaspr as not setting a base href for each document,
+# so that links to fragments still work as expected.
+base: false

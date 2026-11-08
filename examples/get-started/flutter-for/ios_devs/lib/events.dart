@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 
 class MyButton extends StatelessWidget {
   const MyButton({super.key});
@@ -29,9 +30,7 @@ class SampleTapApp extends StatelessWidget {
           onTap: () {
             developer.log('tap');
           },
-          child: const FlutterLogo(
-            size: 200,
-          ),
+          child: const FlutterLogo(size: 200),
         ),
       ),
     );
@@ -59,10 +58,7 @@ class _SampleAppState extends State<SampleApp>
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     );
-    curve = CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeIn,
-    );
+    curve = CurvedAnimation(parent: controller, curve: Curves.easeIn);
   }
 
   @override
@@ -79,9 +75,7 @@ class _SampleAppState extends State<SampleApp>
           },
           child: RotationTransition(
             turns: curve,
-            child: const FlutterLogo(
-              size: 200,
-            ),
+            child: const FlutterLogo(size: 200),
           ),
         ),
       ),

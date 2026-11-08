@@ -1,7 +1,7 @@
-// ignore_for_file: avoid_print, prefer_const_declarations, prefer_const_constructors
+// ignore_for_file: specify_nonobvious_property_types, avoid_print, prefer_const_declarations, prefer_const_constructors
 
 // #docregion build
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,11 +18,7 @@ class MyApp extends StatelessWidget {
 // #enddocregion build
 
 // #docregion enum
-enum Color {
-  red,
-  green,
-  blue,
-}
+enum Color { red, green, blue }
 // #enddocregion enum
 
 // #docregion class
@@ -35,30 +31,22 @@ class A<T> {
 final sampleTable = [
   Table(
     children: const [
-      TableRow(
-        children: [Text('T1')],
-      )
+      TableRow(children: [Text('T1')]),
     ],
   ),
   Table(
     children: const [
-      TableRow(
-        children: [Text('T2')],
-      )
+      TableRow(children: [Text('T2')]),
     ],
   ),
   Table(
     children: const [
-      TableRow(
-        children: [Text('T3')],
-      )
+      TableRow(children: [Text('T3')]),
     ],
   ),
   Table(
     children: const [
-      TableRow(
-        children: [Text('T4')],
-      )
+      TableRow(children: [Text('T4')]),
     ],
   ),
 ];

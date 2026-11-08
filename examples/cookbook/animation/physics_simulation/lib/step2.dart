@@ -11,11 +11,7 @@ class PhysicsCardDragDemo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const DraggableCard(
-        child: FlutterLogo(
-          size: 128,
-        ),
-      ),
+      body: const DraggableCard(child: FlutterLogo(size: 128)),
     );
   }
 }
@@ -42,8 +38,10 @@ class _DraggableCardState extends State<DraggableCard>
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
   }
   // #enddocregion init-state
 
@@ -56,7 +54,7 @@ class _DraggableCardState extends State<DraggableCard>
   // #docregion build
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     // #docregion gesture
     return GestureDetector(
       onPanDown: (details) {},
@@ -71,9 +69,7 @@ class _DraggableCardState extends State<DraggableCard>
       onPanEnd: (details) {},
       child: Align(
         alignment: _dragAlignment,
-        child: Card(
-          child: widget.child,
-        ),
+        child: Card(child: widget.child),
       ),
     );
     // #enddocregion gesture

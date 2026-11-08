@@ -1,0 +1,490 @@
+---
+title: Host native iOS views in your Flutter app with platform views
+shortTitle: iOS platform views
+description: >-
+  Learn how to host native iOS views in your Flutter app with platform views.
+---
+
+<?code-excerpt path-base="platform_integration/platform_views"?>
+
+Platform views allow you to embed native views in a Flutter app,
+so you can apply transforms, clips, and opacity to the native view
+from Dart.
+
+This allows you, for example, to use the native
+Google Maps from the Android and iOS SDKs
+directly inside your Flutter app.
+
+:::note
+This page discusses how to host your own native iOS views
+within a Flutter app.
+If you'd like to embed native Android views in your Flutter app,
+see [Hosting native Android views][].
+If you'd like to embed native macOS views in your Flutter app,
+see [Hosting native macOS views][].
+:::
+
+[Hosting native Android views]: /platform-integration/android/platform-views
+[Hosting native macOS views]: /platform-integration/macos/platform-views
+
+
+iOS only uses Hybrid composition,
+which means that the native
+`UIView` is appended to the view hierarchy.
+
+To create a platform view on iOS,
+use the following instructions:
+
+## On the Dart side
+
+On the Dart side, create a `Widget`
+and add the build implementation,
+as shown in the following steps.
+
+In the Dart widget file, make changes similar to those
+shown in `native_view_example.dart`:
+
+<ol>
+<li>
+
+Add the following imports:
+
+<?code-excerpt "lib/native_view_example_3.dart (import)"?>
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+```
+
+</li>
+
+<li>
+
+Implement a `build()` method:
+
+<?code-excerpt "lib/native_view_example_3.dart (ios-composition)"?>
+```dart
+Widget build(BuildContext context) {
+  // This is used in the platform side to register the view.
+  const String viewType = '<platform-view-type>';
+  // Pass parameters to the platform side.
+  final Map<String, dynamic> creationParams = <String, dynamic>{};
+
+  return UiKitView(
+    viewType: viewType,
+    layoutDirection: TextDirection.ltr,
+    creationParams: creationParams,
+    creationParamsCodec: const StandardMessageCodec(),
+  );
+}
+```
+
+</li>
+</ol>
+
+For more information, see the API docs for:
+[`UIKitView`][].
+
+[`UIKitView`]: {{site.api}}/flutter/widgets/UiKitView-class.html
+
+## On the platform side
+
+On the platform side, use either Swift or Objective-C:
+
+<Tabs key="darwin-language">
+<Tab name="Swift">
+
+Implement the factory and the platform view.
+The `FLNativeViewFactory` creates the platform view,
+and the platform view provides a reference to the `UIView`.
+
+For example, implement the factory class:
+
+```swift
+import Flutter
+import UIKit
+
+class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
+    private var messenger: FlutterBinaryMessenger
+
+    init(messenger: FlutterBinaryMessenger) {
+        self.messenger = messenger
+        super.init()
+    }
+
+    func create(
+        withFrame frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?
+    ) -> FlutterPlatformView {
+        return FLNativeView(
+            frame: frame,
+            viewIdentifier: viewId,
+            arguments: args,
+            binaryMessenger: messenger)
+    }
+
+    /// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
+    public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
+          return FlutterStandardMessageCodec.sharedInstance()
+    }
+}
+```
+
+Depending on the UI framework you are using,
+choose one of the following implementations for `FLNativeView`:
+
+<Tabs key="swift-ui-framework">
+<Tab name="UIKit">
+
+For UIKit, implement the `FLNativeView` class:
+
+```swift
+class FLNativeView: NSObject, FlutterPlatformView {
+    private var _view: UIView
+
+    init(
+        frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?,
+        binaryMessenger messenger: FlutterBinaryMessenger?
+    ) {
+        _view = UIView()
+        super.init()
+        // iOS views can be created here
+        createNativeView(view: _view)
+    }
+
+    func view() -> UIView {
+        return _view
+    }
+
+    func createNativeView(view _view: UIView){
+        _view.backgroundColor = UIColor.blue
+        let nativeLabel = UILabel()
+        nativeLabel.text = "Native text from iOS"
+        nativeLabel.textColor = UIColor.white
+        nativeLabel.textAlignment = .center
+        nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
+        _view.addSubview(nativeLabel)
+    }
+}
+```
+
+</Tab>
+<Tab name="SwiftUI">
+
+To display SwiftUI views within a platform view on iOS,
+wrap the SwiftUI view inside a `UIHostingController`.
+Since `UIHostingController` is a view controller,
+you can retrieve its view using the `view` property,
+and return it from the platform view's `view()` method.
+
+To prevent premature deallocation, store the `UIHostingController`
+instance as a property of `FLNativeView`. Use the `frame`
+passed to the initializer to set the frame of the hosting
+controller's view so Flutter sizes it correctly.
+
+For SwiftUI, implement the `FLNativeView` class and its SwiftUI view:
+
+```swift
+import SwiftUI
+
+class FLNativeView: NSObject, FlutterPlatformView {
+    private let hostingController: UIHostingController<MySwiftUIView>
+
+    init(
+        frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?,
+        binaryMessenger messenger: FlutterBinaryMessenger?
+    ) {
+        hostingController = UIHostingController(rootView: MySwiftUIView())
+        super.init()
+        hostingController.view.frame = frame
+    }
+
+    func view() -> UIView {
+        return hostingController.view
+    }
+}
+
+struct MySwiftUIView: View {
+    var body: some View {
+        Text("Native text from iOS (SwiftUI)")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.blue)
+            .foregroundColor(.white)
+    }
+}
+```
+
+</Tab>
+</Tabs>
+
+Finally, register the platform view.
+This can be done in an app or a plugin.
+
+:::version-note
+In Flutter 3.41 and later,
+iOS apps use the `UIScene` lifecycle by default.
+For apps using `UIScene`,
+you must implement `FlutterImplicitEngineDelegate`
+and register your platform views inside
+`didInitializeImplicitFlutterEngine(_:)`.
+For more information,
+refer to the [UISceneDelegate adoption guide][].
+:::
+
+For app registration,
+modify the App's `AppDelegate.swift`:
+
+```swift
+import Flutter
+import UIKit
+
+@main
+@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
+   
+    func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+        GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+
+        guard let pluginRegistrar = engineBridge.pluginRegistry.registrar(forPlugin: "plugin-name") else { return }
+
+        let factory = FLNativeViewFactory(messenger: pluginRegistrar.messenger())
+        pluginRegistrar.register(
+            factory,
+            withId: "<platform-view-type>")
+    }
+}
+```
+
+For plugin registration,
+modify the plugin's main file
+(for example, `FLPlugin.swift`):
+
+```swift
+import Flutter
+import UIKit
+
+class FLPlugin: NSObject, FlutterPlugin {
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let factory = FLNativeViewFactory(messenger: registrar.messenger())
+        registrar.register(factory, withId: "<platform-view-type>")
+    }
+}
+```
+
+</Tab>
+<Tab name="Objective-C">
+
+In Objective-C, add the headers for the factory and the platform view.
+For example, as shown in `FLNativeView.h`:
+
+```objc
+#import <Flutter/Flutter.h>
+
+@interface FLNativeViewFactory : NSObject <FlutterPlatformViewFactory>
+- (instancetype)initWithMessenger:(NSObject<FlutterBinaryMessenger>*)messenger;
+@end
+
+@interface FLNativeView : NSObject <FlutterPlatformView>
+
+- (instancetype)initWithFrame:(CGRect)frame
+               viewIdentifier:(int64_t)viewId
+                    arguments:(id _Nullable)args
+              binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger;
+
+- (UIView*)view;
+@end
+```
+
+Implement the factory and the platform view.
+The `FLNativeViewFactory` creates the platform view,
+and the platform view provides a reference to the
+`UIView`. For example, `FLNativeView.m`:
+
+```objc
+#import "FLNativeView.h"
+
+@implementation FLNativeViewFactory {
+  NSObject<FlutterBinaryMessenger>* _messenger;
+}
+
+- (instancetype)initWithMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
+  self = [super init];
+  if (self) {
+    _messenger = messenger;
+  }
+  return self;
+}
+
+- (NSObject<FlutterPlatformView>*)createWithFrame:(CGRect)frame
+                                   viewIdentifier:(int64_t)viewId
+                                        arguments:(id _Nullable)args {
+  return [[FLNativeView alloc] initWithFrame:frame
+                              viewIdentifier:viewId
+                                   arguments:args
+                             binaryMessenger:_messenger];
+}
+
+/// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
+- (NSObject<FlutterMessageCodec>*)createArgsCodec {
+    return [FlutterStandardMessageCodec sharedInstance];
+}
+
+@end
+
+@implementation FLNativeView {
+   UIView *_view;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+               viewIdentifier:(int64_t)viewId
+                    arguments:(id _Nullable)args
+              binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
+  if (self = [super init]) {
+    _view = [[UIView alloc] init];
+  }
+  return self;
+}
+
+- (UIView*)view {
+  return _view;
+}
+
+@end
+```
+
+Finally, register the platform view.
+This can be done in an app or a plugin.
+
+:::version-note
+In Flutter 3.41 and later,
+iOS apps use the `UIScene` lifecycle by default.
+For apps using `UIScene`,
+you must implement `FlutterImplicitEngineDelegate`
+and register your platform views inside
+`didInitializeImplicitFlutterEngine:`.
+For more information,
+refer to the [UISceneDelegate adoption guide][].
+:::
+
+For app registration,
+modify the App's `AppDelegate.m`:
+
+```objc
+#import "AppDelegate.h"
+#import "FLNativeView.h"
+#import "GeneratedPluginRegistrant.h"
+
+@interface AppDelegate () <FlutterImplicitEngineDelegate>
+@end
+
+@implementation AppDelegate
+
+- (void)didInitializeImplicitFlutterEngine:(NSObject<FlutterImplicitEngineBridge>*)engineBridge {
+  [GeneratedPluginRegistrant registerWithRegistry:engineBridge.pluginRegistry];
+
+  NSObject<FlutterPluginRegistrar>* registrar =
+      [engineBridge.pluginRegistry registrarForPlugin:@"plugin-name"];
+
+  FLNativeViewFactory* factory =
+      [[FLNativeViewFactory alloc] initWithMessenger:registrar.messenger];
+
+  [registrar registerViewFactory:factory withId:@"<platform-view-type>"];
+}
+
+@end
+```
+
+For plugin registration,
+modify the main plugin file
+(for example, `FLPlugin.m`):
+
+```objc
+#import <Flutter/Flutter.h>
+#import "FLNativeView.h"
+
+@interface FLPlugin : NSObject<FlutterPlugin>
+@end
+
+@implementation FLPlugin
+
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
+  FLNativeViewFactory* factory =
+      [[FLNativeViewFactory alloc] initWithMessenger:registrar.messenger];
+  [registrar registerViewFactory:factory withId:@"<platform-view-type>"];
+}
+
+@end
+```
+
+</Tab>
+</Tabs>
+
+For more information, see the API docs for:
+
+* [`FlutterPlatformViewFactory`][]
+* [`FlutterPlatformView`][]
+* [`PlatformView`][]
+
+[`FlutterPlatformView`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view-p.html
+[`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
+[`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
+
+## Putting it together
+
+When implementing the `build()` method in Dart,
+you can use [`defaultTargetPlatform`][]
+to detect the platform, and decide which widget to use:
+
+<?code-excerpt "lib/native_view_example_3.dart (together-widget)"?>
+```dart
+Widget build(BuildContext context) {
+  // This is used in the platform side to register the view.
+  const String viewType = '<platform-view-type>';
+  // Pass parameters to the platform side.
+  final Map<String, dynamic> creationParams = <String, dynamic>{};
+
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.android:
+    // return widget on Android.
+    case TargetPlatform.iOS:
+    // return widget on iOS.
+    case TargetPlatform.macOS:
+    // return widget on macOS.
+    default:
+      throw UnsupportedError('Unsupported platform view');
+  }
+}
+```
+
+## Performance
+
+Platform views in Flutter come with performance trade-offs.
+
+For complex cases, there are some techniques that can be used
+to mitigate performance issues.
+
+For example, you could use a placeholder texture while an
+animation is happening in Dart.
+In other words, if an animation is slow while a platform view is rendered,
+then consider taking a screenshot of the native view and
+rendering it as a texture.
+
+## Composition limitations
+
+There are some limitations when composing iOS Platform Views.
+
+- The [`ShaderMask`][] and [`ColorFiltered`][] widgets are not supported.
+- The [`BackdropFilter`][] widget is supported,
+  but there are some limitations on how it can be used.
+  For more details, check out the
+  [iOS Platform View Backdrop Filter Blur design doc][design-doc].
+
+[`ShaderMask`]: {{site.api}}/flutter/foundation/ShaderMask.html
+[`ColorFiltered`]: {{site.api}}/flutter/foundation/ColorFiltered.html
+[`BackdropFilter`]: {{site.api}}/flutter/foundation/BackdropFilter.html
+[`defaultTargetPlatform`]: {{site.api}}/flutter/foundation/defaultTargetPlatform.html
+[design-doc]: {{site.main-url}}/go/ios-platformview-backdrop-filter-blur
+[UISceneDelegate adoption guide]: /release/breaking-changes/uiscenedelegate#migrate-appdelegate

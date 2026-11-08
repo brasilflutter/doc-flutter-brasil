@@ -1,13 +1,17 @@
-# Default code owners
-* @flutter/website-reviewers @sfshaza2 @antfitch @parlough
+# @sfshaza2 is the default reviewer and triager for the repository,
+# with @flutter/website-reviewers available to approve as well as a fallback.
+* @flutter/website-reviewers @sfshaza2
 
-# Covers iOS documentation content
-**/add-to-app/ios/                @flutter/website-reviewers @sfshaza2 @parlough @jmagman
-**/deployment/ios.md              @flutter/website-reviewers @sfshaza2 @parlough @jmagman
-**/flavors.md                     @flutter/website-reviewers @sfshaza2 @parlough @jmagman
-**/flavors/                       @flutter/website-reviewers @sfshaza2 @parlough @jmagman
-**/platform-integration/ios/      @flutter/website-reviewers @sfshaza2 @parlough @jmagman
+# @abdallahshaban557 is the default reviewer for the marketing site,
+# with @flutter/website-reviewers available to approve as well as a fallback.
+/sites/www/ @flutter/website-reviewers @abdallahshaban557
 
-# Covers macOS documentation content
-**/deployment/macos.md            @flutter/website-reviewers @sfshaza2 @parlough @jmagman
-**/platform-integration/macos/    @flutter/website-reviewers @sfshaza2 @parlough @jmagman
+# @sfshaza2 is the default reviewer for the blog on the marketing site,
+# with @flutter/website-reviewers available to approve as well as a fallback.
+/sites/www/content/blog @flutter/website-reviewers @sfshaza2
+
+## Notes
+## --------------------------------------------------
+## Default reviewer will triage to others.
+## All PRs require an LGTM from a `@flutter/website-reviewers` member to land.
+## Include the following reviewers on any iOS or macOS or flavors changes: @jmagman

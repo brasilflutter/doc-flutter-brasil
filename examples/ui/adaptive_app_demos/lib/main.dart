@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 import 'app_model.dart';
@@ -29,8 +29,10 @@ class AppScaffold extends StatelessWidget {
           bool touchMode = context.select<AppModel, bool>((m) => m.touchMode);
           // #docregion visual-density
           double densityAmt = touchMode ? 0.0 : -1.0;
-          VisualDensity density =
-              VisualDensity(horizontal: densityAmt, vertical: densityAmt);
+          VisualDensity density = VisualDensity(
+            horizontal: densityAmt,
+            vertical: densityAmt,
+          );
           return MaterialApp(
             theme: ThemeData(visualDensity: density),
             home: MainAppScaffold(),

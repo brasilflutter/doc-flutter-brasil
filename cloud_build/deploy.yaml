@@ -1,19 +1,19 @@
+substitutions:
+  _SITE: docs
 steps:
-  - name: gcr.io/cloud-builders/git
-    args: ['submodule', 'update', '--init', '--recursive']
   - name: gcr.io/cloud-builders/git
     args: ['fetch', '--unshallow']
   - name: gcr.io/flutter-dev-230821/firebase-ghcli
-    # Set up, build, then deploy site to production
+    # Build the selected site, then deploy it to production.
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
-        set -e
+        set -euo pipefail
 
-        npm install
-        npm run build-site-for-production
-
-        firebase deploy --project=flutter-docs-prod --only=hosting
+        dart pub get
+        dart run dash_site --site="$${SITE}" deploy
+    env:
+      - 'SITE=$_SITE'
 options:
   logging: CLOUD_LOGGING_ONLY

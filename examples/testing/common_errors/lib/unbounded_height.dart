@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProblemWidget extends StatelessWidget {
   const ProblemWidget({super.key});
@@ -12,14 +12,8 @@ class ProblemWidget extends StatelessWidget {
           const Text('Header'),
           ListView(
             children: const <Widget>[
-              ListTile(
-                leading: Icon(Icons.map),
-                title: Text('Map'),
-              ),
-              ListTile(
-                leading: Icon(Icons.subway),
-                title: Text('Subway'),
-              ),
+              ListTile(leading: Icon(Icons.map), title: Text('Map')),
+              ListTile(leading: Icon(Icons.subway), title: Text('Subway')),
             ],
           ),
         ],
@@ -42,14 +36,8 @@ class SolutionWidget extends StatelessWidget {
           Expanded(
             child: ListView(
               children: const <Widget>[
-                ListTile(
-                  leading: Icon(Icons.map),
-                  title: Text('Map'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.subway),
-                  title: Text('Subway'),
-                ),
+                ListTile(leading: Icon(Icons.map), title: Text('Map')),
+                ListTile(leading: Icon(Icons.subway), title: Text('Subway')),
               ],
             ),
           ),

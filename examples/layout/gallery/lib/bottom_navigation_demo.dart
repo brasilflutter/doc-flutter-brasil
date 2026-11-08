@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BottomNavigationDemo extends StatefulWidget {
   const BottomNavigationDemo({
@@ -55,10 +55,7 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
         icon: Icon(Icons.account_circle),
         label: 'Account',
       ),
-      const BottomNavigationBarItem(
-        icon: Icon(Icons.alarm_on),
-        label: 'Alarm',
-      ),
+      const BottomNavigationBarItem(icon: Icon(Icons.alarm_on), label: 'Alarm'),
       const BottomNavigationBarItem(
         icon: Icon(Icons.camera_enhance),
         label: 'Camera',
@@ -67,7 +64,9 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
 
     if (widget.type == BottomNavigationDemoType.withLabels) {
       bottomNavigationBarItems = bottomNavigationBarItems.sublist(
-          0, bottomNavigationBarItems.length - 2);
+        0,
+        bottomNavigationBarItems.length - 2,
+      );
       _currentIndex.value = _currentIndex.value
           .clamp(0, bottomNavigationBarItems.length - 1)
           .toInt();
@@ -77,12 +76,10 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
       home: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(
-            switch (widget.type) {
-              BottomNavigationDemoType.withLabels => 'Persistent labels',
-              BottomNavigationDemoType.withoutLabels => 'Selected label',
-            },
-          ),
+          title: Text(switch (widget.type) {
+            BottomNavigationDemoType.withLabels => 'Persistent labels',
+            BottomNavigationDemoType.withoutLabels => 'Selected label',
+          }),
         ),
         body: Center(
           child: PageTransitionSwitcher(
@@ -123,10 +120,7 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
 }
 
 class _NavigationDestinationView extends StatelessWidget {
-  const _NavigationDestinationView({
-    super.key,
-    required this.item,
-  });
+  const _NavigationDestinationView({super.key, required this.item});
 
   final BottomNavigationBarItem item;
 
@@ -149,10 +143,7 @@ class _NavigationDestinationView extends StatelessWidget {
         ),
         Center(
           child: IconTheme(
-            data: const IconThemeData(
-              color: Colors.white,
-              size: 80,
-            ),
+            data: const IconThemeData(color: Colors.white, size: 80),
             child: Semantics(
               label: 'Placeholder for ${item.label} tab',
               child: item.icon,
@@ -164,14 +155,13 @@ class _NavigationDestinationView extends StatelessWidget {
   }
 }
 
-enum BottomNavigationDemoType {
-  withLabels,
-  withoutLabels,
-}
+enum BottomNavigationDemoType { withLabels, withoutLabels }
 
 void main() {
-  runApp(const BottomNavigationDemo(
-    type: BottomNavigationDemoType.withLabels,
-    restorationId: 'bottom_navigation_labels_demo',
-  ));
+  runApp(
+    const BottomNavigationDemo(
+      type: BottomNavigationDemoType.withLabels,
+      restorationId: 'bottom_navigation_labels_demo',
+    ),
+  );
 }

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    title: 'Navigation basics',
-    home: FirstScreen(),
-  ));
+  runApp(const MaterialApp(title: 'Navigation basics', home: FirstScreen()));
 }
 
 class FirstScreen extends StatelessWidget {
@@ -12,16 +9,16 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Screen'),
-      ),
+      appBar: AppBar(title: const Text('First Screen')),
       body: Center(
         child: ElevatedButton(
           // #docregion push-route
           child: const Text('Open second screen'),
           onPressed: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const SecondScreen()),
+              MaterialPageRoute<void>(
+                builder: (context) => const SecondScreen(),
+              ),
             );
           },
           // #enddocregion push-route
@@ -36,9 +33,7 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Screen'),
-      ),
+      appBar: AppBar(title: const Text('Second Screen')),
       body: Center(
         child: ElevatedButton(
           child: const Text('Pop current screen'),

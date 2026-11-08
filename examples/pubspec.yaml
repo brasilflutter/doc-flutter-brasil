@@ -2,16 +2,9 @@ name: flutter_docs_examples
 publish_to: none
 
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.13.0
 
 workspace:
-  - _animation/basic_hero_animation
-  - _animation/basic_radial_hero_animation
-  - _animation/basic_staggered_animation
-  - _animation/hero_animation
-  - _animation/radial_hero_animation
-  - _animation/radial_hero_animation_animate_rectclip
-  - _animation/staggered_pic_selection
   - accessibility
   - animation/animate0
   - animation/animate1
@@ -19,7 +12,10 @@ workspace:
   - animation/animate3
   - animation/animate4
   - animation/animate5
+  - animation/hero_animation
   - animation/implicit
+  - animation/radial_hero_animation
+  - animation/staggered_animation
   - app-architecture/command
   - app-architecture/offline_first
   - app-architecture/optimistic_state
@@ -39,12 +35,10 @@ workspace:
   - cookbook/effects/download_button
   - cookbook/effects/drag_a_widget
   - cookbook/effects/expandable_fab
-  - cookbook/effects/gradient_bubbles
   - cookbook/effects/nested_nav
   - cookbook/effects/parallax_scrolling
   - cookbook/effects/shimmer_loading
   - cookbook/effects/staggered_menu_animation
-  - cookbook/effects/typing_indicator
   - cookbook/forms/focus
   - cookbook/forms/retrieve_input
   - cookbook/forms/text_field_changes
@@ -91,11 +85,14 @@ workspace:
   - cookbook/testing/unit/mocking
   - cookbook/testing/widget/finders
   - cookbook/testing/widget/introduction
+  - cookbook/testing/widget/orientation_tests
   - cookbook/testing/widget/scrolling
   - cookbook/testing/widget/tap_drag
   - data-and-backend/json
   - deployment/obfuscate
-  - get-started/codelab_web
+  - fwe/birdle
+  - fwe/rolodex
+  - fwe/wikipedia_reader
   - get-started/flutter-for/android_devs
   - get-started/flutter-for/declarative
   - get-started/flutter-for/ios_devs
@@ -106,7 +103,7 @@ workspace:
   - integration_test
   - integration_test_migration
   - internationalization/add_language
-#  - internationalization/gen_l10n_example
+  - internationalization/gen_l10n_example
   - internationalization/intl_example
   - internationalization/minimal
   - layout/base
@@ -151,4 +148,4 @@ workspace:
   - visual_debugging
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0

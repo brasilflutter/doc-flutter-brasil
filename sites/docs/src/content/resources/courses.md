@@ -1,0 +1,83 @@
+---
+title: Online courses
+description: An index of online courses teaching Flutter development.
+showBreadcrumbs: false
+---
+
+Learn how to build Flutter apps with these video courses.
+Before signing up for a course, verify that it includes
+up-to-date information, such as null-safe Dart code.
+
+These courses are grouped by language and listed alphabetically.
+To include your course, [submit a PR][]:
+
+## Arabic
+
+* [Flutter Master Course From Zero To Hero][] by Usama Elgendy
+
+## English
+
+* [20 Hour Dart & Flutter YT Course For Beginners][] by Rivaan Ranawat
+* [Best Dart Course][] by Tadas Petra & Robert Brunhage
+* [Best Flutter Course][] by Tadas Petra & Robert Brunhage
+* [Dart & Flutter - Zero to Mastery 2023 + Clean Architecture][] by Max Berktold & Max Steffen
+* [Dart & Flutter - Zero to Mastery 2023 - Keiko Corp. Food Reviews App][] by Marco Napoli
+* [Flutter & Dart - The Complete Guide, 2023 Edition][]
+* [Flutter & Firebase Masterclass][] by Andrea Bizzotto
+* [Flutter and Dart Full Course][] by Mouaz M. Alshahmeh
+* [Flutter Animations Masterclass][] by Andrea Bizzotto
+* [Flutter Crash Course][]
+* [Flutter Foundations][] by Andrea Bizzotto
+* [Flutter in Production][] by Andrea Bizzotto
+* [FlutterCraft][] by Muhammad Haris Shahzad
+* [Learn Flutter App Development][] by Coddy
+* [Sticky Grouped Headers in Flutter][] by Marco Napoli
+* [The Complete 2021 Flutter Development Bootcamp Using Dart][] by App Brewery
+* [The Complete Dart Developer Guide][] by Andrea Bizzotto
+
+## German
+
+* [Flutter leicht gemacht 2022 - Zero to Mastery!][] by Max Berktold
+
+## Italian
+
+* [Flutter University - From Zero to Mastery][] by Fudeo
+
+## Portuguese
+
+* [Flutter Bootcamp][] by Rubens de Melo
+* [Flutter para iniciantes][] by Rubens de Melo
+
+## Turkish
+
+* [Flutter Zero to Hero][] by Veli Bacik
+
+## Urdu
+
+* [Tech Idara - Flutter from Basic to Advanced][] by Ishaq Hassan
+
+[20 Hour Dart & Flutter YT Course For Beginners]: https://youtu.be/CzRQ9mnmh44
+[Best Dart Course]: https://www.hungrimind.com/learn/dart
+[Best Flutter Course]: https://www.hungrimind.com/learn/flutter
+[Flutter in Production]: https://codewithandrea.com/courses/flutter-in-production/
+[Flutter Foundations]: https://codewithandrea.com/courses/flutter-foundations/
+[Flutter & Firebase Masterclass]: https://codewithandrea.com/courses/flutter-firebase-masterclass/
+[Flutter and Dart Full Course]: https://www.youtube.com/watch?v=_FDJ1of5YPM
+[Flutter Animations Masterclass]: https://codewithandrea.com/courses/flutter-animations-masterclass/
+[The Complete Dart Developer Guide]: https://codewithandrea.com/courses/complete-dart-guide/
+[Flutter & Dart - The Complete Guide, 2023 Edition]: https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/
+[The Complete 2021 Flutter Development Bootcamp Using Dart]: https://www.appbrewery.com/p/flutter-development-bootcamp-with-dart/
+[Flutter Crash Course]: https://fluttercrashcourse.com/
+[Flutter leicht gemacht 2022 - Zero to Mastery!]: https://www.udemy.com/course/dart-flutter-leicht-gemacht/
+[Flutter Zero to Hero]: {{site.yt.playlist}}PL1k5oWAuBhgXdw1BbxVGxxWRmkGB1C11l
+[Flutter Bootcamp]: https://flutterbootcamp.com.br
+[Flutter para iniciantes]: {{site.yt.playlist}}PLS4cqF1_X2syzBpkoSwtmKoREgnp1MhTn
+[Dart & Flutter - Zero to Mastery 2023 + Clean Architecture]: https://www.udemy.com/course/flutter-made-easy-zero-to-mastery/?referralCode=CCBFCD16CC71F359EE3C
+[Dart & Flutter - Zero to Mastery 2023 - Keiko Corp. Food Reviews App]: https://academy.zerotomastery.io/courses/2092303/lectures/47623876
+[Learn Flutter App Development]: https://coddy.tech/landing/flutter
+[Sticky Grouped Headers in Flutter]: https://academy.droidcon.com/course/sticky-grouped-headers-in-flutter
+[Flutter University - From Zero to Mastery]: https://www.fudeo.it/?utm_source=flutter_dev
+[Tech Idara - Flutter from Basic to Advanced]: https://www.youtube.com/playlist?list=PLX97VxArfzkmXeUqUxeKW7XS8oYraH7A5
+[FlutterCraft]: https://fluttercraft.app
+[Flutter Master Course From Zero To Hero]: https://usamaelgendy.com/courses/flutter-beginners/
+[submit a PR]: {{site.repo.this}}/pulls

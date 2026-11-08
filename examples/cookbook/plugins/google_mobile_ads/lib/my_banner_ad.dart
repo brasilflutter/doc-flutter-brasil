@@ -18,10 +18,7 @@ class MyBannerAdWidget extends StatefulWidget {
       : 'ca-app-pub-3940256099942544/2934735716';
   // #enddocregion adUnitId
 
-  MyBannerAdWidget({
-    super.key,
-    this.adSize = AdSize.banner,
-  });
+  MyBannerAdWidget({super.key, this.adSize = AdSize.banner});
 
   @override
   State<MyBannerAdWidget> createState() => _MyBannerAdWidgetState();

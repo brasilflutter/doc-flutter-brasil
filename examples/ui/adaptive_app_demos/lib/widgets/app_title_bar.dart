@@ -1,5 +1,5 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 import '../app_model.dart';
@@ -37,8 +37,9 @@ class AppTitleBar extends StatelessWidget {
           // Enable Touch Mode Button
           Row(
             // Touch button should be right-aligned on macOS to avoid the native buttons
-            textDirection:
-                DeviceType.isMacOS ? TextDirection.rtl : TextDirection.ltr,
+            textDirection: DeviceType.isMacOS
+                ? TextDirection.rtl
+                : TextDirection.ltr,
             children: [
               IconButton(
                 onPressed: () => context.read<AppModel>().toggleTouchMode(),
@@ -57,8 +58,8 @@ class AppTitleBar extends StatelessWidget {
                 MaximizeWindowButton(colors: buttonColors),
                 CloseWindowButton(colors: closeButtonColors),
               ],
-            )
-          ]
+            ),
+          ],
         ],
       ),
     );

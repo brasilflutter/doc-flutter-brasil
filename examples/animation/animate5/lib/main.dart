@@ -3,18 +3,19 @@
 import 'dart:math';
 
 // #enddocregion ShakeCurve
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const LogoApp());
 
 // #docregion diff
 class AnimatedLogo extends AnimatedWidget {
   const AnimatedLogo({super.key, required Animation<double> animation})
-      : super(listenable: animation);
+    : super(listenable: animation);
 
-  // Make the Tweens static because they don't change.
-  static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
-  static final _sizeTween = Tween<double>(begin: 0, end: 300);
+  // Make the tweens static because they don't change.
+  static final Tween<double> _opacityTween = Tween(begin: 0.1, end: 1);
+  static final Tween<double> _sizeTween = Tween(begin: 0, end: 300);
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,10 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     // #docregion animation-controller, tweens
-    controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
     // #enddocregion animation-controller, tweens
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((status) {
@@ -77,8 +80,11 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
 
 class UsedInTutorialTextOnly extends _LogoAppState {
   UsedInTutorialTextOnly() {
-    // ignore: prefer_typing_uninitialized_variables
-    var animation, sizeAnimation, opacityAnimation, tween, colorTween;
+    Animation<double>? animation;
+    Animation<double>? sizeAnimation;
+    Animation<double>? opacityAnimation;
+    Tween? tween;
+    Tween? colorTween;
 
     // #docregion CurvedAnimation
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -100,19 +106,28 @@ class UsedInTutorialTextOnly extends _LogoAppState {
 
   void usedInTutorialOnly1() {
     // #docregion IntTween
-    AnimationController controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
-    Animation<int> alpha = IntTween(begin: 0, end: 255).animate(controller);
+    final AnimationController controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    final Animation<int> alpha = IntTween(
+      begin: 0,
+      end: 255,
+    ).animate(controller);
     // #enddocregion IntTween
   }
 
   void usedInTutorialOnly2() {
     // #docregion IntTween-curve
-    AnimationController controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
-    final Animation<double> curve =
-        CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    Animation<int> alpha = IntTween(begin: 0, end: 255).animate(curve);
+    final AnimationController controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    final Animation<double> curve = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeOut,
+    );
+    final Animation<int> alpha = IntTween(begin: 0, end: 255).animate(curve);
     // #enddocregion IntTween-curve
   }
 }
@@ -120,6 +135,6 @@ class UsedInTutorialTextOnly extends _LogoAppState {
 // #docregion ShakeCurve
 class ShakeCurve extends Curve {
   @override
-  double transform(double t) => sin(t * pi * 2);
+  double transformInternal(double t) => t + sin(t * pi * 4) * 0.2;
 }
 // #enddocregion ShakeCurve

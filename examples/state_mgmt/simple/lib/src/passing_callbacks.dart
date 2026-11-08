@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import 'common.dart';
 
 class CallbackPasser extends StatelessWidget {
@@ -16,7 +17,7 @@ class CallbackPasser extends StatelessWidget {
   void myTapCallback(Item item) {
     print('user tapped on $item');
   }
-// #enddocregion methods
+  // #enddocregion methods
 }
 
 class Item {
@@ -28,10 +29,7 @@ class MyHomepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const CallbackPasser(),
-    );
+    return Scaffold(appBar: AppBar(), body: const CallbackPasser());
   }
 }
 
@@ -47,10 +45,7 @@ class MyListItem extends StatelessWidget {
     return Row(
       children: [
         const Text('Item!'),
-        TextButton(
-          onPressed: () => callback(item),
-          child: const Text('Add'),
-        ),
+        TextButton(onPressed: () => callback(item), child: const Text('Add')),
       ],
     );
   }

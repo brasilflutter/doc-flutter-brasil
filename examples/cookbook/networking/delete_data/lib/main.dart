@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 // #docregion Http
 import 'package:http/http.dart' as http;
+import 'package:material_ui/material_ui.dart';
+
 // #enddocregion Http
 
 Future<Album> fetchAlbum() async {
@@ -54,14 +55,7 @@ class Album {
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return switch (json) {
-      {
-        'id': int id,
-        'title': String title,
-      } =>
-        Album(
-          id: id,
-          title: title,
-        ),
+      {'id': int id, 'title': String title} => Album(id: id, title: title),
       _ => throw const FormatException('Failed to load album.'),
     };
   }
@@ -97,9 +91,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Delete Data Example'),
-        ),
+        appBar: AppBar(title: const Text('Delete Data Example')),
         body: Center(
           child: FutureBuilder<Album>(
             future: _futureAlbum,
@@ -117,8 +109,9 @@ class _MyAppState extends State<MyApp> {
                         child: const Text('Delete Data'),
                         onPressed: () {
                           setState(() {
-                            _futureAlbum =
-                                deleteAlbum(snapshot.data!.id.toString());
+                            _futureAlbum = deleteAlbum(
+                              snapshot.data!.id.toString(),
+                            );
                           });
                         },
                       ),

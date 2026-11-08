@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
-  runApp(
-    const App(),
-  );
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
-  const App({
-    super.key,
-  });
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +29,9 @@ class HomePage extends StatelessWidget {
           // #docregion open-app-example
           child: CupertinoButton(
             onPressed: () async {
-              await launchUrl(
-                Uri.parse('https://google.com'),
-              );
+              await launchUrl(Uri.parse('https://google.com'));
             },
-            child: const Text(
-              'Open website',
-            ),
+            child: const Text('Open website'),
           ),
           // #enddocregion open-app-example
         ),
